@@ -12,20 +12,20 @@
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --black:#04040f;--white:#e8e6f0;--accent:#e8ff47;
-  --grey:#0d0d1f;--mid:#6b6b9a;
-  --neon:#00ff88;--neon-dim:rgba(0,255,136,0.14);
-  --font-display:'Bebas Neue',sans-serif;
-  --font-serif:'Instrument Serif',serif;
-  --font-mono:'DM Mono',monospace;
-  --font-body:'Manrope',sans-serif;
+--black:#04040f;--white:#e8e6f0;--accent:#e8ff47;
+--grey:#0d0d1f;--mid:#6b6b9a;
+--neon:#00ff88;--neon-dim:rgba(0,255,136,0.14);
+--font-display:'Bebas Neue',sans-serif;
+--font-serif:'Instrument Serif',serif;
+--font-mono:'DM Mono',monospace;
+--font-body:'Manrope',sans-serif;
 }
 html{scroll-behavior:auto}
 body{background:var(--black);color:var(--white);font-family:var(--font-body);overflow-x:hidden;cursor:none}
 #page-transition{position:fixed;inset:0;z-index:8000;pointer-events:none;display:grid;grid-template-columns:repeat(5,1fr)}
 .pt-col{background:var(--accent);transform:scaleY(0);transform-origin:bottom}
-.cursor{position:fixed;width:10px;height:10px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .3s,height .3s;mix-blend-mode:difference}
-.cursor-follower{position:fixed;width:36px;height:36px;border:1px solid rgba(232,255,71,.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .3s,height .3s}
+.cursor{position:fixed;width:10px;height:10px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .3s,height .3s;mix-blend-mode:difference;will-change:transform,left,top}
+.cursor-follower{position:fixed;width:36px;height:36px;border:1px solid rgba(232,255,71,.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .3s,height .3s;will-change:transform,left,top}
 /* PRELOADER */
 #preloader{position:fixed;inset:0;background:var(--black);z-index:9000;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:60px;overflow:hidden}
 #preStars{position:absolute;inset:0;pointer-events:none}
@@ -56,95 +56,91 @@ section{min-height:100vh;width:100%;position:relative;display:flex;align-items:f
 .hero-title{font-family:var(--font-display);font-size:clamp(72px,11vw,160px);line-height:.9;margin-bottom:32px}
 .hero-title em{font-family:var(--font-serif);font-style:italic;color:var(--accent);text-shadow:0 0 40px rgba(232,255,71,.4)}
 .hero-sub{font-family:var(--font-body);font-size:15px;line-height:1.7;color:rgba(232,230,240,.5);max-width:480px;margin-bottom:48px}
-.hero-cta{display:inline-flex;align-items:center;gap:14px;font-family:var(--font-mono);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--black);background:var(--accent);padding:16px 32px;text-decoration:none;transition:transform .3s,box-shadow .3s}
+.hero-cta{display:inline-flex;align-items:center;gap:14px;font-family:var(--font-mono);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--black);background:var(--accent);padding:16px 32px;text-decoration:none;transition:transform .3s,box-shadow .3s;will-change:transform}
 .hero-cta:hover{transform:translateY(-2px);box-shadow:0 0 40px rgba(232,255,71,.5)}
 .hero-scroll-hint{position:absolute;bottom:48px;right:48px;font-family:var(--font-mono);font-size:10px;letter-spacing:3px;color:var(--mid);text-transform:uppercase;writing-mode:vertical-rl;display:flex;align-items:center;gap:12px;z-index:2}
 .hero-scroll-hint::before{content:'';width:1px;height:60px;background:linear-gradient(to bottom,var(--accent),transparent);display:block;animation:scrollLine 2s ease-in-out infinite}
 @keyframes scrollLine{0%,100%{transform:scaleY(1);opacity:1}50%{transform:scaleY(.4);opacity:.3}}
 /* HERO NAME */
 .hero-name{
-  font-family:var(--font-display);
-  font-size:clamp(11px,1vw,14px);
-  letter-spacing:9px;
-  color:rgba(232,230,240,0.15);
-  text-transform:uppercase;
-  margin-bottom:18px;
-  display:flex;align-items:center;gap:10px;
+font-family:var(--font-display);
+font-size:clamp(11px,1vw,14px);
+letter-spacing:9px;
+color:rgba(232,230,240,0.15);
+text-transform:uppercase;
+margin-bottom:18px;
+display:flex;align-items:center;gap:10px;
 }
 .hero-name-sep{color:rgba(232,255,71,0.25);font-size:8px}
 .hero-name-last{
-  color:var(--accent);
-  opacity:0.55;
-  letter-spacing:10px;
-  text-shadow:0 0 20px rgba(232,255,71,0.25);
+color:var(--accent);
+opacity:0.55;
+letter-spacing:10px;
+text-shadow:0 0 20px rgba(232,255,71,0.25);
 }
-
-/* ══ PHILOSOPHY — NEBULA PARALLAX BG ══ */
+/* PHILOSOPHY — NEBULA PARALLAX BG */
 #philosophy{
-  background:#020010;
-  flex-direction:column;justify-content:center;
-  padding:100px 48px;
+background:#020010;
+flex-direction:column;justify-content:center;
+padding:100px 48px;
 }
-/* Nebula parallax image layer */
 #philosophy-nebula-bg{
-  position:absolute;inset:0;width:100%;height:100%;
-  z-index:0;pointer-events:none;overflow:hidden;
+position:absolute;inset:0;width:100%;height:100%;
+z-index:0;pointer-events:none;overflow:hidden;
+background:radial-gradient(ellipse at 30% 35%,rgba(90,40,140,.28) 0%,transparent 45%),radial-gradient(ellipse at 75% 65%,rgba(20,60,150,.22) 0%,transparent 50%),radial-gradient(ellipse at 55% 50%,rgba(140,30,70,.14) 0%,transparent 55%);
 }
 #philosophy-nebula-bg img{
-  position:absolute;inset:0;width:100%;height:120%;
-  object-fit:cover;object-position:center;
-  top:-10%;
-  will-change:transform;
-  opacity:0;
-  transition:opacity 1.2s ease;
+position:absolute;inset:0;width:100%;height:120%;
+object-fit:cover;object-position:center;
+top:-10%;
+will-change:transform;
+opacity:0;
+transition:opacity 1.2s ease;
 }
 #philosophy-nebula-bg img.loaded{opacity:1}
-/* Dark overlay for readability */
 #philosophy-nebula-bg::after{
-  content:'';position:absolute;inset:0;
-  background:
-    radial-gradient(ellipse at 50% 0%,rgba(2,0,16,.75) 0%,transparent 60%),
-    radial-gradient(ellipse at 50% 100%,rgba(2,0,16,.80) 0%,transparent 60%),
-    radial-gradient(ellipse at 0% 50%,rgba(2,0,16,.70) 0%,transparent 50%),
-    radial-gradient(ellipse at 100% 50%,rgba(2,0,16,.60) 0%,transparent 50%),
-    linear-gradient(to bottom,rgba(2,0,16,.45),rgba(2,0,16,.30),rgba(2,0,16,.50));
-  z-index:1;
+content:'';position:absolute;inset:0;
+background:
+radial-gradient(ellipse at 50% 0%,rgba(2,0,16,.75) 0%,transparent 60%),
+radial-gradient(ellipse at 50% 100%,rgba(2,0,16,.80) 0%,transparent 60%),
+radial-gradient(ellipse at 0% 50%,rgba(2,0,16,.70) 0%,transparent 50%),
+radial-gradient(ellipse at 100% 50%,rgba(2,0,16,.60) 0%,transparent 50%),
+linear-gradient(to bottom,rgba(2,0,16,.45),rgba(2,0,16,.30),rgba(2,0,16,.50));
+z-index:1;
 }
 #canvas-philosophy{
-  position:absolute;inset:0;width:100%!important;height:100%!important;
-  z-index:2;pointer-events:none;
-  opacity:0.12;
+position:absolute;inset:0;width:100%!important;height:100%!important;
+z-index:2;pointer-events:none;
+opacity:0.12;
 }
 .philosophy-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;width:100%;max-width:1300px;position:relative;z-index:3}
 .big-word{font-family:var(--font-display);font-size:clamp(60px,9vw,130px);line-height:.9;margin-bottom:32px}
 .big-word span{display:block;overflow:hidden}
 .big-word span em{display:block;font-family:var(--font-serif);font-style:italic;color:var(--accent);text-shadow:0 0 20px rgba(232,255,71,.5)}
 .philosophy-right{
-  position:relative;z-index:3;
-  background:rgba(4,4,20,.75);
-  backdrop-filter:blur(16px);
-  -webkit-backdrop-filter:blur(16px);
-  border:1px solid rgba(232,255,71,.12);
-  border-radius:2px;
-  padding:40px;
+position:relative;z-index:3;
+background:rgba(4,4,20,.75);
+backdrop-filter:blur(16px);
+-webkit-backdrop-filter:blur(16px);
+border:1px solid rgba(232,255,71,.12);
+border-radius:2px;
+padding:40px;
 }
 .philosophy-right p{font-size:16px;line-height:1.9;color:rgba(232,230,240,.85);margin-bottom:24px}
 .philosophy-right p:last-child{margin-bottom:0}
 .philosophy-right p strong{color:var(--accent);font-weight:500}
 .divider{width:40px;height:1px;background:var(--accent);margin-bottom:28px;box-shadow:0 0 8px var(--accent)}
-
 /* MARQUEE */
 .marquee-section{background:var(--accent);padding:18px 0;overflow:hidden;white-space:nowrap}
 .marquee-track{display:inline-flex;animation:marquee 22s linear infinite}
 .marquee-track span{font-family:var(--font-display);font-size:17px;letter-spacing:4px;color:var(--black);text-transform:uppercase;padding:0 36px}
 .marquee-track span.dot{color:rgba(0,0,0,.3);padding:0;font-size:8px}
 @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-
 /* STACK */
 #stack{
-  background:#010510;
-  flex-direction:column;justify-content:center;padding:120px 48px;
-  overflow:hidden;
+background:#010510;
+flex-direction:column;justify-content:center;padding:120px 48px;
+overflow:hidden;
 }
 #canvas-stack{position:absolute;inset:0;width:100%!important;height:100%!important;z-index:0;pointer-events:none}
 .stack-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:60px;width:100%;position:relative;z-index:2}
@@ -152,19 +148,19 @@ section{min-height:100vh;width:100%;position:relative;display:flex;align-items:f
 .stack-desc{max-width:320px;font-size:14px;line-height:1.8;color:rgba(232,230,240,.6)}
 .stack-categories{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;width:100%;position:relative;z-index:2}
 .stack-cat{
-  background:rgba(6,6,24,.7);
-  backdrop-filter:blur(20px);
-  -webkit-backdrop-filter:blur(20px);
-  border:1px solid rgba(232,255,71,.1);
-  padding:36px 28px 32px;
-  position:relative;overflow:hidden;
-  transition:border-color .4s,background .4s,transform .3s;
-  cursor:none;
+background:rgba(6,6,24,.7);
+backdrop-filter:blur(20px);
+-webkit-backdrop-filter:blur(20px);
+border:1px solid rgba(232,255,71,.1);
+padding:36px 28px 32px;
+position:relative;overflow:hidden;
+transition:border-color .4s,background .4s,transform .3s;
+cursor:none;
 }
 .stack-cat::before{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse at 50% 0%,rgba(232,255,71,.06) 0%,transparent 70%);
-  opacity:0;transition:opacity .4s;
+content:'';position:absolute;inset:0;
+background:radial-gradient(ellipse at 50% 0%,rgba(232,255,71,.06) 0%,transparent 70%);
+opacity:0;transition:opacity .4s;
 }
 .stack-cat::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--accent);transition:width .5s;box-shadow:0 0 8px var(--accent)}
 .stack-cat:hover{border-color:rgba(232,255,71,.35);background:rgba(8,8,30,.8);transform:translateY(-4px)}
@@ -175,9 +171,8 @@ section{min-height:100vh;width:100%;position:relative;display:flex;align-items:f
 .cat-title{font-family:var(--font-display);font-size:26px;letter-spacing:1px;margin-bottom:20px;color:var(--white)}
 .cat-items{list-style:none;display:flex;flex-direction:column;gap:10px}
 .cat-items li{font-family:var(--font-mono);font-size:12px;color:rgba(232,230,240,.55);display:flex;align-items:center;gap:8px;transition:color .3s}
-.cat-items li::before{content:'→';color:var(--accent);font-size:10px;flex-shrink:0}
+.cat-items li::before{content:'\2192';color:var(--accent);font-size:10px;flex-shrink:0}
 .stack-cat:hover .cat-items li{color:rgba(232,230,240,.85)}
-
 /* PROJECTS */
 #projects{background:radial-gradient(ellipse at 50% 80%,#0f0820 0%,var(--black) 70%);flex-direction:column;justify-content:flex-start;padding:120px 0 80px;min-height:100vh}
 #canvas-projects{position:absolute;inset:0;width:100%!important;height:100%!important;z-index:0;pointer-events:none}
@@ -189,14 +184,14 @@ section{min-height:100vh;width:100%;position:relative;display:flex;align-items:f
 .projects-scroll-wrapper::-webkit-scrollbar{display:none}
 .projects-track{display:flex;gap:24px;width:max-content}
 .proj-card{
-  width:380px;flex-shrink:0;
-  background:rgba(6,6,22,.82);
-  border:1px solid rgba(100,100,200,.14);
-  padding:40px 36px 36px;
-  position:relative;overflow:hidden;
-  transform-style:preserve-3d;will-change:transform;
-  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  transition:border-color .4s;
+width:380px;flex-shrink:0;
+background:rgba(6,6,22,.82);
+border:1px solid rgba(100,100,200,.14);
+padding:40px 36px 36px;
+position:relative;overflow:hidden;
+transform-style:preserve-3d;will-change:transform;
+backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+transition:border-color .4s;
 }
 .proj-card:hover{border-color:rgba(232,255,71,.4)}
 .proj-card-accent{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,transparent,var(--accent),transparent);transform:scaleX(0);transform-origin:left;transition:transform .5s cubic-bezier(.23,1,.32,1);box-shadow:0 0 12px var(--accent)}
@@ -219,49 +214,44 @@ section{min-height:100vh;width:100%;position:relative;display:flex;align-items:f
 .projects-scroll-hint span{font-family:var(--font-mono);font-size:10px;letter-spacing:3px;color:var(--mid);text-transform:uppercase}
 .scroll-track{flex:1;max-width:200px;height:1px;background:#1a1a3a}
 .scroll-thumb{height:1px;background:var(--accent);width:20%;box-shadow:0 0 6px var(--accent);transition:width .1s}
-
-/* ══ TERMINAL — CONVERSATIONAL ══ */
+/* TERMINAL */
 #terminal-section{
-  background:#000508;
-  flex-direction:column;justify-content:center;padding:100px 48px 80px;min-height:auto;
-  position:relative;overflow:hidden;
+background:#000508;
+flex-direction:column;justify-content:center;padding:100px 48px 80px;min-height:auto;
+position:relative;overflow:hidden;
 }
 #canvas-terminal{position:absolute;inset:0;display:block;z-index:0;pointer-events:none;}
 .terminal-header{margin-bottom:36px;position:relative;z-index:2}
 .terminal-header-title{font-family:var(--font-display);font-size:clamp(36px,4.5vw,72px);line-height:.9}
 .terminal-header-title em{font-family:var(--font-serif);font-style:italic;color:var(--accent)}
 .terminal-header-sub{font-family:var(--font-mono);font-size:11px;letter-spacing:2px;color:var(--mid);text-transform:uppercase;margin-top:12px}
-
-/* Terminal window */
 .terminal-window{
-  width:100%;max-width:800px;
-  background:rgba(0,6,10,0.95);
-  border:1px solid rgba(0,255,136,0.13);
-  border-radius:8px;overflow:hidden;
-  position:relative;z-index:2;
-  box-shadow:0 0 40px rgba(0,255,136,0.05),0 0 80px rgba(0,255,136,0.02),inset 0 0 40px rgba(0,255,136,0.015);
-  backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);
+width:100%;max-width:800px;
+background:rgba(0,6,10,0.95);
+border:1px solid rgba(0,255,136,0.13);
+border-radius:8px;overflow:hidden;
+position:relative;z-index:2;
+box-shadow:0 0 40px rgba(0,255,136,0.05),0 0 80px rgba(0,255,136,0.02),inset 0 0 40px rgba(0,255,136,0.015);
+backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);
 }
 .terminal-window::after{
-  content:'';position:absolute;inset:0;pointer-events:none;z-index:10;border-radius:8px;
-  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.06) 2px,rgba(0,0,0,0.06) 4px);
+content:'';position:absolute;inset:0;pointer-events:none;z-index:10;border-radius:8px;
+background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.06) 2px,rgba(0,0,0,0.06) 4px);
 }
 .terminal-titlebar{
-  background:rgba(0,3,6,0.98);padding:11px 16px;
-  display:flex;align-items:center;gap:8px;
-  border-bottom:1px solid rgba(0,255,136,0.09);
+background:rgba(0,3,6,0.98);padding:11px 16px;
+display:flex;align-items:center;gap:8px;
+border-bottom:1px solid rgba(0,255,136,0.09);
 }
 .tb-dot{width:11px;height:11px;border-radius:50%}
 .tb-dot.red{background:#ff5f57;box-shadow:0 0 5px rgba(255,95,87,0.5)}
 .tb-dot.yellow{background:#febc2e;box-shadow:0 0 5px rgba(254,188,46,0.5)}
 .tb-dot.green{background:#28c840;box-shadow:0 0 7px rgba(40,200,64,0.6)}
 .tb-title{font-family:var(--font-mono);font-size:10px;color:rgba(0,255,136,0.5);margin-left:auto;letter-spacing:2px;}
-
-/* Output area — compact */
 .terminal-body{
-  padding:20px 24px 8px;
-  font-family:var(--font-mono);font-size:12.5px;line-height:1.75;
-  overflow-y:auto;max-height:260px;min-height:120px;
+padding:20px 24px 8px;
+font-family:var(--font-mono);font-size:12.5px;line-height:1.75;
+overflow-y:auto;max-height:260px;min-height:120px;
 }
 .terminal-body::-webkit-scrollbar{width:3px}
 .terminal-body::-webkit-scrollbar-thumb{background:rgba(0,255,136,0.15);border-radius:2px}
@@ -278,68 +268,61 @@ section{min-height:100vh;width:100%;position:relative;display:flex;align-items:f
 .t-output.dim{color:rgba(232,230,240,0.3)}
 .t-cursor{display:inline-block;width:7px;height:13px;background:var(--neon);animation:blink .8s step-end infinite;vertical-align:middle;margin-left:2px;box-shadow:0 0 8px var(--neon)}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-
-/* Quick-reply chips */
 .term-chips{
-  padding:12px 24px 14px;
-  border-top:1px solid rgba(0,255,136,0.06);
-  display:flex;flex-wrap:wrap;gap:8px;
-  background:rgba(0,4,8,0.5);
+padding:12px 24px 14px;
+border-top:1px solid rgba(0,255,136,0.06);
+display:flex;flex-wrap:wrap;gap:8px;
+background:rgba(0,4,8,0.5);
 }
 .term-chip{
-  font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;
-  text-transform:uppercase;
-  color:rgba(0,255,136,0.55);
-  border:1px solid rgba(0,255,136,0.18);
-  padding:5px 12px;border-radius:2px;
-  cursor:pointer;
-  transition:color .2s,border-color .2s,background .2s,box-shadow .2s;
-  background:rgba(0,255,136,0.03);
-  user-select:none;
+font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;
+text-transform:uppercase;
+color:rgba(0,255,136,0.55);
+border:1px solid rgba(0,255,136,0.18);
+padding:5px 12px;border-radius:2px;
+cursor:pointer;
+transition:color .2s,border-color .2s,background .2s,box-shadow .2s;
+background:rgba(0,255,136,0.03);
+user-select:none;
 }
 .term-chip:hover{
-  color:var(--neon);border-color:rgba(0,255,136,0.5);
-  background:rgba(0,255,136,0.07);
-  box-shadow:0 0 10px rgba(0,255,136,0.1);
+color:var(--neon);border-color:rgba(0,255,136,0.5);
+background:rgba(0,255,136,0.07);
+box-shadow:0 0 10px rgba(0,255,136,0.1);
 }
-
-/* Input row */
 .terminal-input-row{
-  display:flex;align-items:center;gap:8px;
-  padding:10px 24px 12px;
-  border-top:1px solid rgba(0,255,136,0.08);
-  background:rgba(0,3,6,0.6);
+display:flex;align-items:center;gap:8px;
+padding:10px 24px 12px;
+border-top:1px solid rgba(0,255,136,0.08);
+background:rgba(0,3,6,0.6);
 }
 .terminal-input-prompt{
-  color:var(--neon);flex-shrink:0;
-  text-shadow:0 0 6px rgba(0,255,136,0.5);
-  font-family:var(--font-mono);font-size:12px;
-  white-space:nowrap;
+color:var(--neon);flex-shrink:0;
+text-shadow:0 0 6px rgba(0,255,136,0.5);
+font-family:var(--font-mono);font-size:12px;
+white-space:nowrap;
 }
 .terminal-input{
-  background:transparent;border:none;outline:none;
-  color:rgba(232,230,240,0.9);
-  font-family:var(--font-mono);font-size:12px;
-  caret-color:var(--neon);
-  flex:1;min-width:0;
+background:transparent;border:none;outline:none;
+color:rgba(232,230,240,0.9);
+font-family:var(--font-mono);font-size:12px;
+caret-color:var(--neon);
+flex:1;min-width:0;
 }
 .terminal-input::placeholder{color:rgba(0,255,136,0.2);font-size:11px}
 .terminal-input::selection{background:rgba(0,255,136,0.15)}
-
-/* Status bar */
 .terminal-statusbar{
-  background:rgba(0,3,6,0.95);
-  border-top:1px solid rgba(0,255,136,0.06);
-  padding:6px 16px;
-  display:flex;align-items:center;gap:16px;
-  font-family:var(--font-mono);font-size:9.5px;
-  letter-spacing:1.5px;color:rgba(0,255,136,0.35);
+background:rgba(0,3,6,0.95);
+border-top:1px solid rgba(0,255,136,0.06);
+padding:6px 16px;
+display:flex;align-items:center;gap:16px;
+font-family:var(--font-mono);font-size:9.5px;
+letter-spacing:1.5px;color:rgba(0,255,136,0.35);
 }
 .status-dot{width:5px;height:5px;border-radius:50%;background:var(--neon);box-shadow:0 0 5px var(--neon);animation:statusPulse 2s ease-in-out infinite;flex-shrink:0}
 @keyframes statusPulse{0%,100%{opacity:1;box-shadow:0 0 5px var(--neon)}50%{opacity:.45;box-shadow:0 0 2px var(--neon)}}
 .status-item{display:flex;align-items:center;gap:5px}
 .status-sep{opacity:.15}
-
 /* EXPERIENCE */
 #experience{background:radial-gradient(ellipse at 20% 40%,#0a0a2e 0%,var(--black) 70%);flex-direction:column;justify-content:center;padding:120px 48px}
 #canvas-experience{position:absolute;inset:0;width:100%!important;height:100%!important;z-index:0;pointer-events:none}
@@ -347,18 +330,18 @@ section{min-height:100vh;width:100%;position:relative;display:flex;align-items:f
 .exp-title{font-family:var(--font-display);font-size:clamp(50px,7vw,100px);line-height:.9}
 .exp-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;width:100%;position:relative;z-index:2}
 .exp-card{
-  border-left:1px solid #1a1a3a;padding-left:32px;transition:border-color .4s;
-  background:rgba(4,4,18,.5);
-  backdrop-filter:blur(8px);
-  padding:28px 28px 28px 32px;
-  border-radius:0 2px 2px 0;
+border-left:1px solid #1a1a3a;
+transition:border-color .4s;
+background:rgba(4,4,18,.5);
+backdrop-filter:blur(8px);
+padding:28px 28px 28px 32px;
+border-radius:0 2px 2px 0;
 }
 .exp-card:hover{border-color:var(--accent)}
 .exp-period{font-family:var(--font-mono);font-size:10px;letter-spacing:3px;color:var(--accent);text-transform:uppercase;margin-bottom:12px}
 .exp-role{font-family:var(--font-display);font-size:28px;letter-spacing:1px;margin-bottom:4px}
 .exp-company{font-family:var(--font-serif);font-style:italic;font-size:17px;color:var(--mid);margin-bottom:16px}
 .exp-desc{font-size:13px;line-height:1.8;color:rgba(232,230,240,.55)}
-
 /* CONTACT */
 #contact{background:#000000;flex-direction:column;justify-content:center;align-items:flex-start;padding:120px 48px;min-height:100vh;position:relative;overflow:hidden}
 #contact .section-label{color:rgba(232,255,71,.4)}
@@ -368,1124 +351,952 @@ section{min-height:100vh;width:100%;position:relative;display:flex;align-items:f
 .contact-big em{font-family:var(--font-serif);font-style:italic;color:var(--accent);text-shadow:0 0 40px rgba(232,255,71,.5)}
 .contact-tagline{font-family:var(--font-mono);font-size:11px;letter-spacing:3px;color:rgba(232,255,71,.5);text-transform:uppercase;margin-bottom:48px}
 .contact-links{display:flex;gap:32px;flex-wrap:wrap}
-.contact-link{font-family:var(--font-mono);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--white);text-decoration:none;border:1px solid rgba(232,255,71,.2);padding:14px 28px;transition:border-color .3s,color .3s,box-shadow .3s}
+.contact-link{font-family:var(--font-mono);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--white);text-decoration:none;border:1px solid rgba(232,255,71,.2);padding:14px 28px;transition:border-color .3s,color .3s,box-shadow .3s;will-change:transform}
 .contact-link:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 0 20px rgba(232,255,71,.2)}
 .contact-bottom{position:absolute;bottom:48px;right:48px;font-family:var(--font-mono);font-size:10px;color:rgba(232,255,71,.2);letter-spacing:2px;text-transform:uppercase;z-index:2}
 .bh-label{position:absolute;right:48px;top:50%;transform:translateY(-50%);font-family:var(--font-mono);font-size:10px;letter-spacing:3px;color:rgba(232,255,71,.25);text-transform:uppercase;writing-mode:vertical-rl;z-index:2}
-
 /* FOOTER */
 .footer-strip{background:#000005;padding:20px 48px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid #0a0a1a}
 .footer-strip span{font-family:var(--font-mono);font-size:10px;letter-spacing:2px;color:#1a1a3a;text-transform:uppercase}
-
 /* REVEALS */
 .reveal{opacity:0;transform:translateY(60px)}
 .reveal-right{opacity:0;transform:translateX(60px)}
 .split-char .char{display:inline-block;transform:translateY(110%);transition:transform .6s cubic-bezier(.23,1,.32,1)}
 .split-char.in-view .char{transform:translateY(0)}
+/* ===== REFINEMENTS (additive only — design unchanged) ===== */
+@media (hover:none){body{cursor:auto}.cursor,.cursor-follower{display:none!important}}
+@media (prefers-reduced-motion:reduce){
+*,*::before,*::after{animation-duration:.001s!important;animation-iteration-count:1!important}
+.marquee-track{animation:none}
+.hero-scroll-hint::before{animation:none}
+}
+@media (max-width:900px){
+nav{padding:20px 24px}.nav-links{gap:18px}
+section{padding:80px 24px}
+.section-label,.section-number{left:24px}.section-label{top:24px}.section-number{right:24px;top:20px;font-size:80px}
+.philosophy-grid{grid-template-columns:1fr;gap:36px}
+.stack-categories{grid-template-columns:1fr 1fr}
+.stack-header{flex-direction:column;align-items:flex-start;gap:20px}
+.exp-grid{grid-template-columns:1fr;gap:28px}
+.projects-header,.projects-scroll-wrapper,.projects-scroll-hint{padding-left:24px;padding-right:24px}
+.hero-scroll-hint,.bh-label,.contact-bottom{display:none}
+}
+@media (max-width:560px){.stack-categories{grid-template-columns:1fr}.nav-links{display:none}}
 </style>
 </head>
 <body>
 <div id="page-transition">
-  <div class="pt-col"></div><div class="pt-col"></div><div class="pt-col"></div><div class="pt-col"></div><div class="pt-col"></div>
+<div class="pt-col"></div><div class="pt-col"></div><div class="pt-col"></div><div class="pt-col"></div><div class="pt-col"></div>
 </div>
 <div class="cursor" id="cursor"></div>
 <div class="cursor-follower" id="follower"></div>
 <!-- PRELOADER -->
 <div id="preloader">
-  <canvas id="preStars"></canvas>
-  <div class="pre-line"><div class="pre-progress-bar" id="progressBar"></div></div>
-  <div class="pre-percent" id="prePercent">0</div>
-  <div class="pre-label">Launching Portfolio</div>
-  <div class="pre-tagline">Sudhin · DevOps Engineer · Mumbai</div>
-  <div class="pre-cover" id="preCover"></div>
+<canvas id="preStars"></canvas>
+<div class="pre-line"><div class="pre-progress-bar" id="progressBar"></div></div>
+<div class="pre-percent" id="prePercent">0</div>
+<div class="pre-label">Launching Portfolio</div>
+<div class="pre-tagline">Sudhin · DevOps Engineer · Mumbai</div>
+<div class="pre-cover" id="preCover"></div>
 </div>
 <!-- NAV -->
 <nav>
-  <a class="nav-logo" href="#">✦ SUDHIN</a>
-  <ul class="nav-links">
-    <li><a href="#philosophy">About</a></li>
-    <li><a href="#stack">Stack</a></li>
-    <li><a href="#projects">Work</a></li>
-    <li><a href="#terminal-section">Terminal</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
+<a class="nav-logo" href="#">✦ SUDHIN</a>
+<ul class="nav-links">
+<li><a href="#philosophy">About</a></li>
+<li><a href="#stack">Stack</a></li>
+<li><a href="#projects">Work</a></li>
+<li><a href="#terminal-section">Terminal</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
 </nav>
 <!-- HERO -->
 <section id="hero">
-  <div class="hero-bg-text">DEVOPS</div>
-  <canvas id="webgl-canvas"></canvas>
-  <div class="hero-content">
-    <div class="hero-name">SUDHIN<span class="hero-name-sep">·</span><span class="hero-name-last">SWAIN</span></div>
-    <div class="hero-eyebrow">✦ DevOps Engineer · B2W Infotech · Mumbai</div>
-    <h1 class="hero-title">
-      I Build<br/>
-      <em class="scramble-target">Infrastructure</em><br/>
-      That Scales
-    </h1>
-    <p class="hero-sub">Designing, automating, and maintaining cloud-native systems across GCP and AWS — turning complex deployments into reliable, observable pipelines.</p>
-    <a href="#projects" class="hero-cta">Explore My Work →</a>
-  </div>
-  <div class="hero-scroll-hint">Scroll</div>
+<div class="hero-bg-text">DEVOPS</div>
+<canvas id="webgl-canvas"></canvas>
+<div class="hero-content">
+<div class="hero-name">SUDHIN<span class="hero-name-sep">·</span><span class="hero-name-last">SWAIN</span></div>
+<div class="hero-eyebrow">✦ DevOps Engineer · B2W Infotech · Mumbai</div>
+<h1 class="hero-title">
+I Build<br/>
+<em class="scramble-target">Infrastructure</em><br/>
+That Scales
+</h1>
+<p class="hero-sub">Designing, automating, and maintaining cloud-native systems across GCP and AWS — turning complex deployments into reliable, observable pipelines.</p>
+<a href="#projects" class="hero-cta">Explore My Work →</a>
+</div>
+<div class="hero-scroll-hint">Scroll</div>
 </section>
 <!-- PHILOSOPHY -->
 <section id="philosophy">
-  <div id="philosophy-nebula-bg">
-    <img id="nebula-img" src="nebula.jpg" alt="nebula"/>
-  </div>
-  <canvas id="canvas-philosophy"></canvas>
-  <div class="section-label">001 — Philosophy</div>
-  <div class="section-number">01</div>
-  <div class="philosophy-grid">
-    <div>
-      <div class="big-word">
-        <span class="split-char"><em>Ship</em></span>
-        <span class="split-char">With</span>
-        <span class="split-char">Intent</span>
-      </div>
-    </div>
-    <div class="philosophy-right reveal">
-      <div class="divider"></div>
-      <p>I believe infrastructure should be <strong>invisible to the developer</strong> and <strong>bulletproof under pressure</strong>. Every pipeline I build is designed to eliminate friction and surface problems before they reach production.</p>
-      <p>From Kubernetes clusters to Jenkins CI/CD to real-time monitoring — <strong>automate the repetitive, observe the critical, document everything.</strong></p>
-      <p>Currently engineering cloud systems at <strong>B2W Infotech, Mumbai</strong> — with eyes locked on what's next.</p>
-    </div>
-  </div>
+<div id="philosophy-nebula-bg">
+<img id="nebula-img" src="nebula.jpg" alt="nebula"/>
+</div>
+<canvas id="canvas-philosophy"></canvas>
+<div class="section-label">001 — Philosophy</div>
+<div class="section-number">01</div>
+<div class="philosophy-grid">
+<div>
+<div class="big-word">
+<span class="split-char"><em>Ship</em></span>
+<span class="split-char">With</span>
+<span class="split-char">Intent</span>
+</div>
+</div>
+<div class="philosophy-right reveal">
+<div class="divider"></div>
+<p>I believe infrastructure should be <strong>invisible to the developer</strong> and <strong>bulletproof under pressure</strong>. Every pipeline I build is designed to eliminate friction and surface problems before they reach production.</p>
+<p>From Kubernetes clusters to Jenkins CI/CD to real-time monitoring — <strong>automate the repetitive, observe the critical, document everything.</strong></p>
+<p>Currently engineering cloud systems at <strong>B2W Infotech, Mumbai</strong> — with eyes locked on what's next.</p>
+</div>
+</div>
 </section>
 <!-- MARQUEE -->
 <div class="marquee-section">
-  <div class="marquee-track">
-    <span>Kubernetes</span><span class="dot">✦</span><span>Docker</span><span class="dot">✦</span><span>Jenkins</span><span class="dot">✦</span><span>GCP</span><span class="dot">✦</span><span>AWS</span><span class="dot">✦</span><span>Prometheus</span><span class="dot">✦</span><span>Grafana</span><span class="dot">✦</span><span>Terraform</span><span class="dot">✦</span><span>Linux</span><span class="dot">✦</span><span>Nginx</span><span class="dot">✦</span>
-    <span>Kubernetes</span><span class="dot">✦</span><span>Docker</span><span class="dot">✦</span><span>Jenkins</span><span class="dot">✦</span><span class="dot">✦</span><span>GCP</span><span class="dot">✦</span><span>AWS</span><span class="dot">✦</span><span>Prometheus</span><span class="dot">✦</span><span>Grafana</span><span class="dot">✦</span><span>Terraform</span><span class="dot">✦</span><span>Linux</span><span class="dot">✦</span><span>Nginx</span><span class="dot">✦</span>
-  </div>
+<div class="marquee-track">
+<span>Kubernetes</span><span class="dot">✦</span><span>Docker</span><span class="dot">✦</span><span>Jenkins</span><span class="dot">✦</span><span>GCP</span><span class="dot">✦</span><span>AWS</span><span class="dot">✦</span><span>Prometheus</span><span class="dot">✦</span><span>Grafana</span><span class="dot">✦</span><span>Terraform</span><span class="dot">✦</span><span>Linux</span><span class="dot">✦</span><span>Nginx</span><span class="dot">✦</span>
+<span>Kubernetes</span><span class="dot">✦</span><span>Docker</span><span class="dot">✦</span><span>Jenkins</span><span class="dot">✦</span><span>GCP</span><span class="dot">✦</span><span>AWS</span><span class="dot">✦</span><span>Prometheus</span><span class="dot">✦</span><span>Grafana</span><span class="dot">✦</span><span>Terraform</span><span class="dot">✦</span><span>Linux</span><span class="dot">✦</span><span>Nginx</span><span class="dot">✦</span>
+</div>
 </div>
 <!-- STACK -->
 <section id="stack">
-  <canvas id="canvas-stack"></canvas>
-  <div class="section-label">002 — Tech Stack</div>
-  <div class="section-number">02</div>
-  <div class="stack-header">
-    <div class="stack-title split-char">The<br/>Arsenal</div>
-    <p class="stack-desc reveal-right">Tools I use every day to build, deploy, monitor, and scale infrastructure across cloud environments.</p>
-  </div>
-  <div class="stack-categories">
-    <div class="stack-cat reveal">
-      <span class="cat-icon">[ 01 ]</span>
-      <div class="cat-label">Containers & Orchestration</div>
-      <div class="cat-title">Cloud Native</div>
-      <ul class="cat-items"><li>Docker & Compose</li><li>Kubernetes (Kind/GKE)</li><li>Helm Charts</li><li>Nginx Ingress</li></ul>
-    </div>
-    <div class="stack-cat reveal">
-      <span class="cat-icon">[ 02 ]</span>
-      <div class="cat-label">CI/CD & Automation</div>
-      <div class="cat-title">Pipeline</div>
-      <ul class="cat-items"><li>Jenkins Master/Agent</li><li>GitHub Actions</li><li>Bash Scripting</li><li>Groovy Pipelines</li></ul>
-    </div>
-    <div class="stack-cat reveal">
-      <span class="cat-icon">[ 03 ]</span>
-      <div class="cat-label">Cloud Platforms</div>
-      <div class="cat-title">Infra</div>
-      <ul class="cat-items"><li>GCP (GCE, GKE, VPC)</li><li>AWS (EC2, RDS, ECS)</li><li>Azure DevOps</li><li>Cloudflare Tunnels</li></ul>
-    </div>
-    <div class="stack-cat reveal">
-      <span class="cat-icon">[ 04 ]</span>
-      <div class="cat-label">Observability</div>
-      <div class="cat-title">Monitor</div>
-      <ul class="cat-items"><li>Prometheus</li><li>Grafana</li><li>Alertmanager</li><li>cAdvisor + Node Exporter</li></ul>
-    </div>
-  </div>
+<canvas id="canvas-stack"></canvas>
+<div class="section-label">002 — Tech Stack</div>
+<div class="section-number">02</div>
+<div class="stack-header">
+<div class="stack-title split-char">The<br/>Arsenal</div>
+<p class="stack-desc reveal-right">Tools I use every day to build, deploy, monitor, and scale infrastructure across cloud environments.</p>
+</div>
+<div class="stack-categories">
+<div class="stack-cat reveal">
+<span class="cat-icon">[ 01 ]</span>
+<div class="cat-label">Containers & Orchestration</div>
+<div class="cat-title">Cloud Native</div>
+<ul class="cat-items"><li>Docker & Compose</li><li>Kubernetes (Kind/GKE)</li><li>Helm Charts</li><li>Nginx Ingress</li></ul>
+</div>
+<div class="stack-cat reveal">
+<span class="cat-icon">[ 02 ]</span>
+<div class="cat-label">CI/CD & Automation</div>
+<div class="cat-title">Pipeline</div>
+<ul class="cat-items"><li>Jenkins Master/Agent</li><li>GitHub Actions</li><li>Bash Scripting</li><li>Groovy Pipelines</li></ul>
+</div>
+<div class="stack-cat reveal">
+<span class="cat-icon">[ 03 ]</span>
+<div class="cat-label">Cloud Platforms</div>
+<div class="cat-title">Infra</div>
+<ul class="cat-items"><li>GCP (GCE, GKE, VPC)</li><li>AWS (EC2, RDS, ECS)</li><li>Azure DevOps</li><li>Cloudflare Tunnels</li></ul>
+</div>
+<div class="stack-cat reveal">
+<span class="cat-icon">[ 04 ]</span>
+<div class="cat-label">Observability</div>
+<div class="cat-title">Monitor</div>
+<ul class="cat-items"><li>Prometheus</li><li>Grafana</li><li>Alertmanager</li><li>cAdvisor + Node Exporter</li></ul>
+</div>
+</div>
 </section>
 <!-- PROJECTS -->
 <section id="projects">
-  <canvas id="canvas-projects"></canvas>
-  <div class="section-label">003 — Selected Work</div>
-  <div class="section-number">03</div>
-  <div class="projects-header reveal">
-    <div class="projects-title">What<br/>I've Built</div>
-    <div class="projects-sub">✦ Drag to explore · Production deployments · Client infrastructure</div>
-  </div>
-  <div class="projects-scroll-wrapper" id="projScroll">
-    <div class="projects-track">
-      <div class="proj-card" data-tilt>
-        <div class="proj-card-accent"></div>
-        <div class="proj-card-num">01 / 06</div>
-        <div class="proj-card-title">Client Interview Portal</div>
-        <div class="proj-card-desc">Full CI/CD — Jenkins Master local, Agent on GCP VM. OAuth, DB seeding, Dockerised React/Node/PostgreSQL stack. Zero-downtime blue-green deploys.</div>
-        <div class="proj-card-tags"><span class="proj-tag">Jenkins</span><span class="proj-tag">Docker</span><span class="proj-tag">GCP</span><span class="proj-tag">PostgreSQL</span></div>
-        <div class="proj-card-footer"><span class="proj-card-link">View Project</span><span class="proj-card-arrow">↗</span></div>
-      </div>
-      <div class="proj-card" data-tilt>
-        <div class="proj-card-accent"></div>
-        <div class="proj-card-num">02 / 06</div>
-        <div class="proj-card-title">Azure DevOps Platform</div>
-        <div class="proj-card-desc">Built an Azure DevOps UI project using Azure Entra ID, service principal, and Azure DevOps APIs. Managed identity, access control, and pipeline integration end-to-end.</div>
-        <div class="proj-card-tags"><span class="proj-tag">Azure</span><span class="proj-tag">Entra ID</span><span class="proj-tag">DevOps API</span><span class="proj-tag">RBAC</span></div>
-        <div class="proj-card-footer"><span class="proj-card-link">View Project</span><span class="proj-card-arrow">↗</span></div>
-      </div>
-      <div class="proj-card" data-tilt>
-        <div class="proj-card-accent"></div>
-        <div class="proj-card-num">03 / 06</div>
-        <div class="proj-card-title">Finance Vaastu</div>
-        <div class="proj-card-desc">Production PHP app deployed to Contabo VPS. Docker, Nginx reverse proxy, SSL/TLS, DNS. End-to-end resolution of networking and container issues.</div>
-        <div class="proj-card-tags"><span class="proj-tag">PHP</span><span class="proj-tag">Docker</span><span class="proj-tag">Nginx</span><span class="proj-tag">SSL</span></div>
-        <div class="proj-card-footer"><span class="proj-card-link">View Project</span><span class="proj-card-arrow">↗</span></div>
-      </div>
-      <div class="proj-card" data-tilt>
-        <div class="proj-card-accent"></div>
-        <div class="proj-card-num">04 / 06</div>
-        <div class="proj-card-title">B2W Green</div>
-        <div class="proj-card-desc">WordPress platform on Docker Compose. Multi-service orchestration, Nginx reverse proxy, SSL certificates, production DNS setup and container networking.</div>
-        <div class="proj-card-tags"><span class="proj-tag">WordPress</span><span class="proj-tag">Docker Compose</span><span class="proj-tag">Nginx</span></div>
-        <div class="proj-card-footer"><span class="proj-card-link">View Project</span><span class="proj-card-arrow">↗</span></div>
-      </div>
-      <div class="proj-card" data-tilt>
-        <div class="proj-card-accent"></div>
-        <div class="proj-card-num">05 / 06</div>
-        <div class="proj-card-title">Monitoring Stack (EC2)</div>
-        <div class="proj-card-desc">Full observability stack alongside MERN app on EC2. Prometheus, Grafana dashboards, Alertmanager, Node Exporter, cAdvisor. Cloudflare tunnel for Jenkins scraping.</div>
-        <div class="proj-card-tags"><span class="proj-tag">Prometheus</span><span class="proj-tag">Grafana</span><span class="proj-tag">EC2</span><span class="proj-tag">MERN</span></div>
-        <div class="proj-card-footer"><span class="proj-card-link">View Project</span><span class="proj-card-arrow">↗</span></div>
-      </div>
-      <div class="proj-card" data-tilt>
-        <div class="proj-card-accent"></div>
-        <div class="proj-card-num">06 / 06</div>
-        <div class="proj-card-title">Portfolio K8s Cluster</div>
-        <div class="proj-card-desc">This very site — running on Kind cluster, namespace portfolio-dev. Helm charts, Nginx Ingress, 3D WebGL space scenes, GSAP scroll animations throughout.</div>
-        <div class="proj-card-tags"><span class="proj-tag">Kind</span><span class="proj-tag">Kubernetes</span><span class="proj-tag">Helm</span><span class="proj-tag">Three.js</span></div>
-        <div class="proj-card-footer"><span class="proj-card-link">View Project</span><span class="proj-card-arrow">↗</span></div>
-      </div>
-    </div>
-  </div>
-  <div class="projects-scroll-hint">
-    <span>✦ Drag</span>
-    <div class="scroll-track"><div class="scroll-thumb" id="scrollThumb"></div></div>
-    <span id="scrollCount">01 / 06</span>
-  </div>
+<canvas id="canvas-projects"></canvas>
+<div class="section-label">003 — Selected Work</div>
+<div class="section-number">03</div>
+<div class="projects-header reveal">
+<div class="projects-title">What<br/>I've Built</div>
+<div class="projects-sub">✦ Drag to explore · Production deployments · Client infrastructure</div>
+</div>
+<div class="projects-scroll-wrapper" id="projScroll">
+<div class="projects-track">
+<div class="proj-card" data-tilt>
+<div class="proj-card-accent"></div>
+<div class="proj-card-num">01 / 06</div>
+<div class="proj-card-title">Client Interview Portal</div>
+<div class="proj-card-desc">Full CI/CD — Jenkins Master local, Agent on GCP VM. OAuth, DB seeding, Dockerised React/Node/PostgreSQL stack. Zero-downtime blue-green deploys.</div>
+<div class="proj-card-tags"><span class="proj-tag">Jenkins</span><span class="proj-tag">Docker</span><span class="proj-tag">GCP</span><span class="proj-tag">PostgreSQL</span></div>
+<div class="proj-card-footer"><span class="proj-card-link">View Project</span><span class="proj-card-arrow">↗</span></div>
+</div>
+<div class="proj-card" data-tilt>
+<div class="proj-card-accent"></div>
+<div class="proj-card-num">02 / 06</div>
+<div class="proj-card-title">Azure DevOps Platform</div>
+<div class="proj-card-desc">Built an Azure DevOps UI project using Azure Entra ID, service principal, and Azure DevOps APIs. Managed identity, access control, and pipeline integration end-to-end.</div>
+<div class="proj-card-tags"><span class="proj-tag">Azure</span><span class="proj-tag">Entra ID</span><span class="proj-tag">DevOps API</span><span class="proj-tag">RBAC</span></div>
+<div class="proj-card-footer"><span class="proj-card-link">View Project</span><span class="proj-card-arrow">↗</span></div>
+</div>
+<div class="proj-card" data-tilt>
+<div class="proj-card-accent"></div>
+<div class="proj-card-num">03 / 06</div>
+<div class="proj-card-title">Finance Vaastu</div>
+<div class="proj-card-desc">Production PHP app deployed to Contabo VPS. Docker, Nginx reverse proxy, SSL/TLS, DNS. End-to-end resolution of networking and container issues.</div>
+<div class="proj-card-tags"><span class="proj-tag">PHP</span><span class="proj-tag">Docker</span><span class="proj-tag">Nginx</span><span class="proj-tag">SSL</span></div>
+<div class="proj-card-footer"><span class="proj-card-link">View Project</span><span class="proj-card-arrow">↗</span></div>
+</div>
+<div class="proj-card" data-tilt>
+<div class="proj-card-accent"></div>
+<div class="proj-card-num">04 / 06</div>
+<div class="proj-card-title">B2W Green</div>
+<div class="proj-card-desc">WordPress platform on Docker Compose. Multi-service orchestration, Nginx reverse proxy, SSL certificates, production DNS setup and container networking.</div>
+<div class="proj-card-tags"><span class="proj-tag">WordPress</span><span class="proj-tag">Docker Compose</span><span class="proj-tag">Nginx</span></div>
+<div class="proj-card-footer"><span class="proj-card-link">View Project</span><span class="proj-card-arrow">↗</span></div>
+</div>
+<div class="proj-card" data-tilt>
+<div class="proj-card-accent"></div>
+<div class="proj-card-num">05 / 06</div>
+<div class="proj-card-title">Monitoring Stack (EC2)</div>
+<div class="proj-card-desc">Full observability stack alongside MERN app on EC2. Prometheus, Grafana dashboards, Alertmanager, Node Exporter, cAdvisor. Cloudflare tunnel for Jenkins scraping.</div>
+<div class="proj-card-tags"><span class="proj-tag">Prometheus</span><span class="proj-tag">Grafana</span><span class="proj-tag">EC2</span><span class="proj-tag">MERN</span></div>
+<div class="proj-card-footer"><span class="proj-card-link">View Project</span><span class="proj-card-arrow">↗</span></div>
+</div>
+<div class="proj-card" data-tilt>
+<div class="proj-card-accent"></div>
+<div class="proj-card-num">06 / 06</div>
+<div class="proj-card-title">Portfolio K8s Cluster</div>
+<div class="proj-card-desc">This very site — running on Kind cluster, namespace portfolio-dev. Helm charts, Nginx Ingress, 3D WebGL space scenes, GSAP scroll animations throughout.</div>
+<div class="proj-card-tags"><span class="proj-tag">Kind</span><span class="proj-tag">Kubernetes</span><span class="proj-tag">Helm</span><span class="proj-tag">Three.js</span></div>
+<div class="proj-card-footer"><span class="proj-card-link">View Project</span><span class="proj-card-arrow">↗</span></div>
+</div>
+</div>
+</div>
+<div class="projects-scroll-hint">
+<span>✦ Drag</span>
+<div class="scroll-track"><div class="scroll-thumb" id="scrollThumb"></div></div>
+<span id="scrollCount">01 / 06</span>
+</div>
 </section>
-<!-- TERMINAL — DYSON SPHERE BG -->
+<!-- TERMINAL -->
 <section id="terminal-section">
-  <canvas id="canvas-terminal"></canvas>
-  <div class="section-label">004 — Mission Control</div>
-  <div class="section-number">04</div>
-  <div class="terminal-header reveal">
-    <div class="terminal-header-title">Ask<br/><em>Anything</em></div>
-    <div class="terminal-header-sub">✦ type or tap a prompt to learn about me</div>
-  </div>
-  <div class="terminal-window reveal">
-    <div class="terminal-titlebar">
-      <div class="tb-dot red"></div><div class="tb-dot yellow"></div><div class="tb-dot green"></div>
-      <span class="tb-title">sudhin@portfolio ~ interactive</span>
-    </div>
-    <div class="terminal-body" id="terminalBody"></div>
-    <div class="term-chips" id="termChips">
-      <span class="term-chip" data-cmd="who are you">who are you?</span>
-      <span class="term-chip" data-cmd="what do you do">what do you do?</span>
-      <span class="term-chip" data-cmd="show skills">skills</span>
-      <span class="term-chip" data-cmd="show projects">projects</span>
-      <span class="term-chip" data-cmd="where are you based">location</span>
-      <span class="term-chip" data-cmd="experience">experience</span>
-      <span class="term-chip" data-cmd="contact">contact</span>
-      <span class="term-chip" data-cmd="help">help</span>
-    </div>
-    <div class="terminal-input-row">
-      <span class="terminal-input-prompt">visitor ❯</span>
-      <input class="terminal-input" id="termInput" type="text" autocomplete="off" spellcheck="false" placeholder="ask me anything or type a linux command..."/>
-    </div>
-    <div class="terminal-statusbar">
-      <div class="status-item"><div class="status-dot"></div><span>ONLINE</span></div>
-      <span class="status-sep">|</span>
-      <div class="status-item"><span>sudhin swain · devops</span></div>
-      <span class="status-sep">|</span>
-      <div class="status-item"><span id="termClock">--:--:--</span></div>
-    </div>
-  </div>
+<canvas id="canvas-terminal"></canvas>
+<div class="section-label">004 — Mission Control</div>
+<div class="section-number">04</div>
+<div class="terminal-header reveal">
+<div class="terminal-header-title">Ask<br/><em>Anything</em></div>
+<div class="terminal-header-sub">✦ type or tap a prompt to learn about me</div>
+</div>
+<div class="terminal-window reveal">
+<div class="terminal-titlebar">
+<div class="tb-dot red"></div><div class="tb-dot yellow"></div><div class="tb-dot green"></div>
+<span class="tb-title">sudhin@portfolio ~ interactive</span>
+</div>
+<div class="terminal-body" id="terminalBody"></div>
+<div class="term-chips" id="termChips">
+<span class="term-chip" data-cmd="who are you">who are you?</span>
+<span class="term-chip" data-cmd="what do you do">what do you do?</span>
+<span class="term-chip" data-cmd="show skills">skills</span>
+<span class="term-chip" data-cmd="show projects">projects</span>
+<span class="term-chip" data-cmd="where are you based">location</span>
+<span class="term-chip" data-cmd="experience">experience</span>
+<span class="term-chip" data-cmd="contact">contact</span>
+<span class="term-chip" data-cmd="help">help</span>
+</div>
+<div class="terminal-input-row">
+<span class="terminal-input-prompt">visitor ❯</span>
+<input class="terminal-input" id="termInput" type="text" autocomplete="off" spellcheck="false" placeholder="ask me anything or type a linux command..."/>
+</div>
+<div class="terminal-statusbar">
+<div class="status-item"><div class="status-dot"></div><span>ONLINE</span></div>
+<span class="status-sep">|</span>
+<div class="status-item"><span>sudhin swain · devops</span></div>
+<span class="status-sep">|</span>
+<div class="status-item"><span id="termClock">--:--:--</span></div>
+</div>
+</div>
 </section>
 <!-- EXPERIENCE -->
 <section id="experience">
-  <canvas id="canvas-experience"></canvas>
-  <div class="section-label">005 — Experience</div>
-  <div class="section-number">05</div>
-  <div class="exp-header reveal">
-    <div class="exp-title split-char">Where<br/>I've Worked</div>
-  </div>
-  <div class="exp-grid">
-    <div class="exp-card reveal">
-      <div class="exp-period">✦ Dec 2025 — Present</div>
-      <div class="exp-role">DevOps Engineer</div>
-      <div class="exp-company">B2W Infotech, Mumbai</div>
-      <div class="exp-desc">Architecting CI/CD pipelines, multi-cloud deployments on GCP and AWS, leading infrastructure for Finance Vaastu and internal platforms. Conducting Docker and Jenkins training sessions.</div>
-    </div>
-    <div class="exp-card reveal">
-      <div class="exp-period">✦ Oct 2025 — Dec 2025</div>
-      <div class="exp-role">Cloud Intern</div>
-      <div class="exp-company">TechEazy</div>
-      <div class="exp-desc">Hands-on cloud internship working with AWS and Azure services. Gained practical experience in cloud infrastructure, deployment pipelines, and managed services across real-world environments.</div>
-    </div>
-    <div class="exp-card reveal">
-      <div class="exp-period">✦ 2021 — 2025</div>
-      <div class="exp-role">B.E. Information Technology</div>
-      <div class="exp-company">Bharati Vidyapeeth, Navi Mumbai</div>
-      <div class="exp-desc">CGPA 7.7. Networking, systems programming, cloud technologies. Active in labs and hands-on DevOps project work throughout the program.</div>
-    </div>
-    <div class="exp-card reveal">
-      <div class="exp-period">✦ Certifications</div>
-      <div class="exp-role">AWS Cloud Assessment</div>
-      <div class="exp-company">LearnTube.ai · Preparing SAA-C03</div>
-      <div class="exp-desc">Hands-on AWS across EC2, RDS, VPC, IAM, ECS, and container services. Actively preparing for the AWS Solutions Architect Associate exam.</div>
-    </div>
-  </div>
+<canvas id="canvas-experience"></canvas>
+<div class="section-label">005 — Experience</div>
+<div class="section-number">05</div>
+<div class="exp-header reveal">
+<div class="exp-title split-char">Where<br/>I've Worked</div>
+</div>
+<div class="exp-grid">
+<div class="exp-card reveal">
+<div class="exp-period">✦ Dec 2025 — Present</div>
+<div class="exp-role">DevOps Engineer</div>
+<div class="exp-company">B2W Infotech, Mumbai</div>
+<div class="exp-desc">Architecting CI/CD pipelines, multi-cloud deployments on GCP and AWS, leading infrastructure for Finance Vaastu and internal platforms. Conducting Docker and Jenkins training sessions.</div>
+</div>
+<div class="exp-card reveal">
+<div class="exp-period">✦ Oct 2025 — Dec 2025</div>
+<div class="exp-role">Cloud Intern</div>
+<div class="exp-company">TechEazy</div>
+<div class="exp-desc">Hands-on cloud internship working with AWS and Azure services. Gained practical experience in cloud infrastructure, deployment pipelines, and managed services across real-world environments.</div>
+</div>
+<div class="exp-card reveal">
+<div class="exp-period">✦ 2021 — 2025</div>
+<div class="exp-role">B.E. Information Technology</div>
+<div class="exp-company">Bharati Vidyapeeth, Navi Mumbai</div>
+<div class="exp-desc">CGPA 7.7. Networking, systems programming, cloud technologies. Active in labs and hands-on DevOps project work throughout the program.</div>
+</div>
+<div class="exp-card reveal">
+<div class="exp-period">✦ Certifications</div>
+<div class="exp-role">AWS Cloud Assessment</div>
+<div class="exp-company">LearnTube.ai · Preparing SAA-C03</div>
+<div class="exp-desc">Hands-on AWS across EC2, RDS, VPC, IAM, ECS, and container services. Actively preparing for the AWS Solutions Architect Associate exam.</div>
+</div>
+</div>
 </section>
 <!-- CONTACT -->
 <section id="contact">
-  <canvas id="bh-canvas"></canvas>
-  <div class="section-label">006 — Get In Touch</div>
-  <div class="bh-label">Event Horizon · Schwarzschild Radius</div>
-  <div class="contact-content">
-    <div class="contact-big split-char">Let's<br/><em>Work</em><br/>Together</div>
-    <div class="contact-tagline">✦ Open to opportunities · Remote / Mumbai</div>
-    <div class="contact-links">
-      <a class="contact-link" href="https://github.com/sudhin79" target="_blank">GitHub ↗</a>
-      <a class="contact-link" href="mailto:sudhinswain@gmail.com">Email ↗</a>
-      <a class="contact-link" href="https://www.linkedin.com/in/sudhin-swain-b2a9461b7/" target="_blank">LinkedIn ↗</a>
-    </div>
-  </div>
-  <div class="contact-bottom">✦ 2025 Sudhin · Mumbai, India</div>
+<canvas id="bh-canvas"></canvas>
+<div class="section-label">006 — Get In Touch</div>
+<div class="bh-label">Let’s create something together</div>
+<div class="contact-content">
+<div class="contact-big split-char">Let's<br/><em>Work</em><br/>Together</div>
+<div class="contact-tagline">✦ Open to opportunities · Remote / Mumbai</div>
+<div class="contact-links">
+<a class="contact-link" href="https://github.com/sudhin79" target="_blank">GitHub ↗</a>
+<a class="contact-link" href="mailto:sudhinswain@gmail.com">Email ↗</a>
+<a class="contact-link" href="https://www.linkedin.com/in/sudhin-swain-b2a9461b7/" target="_blank">LinkedIn ↗</a>
+</div>
+</div>
+<div class="contact-bottom">✦ 2025 Sudhin · Mumbai, India</div>
 </section>
 <div class="footer-strip">
-  <span>✦ Sudhin · DevOps Engineer</span>
-  <span>mumbai · india</span>
-  <span>github.com/sudhin79</span>
+<span>✦ Sudhin · DevOps Engineer</span>
+<span>mumbai · india</span>
+<span>github.com/sudhin79</span>
 </div>
-
 <script>
-// ══ CURSOR ══
+// == REFINEMENT FLAGS ==
+const REDUCED=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const IS_TOUCH=window.matchMedia('(hover: none)').matches||('ontouchstart' in window);
+const DPR=Math.min(window.devicePixelRatio||1,2);
+const MOTION=REDUCED?0:1;
+
+// == CURSOR ==
 const cursor=document.getElementById('cursor'),follower=document.getElementById('follower');
 let mx=0,my=0,fx=0,fy=0;
+if(!IS_TOUCH){
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px'});
-(function af(){fx+=(mx-fx)*.12;fy+=(my-fy)*.12;follower.style.left=fx+'px';follower.style.top=fy+'px';requestAnimationFrame(af)})();
-document.querySelectorAll('a,.proj-card,.stack-cat').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{cursor.style.width='20px';cursor.style.height='20px';follower.style.width='60px';follower.style.height='60px'});
-  el.addEventListener('mouseleave',()=>{cursor.style.width='10px';cursor.style.height='10px';follower.style.width='36px';follower.style.height='36px'});
+(function af(){fx+=(mx-fx)*.18;fy+=(my-fy)*.18;follower.style.left=fx+'px';follower.style.top=fy+'px';requestAnimationFrame(af)})();
+document.querySelectorAll('a,.proj-card,.stack-cat,.term-chip').forEach(el=>{
+el.addEventListener('mouseenter',()=>{cursor.style.width='20px';cursor.style.height='20px';follower.style.width='60px';follower.style.height='60px'});
+el.addEventListener('mouseleave',()=>{cursor.style.width='10px';cursor.style.height='10px';follower.style.width='36px';follower.style.height='36px'});
 });
-// ══ PAGE TRANSITIONS ══
+}
+
+// == PAGE TRANSITIONS ==
 const ptCols=document.querySelectorAll('.pt-col');
-function transitionIn(cb){gsap.set(ptCols,{scaleY:0,transformOrigin:'bottom'});gsap.to(ptCols,{scaleY:1,duration:.55,stagger:.05,ease:'power3.inOut',onComplete:()=>{if(cb)cb()}});}
-function transitionOut(){gsap.to(ptCols,{scaleY:0,duration:.55,stagger:.05,transformOrigin:'top',ease:'power3.inOut',delay:.1});}
+function transitionIn(cb){gsap.set(ptCols,{scaleY:0,transformOrigin:'bottom'});gsap.to(ptCols,{scaleY:1,duration:.55,stagger:.05,ease:'power4.inOut',onComplete:()=>{if(cb)cb()}});}
+function transitionOut(){gsap.to(ptCols,{scaleY:0,duration:.55,stagger:.05,transformOrigin:'top',ease:'power4.inOut',delay:.1});}
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
-  a.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));if(!t)return;transitionIn(()=>{t.scrollIntoView();transitionOut();});});
+a.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));if(!t)return;transitionIn(()=>{t.scrollIntoView();transitionOut();});});
 });
-// ══ PRELOADER STARS ══
+
+// == PRELOADER STARS ==
 (function(){
-  const c=document.getElementById('preStars'),ctx=c.getContext('2d');
-  c.width=window.innerWidth;c.height=window.innerHeight;
-  const stars=Array.from({length:250},()=>({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*1.5+.3,op:Math.random(),spd:.015+Math.random()*.02}));
-  (function draw(){ctx.clearRect(0,0,c.width,c.height);stars.forEach(s=>{s.op+=s.spd*(Math.random()>.5?1:-1);s.op=Math.max(.05,Math.min(1,s.op));ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(232,255,71,${s.op*.5})`;ctx.fill();});requestAnimationFrame(draw);})();
+const c=document.getElementById('preStars'),ctx=c.getContext('2d');
+c.width=window.innerWidth;c.height=window.innerHeight;
+const stars=Array.from({length:250},()=>({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*1.5+.3,op:Math.random(),spd:.015+Math.random()*.02}));
+(function draw(){ctx.clearRect(0,0,c.width,c.height);stars.forEach(s=>{s.op+=s.spd*(Math.random()>.5?1:-1);s.op=Math.max(.05,Math.min(1,s.op));ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(232,255,71,${s.op*.5})`;ctx.fill();});requestAnimationFrame(draw);})();
 })();
-// ══ PRELOADER ══
+
+// == PRELOADER ==
 const prePercent=document.getElementById('prePercent'),progressBar=document.getElementById('progressBar'),preCover=document.getElementById('preCover'),preloader=document.getElementById('preloader');
 let count=0;
-const iv=setInterval(()=>{count+=Math.random()*4+1;if(count>=100){count=100;clearInterval(iv);endPreload();}prePercent.textContent=Math.floor(count);progressBar.style.width=count+'%';},40);
-function endPreload(){setTimeout(()=>{gsap.to(preCover,{scaleY:1,duration:.6,ease:'power3.inOut',onComplete:()=>{gsap.to(preloader,{opacity:0,duration:.3,onComplete:()=>{preloader.style.display='none';initAll();}});}});},300);}
-// ══ SCRAMBLE ══
-const CHARS='!<>-_\\/[]{}—=+*^?#@$%';
-function scramble(el,final,dur=1400){let f=0,total=Math.round(dur/30);(function run(){el.textContent=final.split('').map((ch,i)=>{if(ch===' ')return ' ';if(f/total>i/final.length)return ch;return CHARS[Math.floor(Math.random()*CHARS.length)];}).join('');f++;if(f<=total)requestAnimationFrame(run);else el.textContent=final;})();}
-// ══ SPLIT CHARS ══
+const iv=setInterval(()=>{count+=Math.random()*4+1;if(count>=100){count=100;clearInterval(iv);endPreload();}prePercent.textContent=Math.floor(count);progressBar.style.width=count+'%';},REDUCED?12:40);
+function endPreload(){setTimeout(()=>{gsap.to(preCover,{scaleY:1,duration:.6,ease:'power4.inOut',onComplete:()=>{gsap.to(preloader,{opacity:0,duration:.3,onComplete:()=>{preloader.style.display='none';initAll();}});}});},300);}
+
+// == SCRAMBLE ==
+const CHARS='!<>-_\\/[]{}—=+^?#@$%';
+function scramble(el,final,dur=1400){if(!el)return;if(REDUCED){el.textContent=final;return;}let f=0,total=Math.round(dur/30);(function run(){el.textContent=final.split('').map((ch,i)=>{if(ch===' ')return ' ';if(f/total>i/final.length)return ch;return CHARS[Math.floor(Math.random()*CHARS.length)];}).join('');f++;if(f<=total)requestAnimationFrame(run);else el.textContent=final;})();}
+
+// == SPLIT CHARS ==
 function initSplitChars(){
-  document.querySelectorAll('.split-char').forEach(el=>{
-    el.innerHTML=el.innerHTML.replace(/(?![^<]*>)([A-Za-z])/g,(_,ch)=>`<span class="char">${ch}</span>`);
-    new IntersectionObserver(([e])=>{if(e.isIntersecting)el.classList.add('in-view');},{threshold:.3}).observe(el);
-  });
-}
-// ══ GSAP SCROLL ══
-function initScroll(){
-  gsap.registerPlugin(ScrollTrigger);
-  gsap.from('.hero-eyebrow',{opacity:0,y:30,duration:1,delay:.3,ease:'power3.out'});
-  gsap.from('.hero-title',{opacity:0,y:60,duration:1.2,delay:.5,ease:'power3.out'});
-  gsap.from('.hero-sub',{opacity:0,y:40,duration:1,delay:.8,ease:'power3.out'});
-  gsap.from('.hero-cta',{opacity:0,y:30,duration:.8,delay:1,ease:'power3.out'});
-  gsap.from('.hero-bg-text',{opacity:0,x:-100,duration:1.8,delay:.2,ease:'power3.out'});
-  setTimeout(()=>scramble(document.querySelector('.scramble-target'),'Infrastructure',1400),900);
-  gsap.to('.hero-bg-text',{yPercent:30,ease:'none',scrollTrigger:{trigger:'#hero',start:'top top',end:'bottom top',scrub:true}});
-  gsap.utils.toArray('.reveal').forEach(el=>{gsap.fromTo(el,{opacity:0,y:70},{opacity:1,y:0,duration:1,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 85%',toggleActions:'play none none none'}});});
-  gsap.utils.toArray('.reveal-right').forEach(el=>{gsap.fromTo(el,{opacity:0,x:70},{opacity:1,x:0,duration:1,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 85%',toggleActions:'play none none none'}});});
-  gsap.utils.toArray('.stack-cat').forEach((el,i)=>{gsap.fromTo(el,{opacity:0,y:50},{opacity:1,y:0,duration:.8,delay:i*.1,ease:'power2.out',scrollTrigger:{trigger:'.stack-categories',start:'top 80%',toggleActions:'play none none none'}});});
-  gsap.utils.toArray('.proj-card').forEach((el,i)=>{gsap.fromTo(el,{opacity:0,y:60},{opacity:1,y:0,duration:.7,delay:i*.06,ease:'power2.out',scrollTrigger:{trigger:'#projects',start:'top 80%',toggleActions:'play none none none'}});});
-  gsap.fromTo('.contact-big',{opacity:0,y:80},{opacity:1,y:0,duration:1.2,ease:'power3.out',scrollTrigger:{trigger:'#contact',start:'top 80%',toggleActions:'play none none none'}});
-  gsap.fromTo('.contact-tagline',{opacity:0,y:30},{opacity:1,y:0,duration:.8,delay:.2,ease:'power3.out',scrollTrigger:{trigger:'#contact',start:'top 80%',toggleActions:'play none none none'}});
-  gsap.fromTo('.contact-links',{opacity:0,y:30},{opacity:1,y:0,duration:.8,delay:.4,ease:'power3.out',scrollTrigger:{trigger:'#contact',start:'top 80%',toggleActions:'play none none none'}});
-}
-// ══ 3D TILT ══
-function initTilt(){
-  document.querySelectorAll('[data-tilt]').forEach(card=>{
-    card.addEventListener('mousemove',e=>{const r=card.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;card.style.transform=`perspective(900px) rotateY(${x*14}deg) rotateX(${-y*10}deg) translateZ(12px) scale(1.02)`;card.style.transition='transform .05s';card.style.setProperty('--mx',`${(e.clientX-r.left)/r.width*100}%`);card.style.setProperty('--my',`${(e.clientY-r.top)/r.height*100}%`);});
-    card.addEventListener('mouseleave',()=>{card.style.transform='perspective(900px) rotateY(0) rotateX(0) translateZ(0) scale(1)';card.style.transition='transform .6s cubic-bezier(.23,1,.32,1)';});
-  });
-}
-// ══ DRAG SCROLL ══
-function initDragScroll(){
-  const sc=document.getElementById('projScroll'),thumb=document.getElementById('scrollThumb'),countEl=document.getElementById('scrollCount');
-  let drag=false,startX=0,sl=0;
-  sc.addEventListener('mousedown',e=>{drag=true;startX=e.pageX-sc.offsetLeft;sl=sc.scrollLeft;});
-  document.addEventListener('mouseup',()=>drag=false);
-  document.addEventListener('mousemove',e=>{if(!drag)return;e.preventDefault();sc.scrollLeft=sl-(e.pageX-sc.offsetLeft-startX);});
-  sc.addEventListener('scroll',()=>{const p=sc.scrollLeft/(sc.scrollWidth-sc.clientWidth)||0;thumb.style.width=(20+p*80)+'%';countEl.textContent=`0${Math.min(Math.round(p*5)+1,6)} / 06`;});
-}
-// ══ NEBULA PARALLAX ══
-function initNebulaParallax(){
-  const img=document.getElementById('nebula-img');
-  // Fade in on load
-  if(img.complete){img.classList.add('loaded');}
-  else{img.addEventListener('load',()=>img.classList.add('loaded'));}
-  // Parallax on scroll
-  const section=document.getElementById('philosophy');
-  function updateParallax(){
-    const rect=section.getBoundingClientRect();
-    const vh=window.innerHeight;
-    // progress: 0 when top of section at bottom of viewport, 1 when bottom at top
-    const progress=Math.max(0,Math.min(1,1-(rect.bottom/(vh+rect.height))));
-    const shift=(progress-.5)*30; // ±15% shift
-    img.style.transform=`translateY(${shift}px)`;
-  }
-  window.addEventListener('scroll',updateParallax,{passive:true});
-  updateParallax();
-}
-// ══ TERMINAL CLOCK ══
-function initTermClock(){
-  const el=document.getElementById('termClock');
-  function tick(){const n=new Date();el.textContent=n.toTimeString().slice(0,8);}
-  tick();setInterval(tick,1000);
-}
-// ══ TERMINAL — CONVERSATIONAL ══
-const CONVO_COMMANDS = {
-  'who are you': {
-    lines: [
-      {cls:'accent', t:"  SUDHIN SWAIN"},
-      {cls:'success', t:"  DevOps Engineer · Mumbai, India"},
-      {cls:'', t:""},
-      {cls:'info', t:"  I'm a cloud infrastructure engineer who builds the"},
-      {cls:'info', t:"  systems that developers depend on. Currently at"},
-      {cls:'info', t:"  B2W Infotech, architecting CI/CD pipelines and"},
-      {cls:'info', t:"  multi-cloud deployments since Dec 2025."},
-      {cls:'', t:""},
-      {cls:'dim', t:"  B.E. Information Technology · CGPA 7.7 · Navi Mumbai"},
-    ]
-  },
-  'what do you do': {
-    lines: [
-      {cls:'accent', t:"  What I Actually Do"},
-      {cls:'', t:""},
-      {cls:'success', t:"  → Design & automate CI/CD pipelines (Jenkins, GitHub Actions)"},
-      {cls:'success', t:"  → Deploy and manage Kubernetes clusters (Kind, GKE)"},
-      {cls:'success', t:"  → Build cloud infra on GCP & AWS from scratch"},
-      {cls:'success', t:"  → Set up full observability stacks (Prometheus + Grafana)"},
-      {cls:'success', t:"  → Containerise apps with Docker & orchestrate with Helm"},
-      {cls:'success', t:"  → Train teams on DevOps tooling and best practices"},
-      {cls:'', t:""},
-      {cls:'dim', t:"  TL;DR — I make deployments boring (in the best way)."},
-    ]
-  },
-  'show skills': {
-    lines: [
-      {cls:'accent', t:"  Tech Arsenal"},
-      {cls:'', t:""},
-      {cls:'warning', t:"  CONTAINERS & ORCHESTRATION"},
-      {cls:'info', t:"  Docker · Kubernetes · Helm · Nginx Ingress · Kind/GKE"},
-      {cls:'', t:""},
-      {cls:'warning', t:"  CI/CD & AUTOMATION"},
-      {cls:'info', t:"  Jenkins · GitHub Actions · Bash · Groovy Pipelines"},
-      {cls:'', t:""},
-      {cls:'warning', t:"  CLOUD PLATFORMS"},
-      {cls:'info', t:"  GCP (GCE, GKE, VPC) · AWS (EC2, RDS, ECS) · Azure · Cloudflare"},
-      {cls:'', t:""},
-      {cls:'warning', t:"  OBSERVABILITY"},
-      {cls:'info', t:"  Prometheus · Grafana · Alertmanager · Node Exporter · cAdvisor"},
-    ]
-  },
-  'show projects': {
-    lines: [
-      {cls:'accent', t:"  Selected Projects"},
-      {cls:'', t:""},
-      {cls:'success', t:"  01  Client Interview Portal"},
-      {cls:'dim',     t:"      Jenkins CI/CD · GCP · Docker · PostgreSQL · blue-green deploy"},
-      {cls:'success', t:"  02  Azure DevOps Platform"},
-      {cls:'dim',     t:"      Azure Entra ID · Service Principal · RBAC · DevOps API"},
-      {cls:'success', t:"  03  Finance Vaastu"},
-      {cls:'dim',     t:"      PHP · Docker · Nginx · SSL · Contabo VPS production"},
-      {cls:'success', t:"  04  Monitoring Stack (EC2)"},
-      {cls:'dim',     t:"      Prometheus · Grafana · Alertmanager · MERN · Cloudflare Tunnel"},
-      {cls:'success', t:"  05  Portfolio K8s Cluster"},
-      {cls:'dim',     t:"      Kind · Helm · Nginx Ingress · Three.js · This very site"},
-    ]
-  },
-  'where are you based': {
-    lines: [
-      {cls:'accent', t:"  Location & Availability"},
-      {cls:'', t:""},
-      {cls:'success', t:"  Mumbai, Maharashtra, India"},
-      {cls:'info',    t:"  Open to remote and on-site opportunities"},
-      {cls:'info',    t:"  Available for full-time roles & freelance projects"},
-      {cls:'', t:""},
-      {cls:'dim',     t:"  Timezone: IST (UTC+5:30)"},
-    ]
-  },
-  'experience': {
-    lines: [
-      {cls:'accent', t:"  Work Timeline"},
-      {cls:'', t:""},
-      {cls:'warning', t:"  Dec 2025 → Present"},
-      {cls:'success', t:"  DevOps Engineer · B2W Infotech, Mumbai"},
-      {cls:'dim',     t:"  CI/CD, multi-cloud, Docker training, client infra"},
-      {cls:'', t:""},
-      {cls:'warning', t:"  Oct 2025 → Dec 2025"},
-      {cls:'success', t:"  Cloud Intern · TechEazy"},
-      {cls:'dim',     t:"  AWS & Azure hands-on, deployment pipelines"},
-      {cls:'', t:""},
-      {cls:'warning', t:"  2021 → 2025"},
-      {cls:'success', t:"  B.E. Information Technology · Bharati Vidyapeeth"},
-      {cls:'dim',     t:"  CGPA 7.7 · Networking · Cloud · Systems programming"},
-    ]
-  },
-  'contact': {
-    lines: [
-      {cls:'accent', t:"  Get In Touch"},
-      {cls:'', t:""},
-      {cls:'success', t:"  Email    →  sudhinswain@gmail.com"},
-      {cls:'info',    t:"  GitHub   →  github.com/sudhin79"},
-      {cls:'info',    t:"  LinkedIn →  linkedin.com/in/sudhin-swain-b2a9461b7"},
-      {cls:'', t:""},
-      {cls:'dim',     t:"  Scroll down to the contact section to reach out directly."},
-    ]
-  },
-  'help': {
-    lines: [
-      {cls:'accent',  t:"  Available Commands"},
-      {cls:'', t:""},
-      {cls:'info',    t:"  ABOUT ME"},
-      {cls:'success', t:"  who are you       → intro & background"},
-      {cls:'success', t:"  what do you do    → day-to-day work"},
-      {cls:'success', t:"  experience        → work history & education"},
-      {cls:'success', t:"  where are you based → location & availability"},
-      {cls:'', t:""},
-      {cls:'info',    t:"  WORK"},
-      {cls:'success', t:"  show skills       → full tech stack"},
-      {cls:'success', t:"  show projects     → selected project list"},
-      {cls:'success', t:"  contact           → email, GitHub, LinkedIn"},
-      {cls:'', t:""},
-      {cls:'info',    t:"  LINUX (for the devs)"},
-      {cls:'dim',     t:"  kubectl get pods  docker ps  helm list"},
-      {cls:'dim',     t:"  gcloud compute instances list  uptime  whoami"},
-      {cls:'', t:""},
-      {cls:'dim',     t:"  clear → clear the terminal"},
-    ]
-  },
-  // Linux commands
-  'kubectl get pods': {
-    lines: [
-      {cls:'success', t:"  NAME                            READY   STATUS    RESTARTS   AGE"},
-      {cls:'success', t:"  portfolio-frontend-7d9f-x8kp2   1/1     Running   0          3d"},
-      {cls:'success', t:"  portfolio-backend-6bc4-m2nqp     1/1     Running   0          3d"},
-      {cls:'success', t:"  postgres-0                       1/1     Running   0          3d"},
-    ]
-  },
-  'docker ps': {
-    lines: [
-      {cls:'info', t:"  NAMES                  STATUS"},
-      {cls:'info', t:"  nginx-proxy            Up 3 days (healthy)"},
-      {cls:'info', t:"  jenkins-master         Up 5 hours"},
-      {cls:'info', t:"  prometheus             Up 3 days"},
-      {cls:'info', t:"  grafana                Up 3 days"},
-    ]
-  },
-  'helm list': {
-    lines: [
-      {cls:'info', t:"  NAME              NAMESPACE      STATUS    CHART"},
-      {cls:'info', t:"  portfolio         portfolio-dev  deployed  portfolio-0.3.0"},
-      {cls:'info', t:"  nginx-ingress     ingress-nginx  deployed  ingress-nginx-4.7.0"},
-      {cls:'info', t:"  prometheus-stack  monitoring     deployed  kube-prometheus-45.7.1"},
-    ]
-  },
-  'gcloud compute instances list': {
-    lines: [
-      {cls:'warning', t:"  NAME              ZONE           MACHINE_TYPE   STATUS"},
-      {cls:'warning', t:"  jenkins-agent-01  asia-south1-a  e2-medium      RUNNING"},
-      {cls:'warning', t:"  finance-vaastu    asia-south1-b  n1-standard-1  RUNNING"},
-    ]
-  },
-  'uptime': [{cls:'success', t:"   14:32:07 up 3 days, 1 user, load average: 0.12, 0.08, 0.05"}],
-  'whoami': [{cls:'success', t:"  sudhin"}],
-};
-// Flatten single-array commands
-Object.keys(CONVO_COMMANDS).forEach(k=>{
-  if(Array.isArray(CONVO_COMMANDS[k])) CONVO_COMMANDS[k]={lines:CONVO_COMMANDS[k]};
+document.querySelectorAll('.split-char').forEach(el=>{
+el.innerHTML=el.innerHTML.replace(/(?![^<]*>)([A-Za-z])/g,(_,ch)=>`<span class="char">${ch}</span>`);
+new IntersectionObserver(([e])=>{if(e.isIntersecting)el.classList.add('in-view');},{threshold:.3}).observe(el);
 });
+}
 
+// == GSAP SCROLL ==
+function initScroll(){
+gsap.registerPlugin(ScrollTrigger);
+gsap.from('.hero-eyebrow',{opacity:0,y:30,duration:1,delay:.3,ease:'power4.out'});
+gsap.from('.hero-title',{opacity:0,y:60,clipPath:'inset(0 0 100% 0)',duration:1.3,delay:.5,ease:'expo.out'});
+gsap.from('.hero-sub',{opacity:0,y:40,duration:1,delay:.85,ease:'power4.out'});
+gsap.from('.hero-cta',{opacity:0,y:30,duration:.8,delay:1.05,ease:'power3.out'});
+gsap.from('.hero-name',{opacity:0,y:20,duration:1,delay:.2,ease:'power3.out'});
+gsap.from('.hero-bg-text',{opacity:0,x:-100,duration:1.8,delay:.2,ease:'power4.out'});
+setTimeout(()=>scramble(document.querySelector('.scramble-target'),'Infrastructure',1400),900);
+gsap.to('.hero-bg-text',{yPercent:30,ease:'none',scrollTrigger:{trigger:'#hero',start:'top top',end:'bottom top',scrub:true}});
+gsap.utils.toArray('.reveal').forEach(el=>{gsap.fromTo(el,{opacity:0,y:70},{opacity:1,y:0,duration:1,ease:'power4.out',scrollTrigger:{trigger:el,start:'top 85%',toggleActions:'play none none none'}});});
+gsap.utils.toArray('.reveal-right').forEach(el=>{gsap.fromTo(el,{opacity:0,x:70},{opacity:1,x:0,duration:1,ease:'power4.out',scrollTrigger:{trigger:el,start:'top 85%',toggleActions:'play none none none'}});});
+gsap.utils.toArray('.stack-cat').forEach((el,i)=>{gsap.fromTo(el,{opacity:0,y:50},{opacity:1,y:0,duration:.8,delay:i*.1,ease:'power3.out',scrollTrigger:{trigger:'.stack-categories',start:'top 80%',toggleActions:'play none none none'}});});
+gsap.utils.toArray('.proj-card').forEach((el,i)=>{gsap.fromTo(el,{opacity:0,y:60},{opacity:1,y:0,duration:.7,delay:i*.06,ease:'power3.out',scrollTrigger:{trigger:'#projects',start:'top 80%',toggleActions:'play none none none'}});});
+gsap.fromTo('.contact-big',{opacity:0,y:80},{opacity:1,y:0,duration:1.2,ease:'expo.out',scrollTrigger:{trigger:'#contact',start:'top 80%',toggleActions:'play none none none'}});
+gsap.fromTo('.contact-tagline',{opacity:0,y:30},{opacity:1,y:0,duration:.8,delay:.2,ease:'power4.out',scrollTrigger:{trigger:'#contact',start:'top 80%',toggleActions:'play none none none'}});
+gsap.fromTo('.contact-links',{opacity:0,y:30},{opacity:1,y:0,duration:.8,delay:.4,ease:'power4.out',scrollTrigger:{trigger:'#contact',start:'top 80%',toggleActions:'play none none none'}});
+}
+
+// == MAGNETIC BUTTONS (refinement) ==
+function initMagnetic(){
+if(IS_TOUCH)return;
+document.querySelectorAll('.hero-cta,.contact-link,.nav-logo').forEach(el=>{
+const strength=el.classList.contains('hero-cta')?.35:.25;
+el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();const x=(e.clientX-r.left-r.width/2)*strength;const y=(e.clientY-r.top-r.height/2)*strength;gsap.to(el,{x,y,duration:.4,ease:'power3.out'});});
+el.addEventListener('mouseleave',()=>{gsap.to(el,{x:0,y:0,duration:.6,ease:'elastic.out(1,.4)'});});
+});
+}
+
+// == 3D TILT ==
+function initTilt(){
+if(IS_TOUCH)return;
+document.querySelectorAll('[data-tilt]').forEach(card=>{
+card.addEventListener('mousemove',e=>{const r=card.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;card.style.transform=`perspective(900px) rotateY(${x*14}deg) rotateX(${-y*10}deg) translateZ(12px) scale(1.02)`;card.style.transition='transform .05s';card.style.setProperty('--mx',`${(e.clientX-r.left)/r.width*100}%`);card.style.setProperty('--my',`${(e.clientY-r.top)/r.height*100}%`);});
+card.addEventListener('mouseleave',()=>{card.style.transform='perspective(900px) rotateY(0) rotateX(0) translateZ(0) scale(1)';card.style.transition='transform .6s cubic-bezier(.23,1,.32,1)';});
+});
+}
+
+// == DRAG SCROLL ==
+function initDragScroll(){
+const sc=document.getElementById('projScroll'),thumb=document.getElementById('scrollThumb'),countEl=document.getElementById('scrollCount');
+let drag=false,startX=0,sl=0;
+sc.addEventListener('mousedown',e=>{drag=true;startX=e.pageX-sc.offsetLeft;sl=sc.scrollLeft;});
+document.addEventListener('mouseup',()=>drag=false);
+document.addEventListener('mousemove',e=>{if(!drag)return;e.preventDefault();sc.scrollLeft=sl-(e.pageX-sc.offsetLeft-startX);});
+sc.addEventListener('scroll',()=>{const p=sc.scrollLeft/(sc.scrollWidth-sc.clientWidth)||0;thumb.style.width=(20+p*80)+'%';countEl.textContent=`0${Math.min(Math.round(p*5)+1,6)} / 06`;});
+}
+
+// == NEBULA PARALLAX ==
+function initNebulaParallax(){
+const img=document.getElementById('nebula-img');
+if(img.complete&&img.naturalWidth>0){img.classList.add('loaded');}
+else{img.addEventListener('load',()=>img.classList.add('loaded'));img.addEventListener('error',()=>img.style.display='none');}
+const section=document.getElementById('philosophy');
+function updateParallax(){
+const rect=section.getBoundingClientRect();
+const vh=window.innerHeight;
+const progress=Math.max(0,Math.min(1,1-(rect.bottom/(vh+rect.height))));
+const shift=(progress-.5)*30*MOTION;
+img.style.transform=`translateY(${shift}px)`;
+}
+window.addEventListener('scroll',updateParallax,{passive:true});
+updateParallax();
+}
+
+// == TERMINAL CLOCK ==
+function initTermClock(){
+const el=document.getElementById('termClock');
+function tick(){const n=new Date();el.textContent=n.toTimeString().slice(0,8);}
+tick();setInterval(tick,1000);
+}
+
+// == TERMINAL — CONVERSATIONAL ==
+const CONVO_COMMANDS={
+'who are you':{lines:[
+{cls:'accent',t:"  SUDHIN SWAIN"},
+{cls:'success',t:"  DevOps Engineer · Mumbai, India"},
+{cls:'',t:""},
+{cls:'info',t:"  I'm a cloud infrastructure engineer who builds the"},
+{cls:'info',t:"  systems that developers depend on. Currently at"},
+{cls:'info',t:"  B2W Infotech, architecting CI/CD pipelines and"},
+{cls:'info',t:"  multi-cloud deployments since Dec 2025."},
+{cls:'',t:""},
+{cls:'dim',t:"  B.E. Information Technology · CGPA 7.7 · Navi Mumbai"},
+]},
+'what do you do':{lines:[
+{cls:'accent',t:"  What I Actually Do"},
+{cls:'',t:""},
+{cls:'success',t:"  → Design & automate CI/CD pipelines (Jenkins, GitHub Actions)"},
+{cls:'success',t:"  → Deploy and manage Kubernetes clusters (Kind, GKE)"},
+{cls:'success',t:"  → Build cloud infra on GCP & AWS from scratch"},
+{cls:'success',t:"  → Set up full observability stacks (Prometheus + Grafana)"},
+{cls:'success',t:"  → Containerise apps with Docker & orchestrate with Helm"},
+{cls:'success',t:"  → Train teams on DevOps tooling and best practices"},
+{cls:'',t:""},
+{cls:'dim',t:"  TL;DR — I make deployments boring (in the best way)."},
+]},
+'show skills':{lines:[
+{cls:'accent',t:"  Tech Arsenal"},
+{cls:'',t:""},
+{cls:'warning',t:"  CONTAINERS & ORCHESTRATION"},
+{cls:'info',t:"  Docker · Kubernetes · Helm · Nginx Ingress · Kind/GKE"},
+{cls:'',t:""},
+{cls:'warning',t:"  CI/CD & AUTOMATION"},
+{cls:'info',t:"  Jenkins · GitHub Actions · Bash · Groovy Pipelines"},
+{cls:'',t:""},
+{cls:'warning',t:"  CLOUD PLATFORMS"},
+{cls:'info',t:"  GCP (GCE, GKE, VPC) · AWS (EC2, RDS, ECS) · Azure · Cloudflare"},
+{cls:'',t:""},
+{cls:'warning',t:"  OBSERVABILITY"},
+{cls:'info',t:"  Prometheus · Grafana · Alertmanager · Node Exporter · cAdvisor"},
+]},
+'show projects':{lines:[
+{cls:'accent',t:"  Selected Projects"},
+{cls:'',t:""},
+{cls:'success',t:"  01  Client Interview Portal"},
+{cls:'dim',t:"      Jenkins CI/CD · GCP · Docker · PostgreSQL · blue-green deploy"},
+{cls:'success',t:"  02  Azure DevOps Platform"},
+{cls:'dim',t:"      Azure Entra ID · Service Principal · RBAC · DevOps API"},
+{cls:'success',t:"  03  Finance Vaastu"},
+{cls:'dim',t:"      PHP · Docker · Nginx · SSL · Contabo VPS production"},
+{cls:'success',t:"  04  Monitoring Stack (EC2)"},
+{cls:'dim',t:"      Prometheus · Grafana · Alertmanager · MERN · Cloudflare Tunnel"},
+{cls:'success',t:"  05  Portfolio K8s Cluster"},
+{cls:'dim',t:"      Kind · Helm · Nginx Ingress · Three.js · This very site"},
+]},
+'where are you based':{lines:[
+{cls:'accent',t:"  Location & Availability"},
+{cls:'',t:""},
+{cls:'success',t:"  Mumbai, Maharashtra, India"},
+{cls:'info',t:"  Open to remote and on-site opportunities"},
+{cls:'info',t:"  Available for full-time roles & freelance projects"},
+{cls:'',t:""},
+{cls:'dim',t:"  Timezone: IST (UTC+5:30)"},
+]},
+'experience':{lines:[
+{cls:'accent',t:"  Work Timeline"},
+{cls:'',t:""},
+{cls:'warning',t:"  Dec 2025 → Present"},
+{cls:'success',t:"  DevOps Engineer · B2W Infotech, Mumbai"},
+{cls:'dim',t:"  CI/CD, multi-cloud, Docker training, client infra"},
+{cls:'',t:""},
+{cls:'warning',t:"  Oct 2025 → Dec 2025"},
+{cls:'success',t:"  Cloud Intern · TechEazy"},
+{cls:'dim',t:"  AWS & Azure hands-on, deployment pipelines"},
+{cls:'',t:""},
+{cls:'warning',t:"  2021 → 2025"},
+{cls:'success',t:"  B.E. Information Technology · Bharati Vidyapeeth"},
+{cls:'dim',t:"  CGPA 7.7 · Networking · Cloud · Systems programming"},
+]},
+'contact':{lines:[
+{cls:'accent',t:"  Get In Touch"},
+{cls:'',t:""},
+{cls:'success',t:"  Email    →  sudhinswain@gmail.com"},
+{cls:'info',t:"  GitHub   →  github.com/sudhin79"},
+{cls:'info',t:"  LinkedIn →  linkedin.com/in/sudhin-swain-b2a9461b7"},
+{cls:'',t:""},
+{cls:'dim',t:"  Scroll down to the contact section to reach out directly."},
+]},
+'help':{lines:[
+{cls:'accent',t:"  Available Commands"},
+{cls:'',t:""},
+{cls:'info',t:"  ABOUT ME"},
+{cls:'success',t:"  who are you       → intro & background"},
+{cls:'success',t:"  what do you do    → day-to-day work"},
+{cls:'success',t:"  experience        → work history & education"},
+{cls:'success',t:"  where are you based → location & availability"},
+{cls:'',t:""},
+{cls:'info',t:"  WORK"},
+{cls:'success',t:"  show skills       → full tech stack"},
+{cls:'success',t:"  show projects     → selected project list"},
+{cls:'success',t:"  contact           → email, GitHub, LinkedIn"},
+{cls:'',t:""},
+{cls:'info',t:"  LINUX (for the devs)"},
+{cls:'dim',t:"  kubectl get pods  docker ps  helm list"},
+{cls:'dim',t:"  gcloud compute instances list  uptime  whoami"},
+{cls:'',t:""},
+{cls:'dim',t:"  clear → clear the terminal"},
+]},
+'kubectl get pods':{lines:[
+{cls:'success',t:"  NAME                            READY   STATUS    RESTARTS   AGE"},
+{cls:'success',t:"  portfolio-frontend-7d9f-x8kp2   1/1     Running   0          3d"},
+{cls:'success',t:"  portfolio-backend-6bc4-m2nqp    1/1     Running   0          3d"},
+{cls:'success',t:"  postgres-0                      1/1     Running   0          3d"},
+]},
+'docker ps':{lines:[
+{cls:'info',t:"  NAMES                  STATUS"},
+{cls:'info',t:"  nginx-proxy            Up 3 days (healthy)"},
+{cls:'info',t:"  jenkins-master         Up 5 hours"},
+{cls:'info',t:"  prometheus             Up 3 days"},
+{cls:'info',t:"  grafana                Up 3 days"},
+]},
+'helm list':{lines:[
+{cls:'info',t:"  NAME              NAMESPACE      STATUS    CHART"},
+{cls:'info',t:"  portfolio         portfolio-dev  deployed  portfolio-0.3.0"},
+{cls:'info',t:"  nginx-ingress     ingress-nginx  deployed  ingress-nginx-4.7.0"},
+{cls:'info',t:"  prometheus-stack  monitoring     deployed  kube-prometheus-45.7.1"},
+]},
+'gcloud compute instances list':{lines:[
+{cls:'warning',t:"  NAME              ZONE           MACHINE_TYPE   STATUS"},
+{cls:'warning',t:"  jenkins-agent-01  asia-south1-a  e2-medium      RUNNING"},
+{cls:'warning',t:"  finance-vaastu    asia-south1-b  n1-standard-1  RUNNING"},
+]},
+'uptime':[{cls:'success',t:"   14:32:07 up 3 days, 1 user, load average: 0.12, 0.08, 0.05"}],
+'whoami':[{cls:'success',t:"  sudhin"}],
+};
+Object.keys(CONVO_COMMANDS).forEach(k=>{if(Array.isArray(CONVO_COMMANDS[k]))CONVO_COMMANDS[k]={lines:CONVO_COMMANDS[k]};});
 function initTerminal(){
-  const body=document.getElementById('terminalBody');
-  const chips=document.getElementById('termChips');
-  const input=document.getElementById('termInput');
-
-  // Boot message
-  const bootLines=[
-    {cls:'dim',     t:"  sudhin-portfolio v2.0 · interactive shell"},
-    {cls:'dim',     t:"  ─────────────────────────────────────────"},
-    {cls:'info',    t:"  Hey! I'm Sudhin — DevOps Engineer from Mumbai."},
-    {cls:'',        t:""},
-    {cls:'dim',     t:"  Tap a button below or type anything to learn about me."},
-    {cls:'dim',     t:"  (DevOps? try: kubectl get pods · docker ps · helm list)"},
-  ];
-
-  // Wait for section visibility
-  const obs=new IntersectionObserver(([e])=>{
-    if(e.isIntersecting){
-      showLines(body, bootLines, 0, ()=>{});
-      obs.disconnect();
-    }
-  },{threshold:.3});
-  obs.observe(document.getElementById('terminal-section'));
-
-  // Chip clicks
-  chips.addEventListener('click',e=>{
-    const chip=e.target.closest('.term-chip');
-    if(!chip)return;
-    runCommand(chip.dataset.cmd, body);
-  });
-
-  // Input enter
-  input.addEventListener('keydown',e=>{
-    if(e.key!=='Enter')return;
-    const cmd=input.value.trim().toLowerCase();
-    input.value='';
-    if(!cmd)return;
-    runCommand(cmd, body);
-  });
+const body=document.getElementById('terminalBody');
+const chips=document.getElementById('termChips');
+const input=document.getElementById('termInput');
+const bootLines=[
+{cls:'dim',t:"  sudhin-portfolio v2.0 · interactive shell"},
+{cls:'dim',t:"  ───────────────────────────────────────────"},
+{cls:'info',t:"  Hey! I'm Sudhin — DevOps Engineer from Mumbai."},
+{cls:'',t:""},
+{cls:'dim',t:"  Tap a button below or type anything to learn about me."},
+{cls:'dim',t:"  (DevOps? try: kubectl get pods · docker ps · helm list)"},
+];
+const obs=new IntersectionObserver(([e])=>{
+if(e.isIntersecting){showLines(body,bootLines,0,()=>{});obs.disconnect();}
+},{threshold:.3});
+obs.observe(document.getElementById('terminal-section'));
+chips.addEventListener('click',e=>{const chip=e.target.closest('.term-chip');if(!chip)return;runCommand(chip.dataset.cmd,body);});
+input.addEventListener('keydown',e=>{if(e.key!=='Enter')return;const cmd=input.value.trim().toLowerCase();input.value='';if(!cmd)return;runCommand(cmd,body);});
 }
-
-function runCommand(cmd, body){
-  // Echo
-  const echo=document.createElement('div');
-  echo.className='t-prompt-line';
-  echo.innerHTML=`<span class="t-prompt">visitor ❯</span><span class="t-cmd">${cmd}</span>`;
-  body.appendChild(echo);
-  body.scrollTop=body.scrollHeight;
-
-  if(cmd==='clear'){body.innerHTML='';return;}
-
-  const result=CONVO_COMMANDS[cmd];
-  if(result){
-    // Blank line before output
-    const blank=document.createElement('div');blank.className='t-line visible';blank.textContent='';body.appendChild(blank);
-    showLines(body, result.lines, 0, ()=>body.scrollTop=body.scrollHeight);
-  } else {
-    // Natural language fallback — try fuzzy match
-    const fuzzy=Object.keys(CONVO_COMMANDS).find(k=>cmd.includes(k.split(' ')[0])||k.includes(cmd.split(' ')[0]));
-    if(fuzzy){
-      showLines(body, CONVO_COMMANDS[fuzzy].lines, 0, ()=>body.scrollTop=body.scrollHeight);
-    } else {
-      const notFound=document.createElement('div');
-      notFound.className='t-line visible t-output warning';
-      notFound.textContent=`  command not found: ${cmd}  (try 'help' for a list)`;
-      body.appendChild(notFound);
-      body.scrollTop=body.scrollHeight;
-    }
-  }
+function runCommand(cmd,body){
+const echo=document.createElement('div');
+echo.className='t-prompt-line';
+echo.innerHTML=`<span class="t-prompt">visitor ❯</span><span class="t-cmd">${cmd}</span>`;
+body.appendChild(echo);
+body.scrollTop=body.scrollHeight;
+if(cmd==='clear'){body.innerHTML='';return;}
+const result=CONVO_COMMANDS[cmd];
+if(result){
+const blank=document.createElement('div');blank.className='t-line visible';blank.textContent='';body.appendChild(blank);
+showLines(body,result.lines,0,()=>body.scrollTop=body.scrollHeight);
+}else{
+const fuzzy=Object.keys(CONVO_COMMANDS).find(k=>cmd.includes(k.split(' ')[0])||k.includes(cmd.split(' ')[0]));
+if(fuzzy){showLines(body,CONVO_COMMANDS[fuzzy].lines,0,()=>body.scrollTop=body.scrollHeight);}
+else{const notFound=document.createElement('div');notFound.className='t-line visible t-output warning';notFound.textContent=`  command not found: ${cmd}  (try 'help' for a list)`;body.appendChild(notFound);body.scrollTop=body.scrollHeight;}
 }
-
-function showLines(body, lines, idx, done){
-  if(idx>=lines.length){done();return;}
-  const l=lines[idx];
-  const div=document.createElement('div');
-  div.className='t-line visible t-output '+(l.cls||'');
-  div.textContent=l.t;
-  body.appendChild(div);
-  body.scrollTop=body.scrollHeight;
-  setTimeout(()=>showLines(body,lines,idx+1,done), l.cls==='accent'?60:28);
 }
-
+function showLines(body,lines,idx,done){
+if(idx>=lines.length){done();return;}
+const l=lines[idx];
+const div=document.createElement('div');
+div.className='t-line visible t-output '+(l.cls||'');
+div.textContent=l.t;
+body.appendChild(div);
+body.scrollTop=body.scrollHeight;
+setTimeout(()=>showLines(body,lines,idx+1,done),l.cls==='accent'?60:28);
+}
 function initAll(){
-  initScroll();initSplitChars();initTilt();initDragScroll();
-  initTerminal();initNebulaParallax();initTermClock();
+initScroll();initSplitChars();initTilt();initDragScroll();
+initTerminal();initNebulaParallax();initTermClock();initMagnetic();
 }
-// ══════════════════════════════════════════════════════════
-//  PERFORMANCE HELPER
-// ══════════════════════════════════════════════════════════
+// ==========================================================
+//  PERFORMANCE HELPERS
+// ==========================================================
 function makeRenderer(canvasId){
-  const canvas=document.getElementById(canvasId);
-  const renderer=new THREE.WebGLRenderer({canvas,antialias:false,alpha:true,powerPreference:'low-power'});
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio,1.5));
-  renderer.setClearColor(0x000000,0);
-  return renderer;
+const canvas=document.getElementById(canvasId);
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:'high-performance'});
+renderer.setPixelRatio(DPR);
+renderer.setClearColor(0x000000,0);
+return renderer;
 }
 function makeCamera(fov=60){return new THREE.PerspectiveCamera(fov,1,.1,200);}
 function sizeRenderer(renderer,camera,el){
-  const w=el.offsetWidth,h=el.offsetHeight;
-  renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();
+const w=el.offsetWidth,h=el.offsetHeight;
+renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();
 }
-function watchSection(el,cb){let v=false;new IntersectionObserver(([e])=>{v=e.isIntersecting;},{threshold:.05}).observe(el);return()=>v;}
-// ══ HERO ══
+function watchSection(el){let v=false;new IntersectionObserver(([e])=>{v=e.isIntersecting;},{threshold:.05}).observe(el);return()=>v;}
+// == HERO ==
 (function(){
-  const hero=document.getElementById('hero');
-  const renderer=makeRenderer('webgl-canvas');
-  const scene=new THREE.Scene(),camera=makeCamera(60);
-  camera.position.z=5;
-  const mouse=new THREE.Vector2(),tgt=new THREE.Vector2();
-  document.addEventListener('mousemove',e=>{mouse.x=(e.clientX/window.innerWidth)*2-1;mouse.y=-(e.clientY/window.innerHeight)*2+1;});
-  function makeStars(n,spread,sz,op,col){const p=new Float32Array(n*3);for(let i=0;i<n;i++){p[i*3]=(Math.random()-.5)*spread;p[i*3+1]=(Math.random()-.5)*spread;p[i*3+2]=(Math.random()-.5)*spread*.3;}const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(p,3));return new THREE.Points(g,new THREE.PointsMaterial({color:col,size:sz,transparent:true,opacity:op,depthWrite:false}));}
-  scene.add(makeStars(2000,80,.022,.5,0xffffff));scene.add(makeStars(300,40,.04,.3,0xe8ff47));
-  scene.add(new THREE.Mesh(new THREE.SphereGeometry(12,24,24),new THREE.MeshBasicMaterial({color:0x1a004a,transparent:true,opacity:.12,side:THREE.BackSide})));
-  const gridGeo=new THREE.PlaneGeometry(16,10,20,20);const gridMat=new THREE.MeshBasicMaterial({color:0xe8ff47,wireframe:true,transparent:true,opacity:.07});const grid=new THREE.Mesh(gridGeo,gridMat);grid.rotation.x=-Math.PI/2.5;grid.position.y=-2.2;grid.position.z=-1;scene.add(grid);
-  const gPos=gridGeo.attributes.position;const gOrig=new Float32Array(gPos.array);
-  function warpGrid(t){for(let i=0;i<gPos.count;i++){const ox=gOrig[i*3],oy=gOrig[i*3+1];const d=Math.sqrt(ox*ox+oy*oy);const warp=Math.max(0,1-d/6)*.5;gPos.setY(i,oy-warp*1.2+Math.sin(d*.8-t*.8)*warp*.3);}gPos.needsUpdate=true;}
-  const knotGeo=new THREE.TorusKnotGeometry(1.5,.42,80,12,2,3);
-  const knotWire=new THREE.MeshBasicMaterial({color:0xe8ff47,wireframe:true,transparent:true,opacity:.18});
-  const knot=new THREE.Mesh(knotGeo,knotWire);knot.position.set(3.2,.1,0);scene.add(knot);
-  const knotSolid=new THREE.Mesh(new THREE.TorusKnotGeometry(1.48,.40,60,8,2,3),new THREE.MeshBasicMaterial({color:0x04040f}));knotSolid.position.copy(knot.position);scene.add(knotSolid);
-  const kGlowMat=new THREE.MeshBasicMaterial({color:0xe8ff47,transparent:true,opacity:.03,side:THREE.BackSide});const kGlow=new THREE.Mesh(new THREE.TorusKnotGeometry(1.9,.7,40,6,2,3),kGlowMat);kGlow.position.copy(knot.position);scene.add(kGlow);
-  const webCount=50;const webPos=new Float32Array(webCount*3);const webNodes=[];
-  for(let i=0;i<webCount;i++){const theta=Math.random()*Math.PI*2,phi=Math.acos(2*Math.random()-1),r=2.2+Math.random()*2;const x=knot.position.x+Math.sin(phi)*Math.cos(theta)*r,y=Math.sin(phi)*Math.sin(theta)*r,z=Math.cos(phi)*r*.5;webPos[i*3]=x;webPos[i*3+1]=y;webPos[i*3+2]=z;webNodes.push({x,y,z,vx:(Math.random()-.5)*.003,vy:(Math.random()-.5)*.003,vz:(Math.random()-.5)*.002});}
-  const webGeo=new THREE.BufferGeometry();const webPA=new THREE.BufferAttribute(webPos,3);webGeo.setAttribute('position',webPA);
-  scene.add(new THREE.Points(webGeo,new THREE.PointsMaterial({color:0xe8ff47,size:.06,transparent:true,opacity:.6,depthWrite:false})));
-  const lineGroup=new THREE.Group();scene.add(lineGroup);const lineMat=new THREE.LineBasicMaterial({color:0xe8ff47,transparent:true,opacity:.08});
-  function rebuildLines(){while(lineGroup.children.length)lineGroup.remove(lineGroup.children[0]);for(let a=0;a<webNodes.length;a++){for(let b=a+1;b<webNodes.length;b++){const na=webNodes[a],nb=webNodes[b],d=Math.sqrt((na.x-nb.x)**2+(na.y-nb.y)**2+(na.z-nb.z)**2);if(d<2.8){const g=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(na.x,na.y,na.z),new THREE.Vector3(nb.x,nb.y,nb.z)]);lineGroup.add(new THREE.Line(g,lineMat));}}}}
-  rebuildLines();
-  const jetMat=new THREE.MeshBasicMaterial({color:0xe8ff47,transparent:true,opacity:.15,side:THREE.DoubleSide});
-  const jet1=new THREE.Mesh(new THREE.CylinderGeometry(.02,.4,5,6,1,true),jetMat);jet1.position.copy(knot.position);jet1.position.y+=3;scene.add(jet1);
-  const jet2=new THREE.Mesh(new THREE.CylinderGeometry(.4,.02,5,6,1,true),jetMat);jet2.position.copy(knot.position);jet2.position.y-=3;scene.add(jet2);
-  const orbRings=[];[{r:2.2,tilt:.5,sp:.004},{r:2.9,tilt:-.7,sp:-.003},{r:3.6,tilt:1.2,sp:.002}].forEach(d=>{const m=new THREE.Mesh(new THREE.TorusGeometry(d.r,.025,4,60),new THREE.MeshBasicMaterial({color:0xe8ff47,transparent:true,opacity:.12}));m.position.copy(knot.position);m.rotation.x=d.tilt;m.userData.sp=d.sp;scene.add(m);orbRings.push(m);});
-  const debris=[];[{p:[-4,1.5,-1],s:.45,sp:.009},{p:[-2.5,-2,-1.5],s:.3,sp:.013},{p:[.5,2.5,-2],s:.25,sp:.016}].forEach(d=>{const m=new THREE.Mesh(new THREE.IcosahedronGeometry(d.s,1),new THREE.MeshBasicMaterial({color:0x8888ff,wireframe:true,transparent:true,opacity:.12}));m.position.set(...d.p);m.userData={sp:d.sp,off:Math.random()*Math.PI*2};scene.add(m);debris.push(m);});
-  window.addEventListener('resize',()=>sizeRenderer(renderer,camera,hero));sizeRenderer(renderer,camera,hero);
-  const clock=new THREE.Clock();let lineTimer=0,heroVis=true,lastF=0;
-  new IntersectionObserver(([e])=>{heroVis=e.isIntersecting;},{threshold:.05}).observe(hero);
-  (function loop(now){requestAnimationFrame(loop);if(!heroVis||now-lastF<16)return;lastF=now;const t=clock.getElapsedTime();tgt.x+=(mouse.x*.5-tgt.x)*.04;tgt.y+=(mouse.y*.25-tgt.y)*.04;camera.position.x=tgt.x;camera.position.y=tgt.y;camera.lookAt(scene.position);knot.rotation.x=t*.13;knot.rotation.y=t*.19;knot.rotation.z=t*.07;knotSolid.rotation.copy(knot.rotation);kGlow.rotation.copy(knot.rotation);knotWire.opacity=.15+Math.sin(t*2.5)*.06;kGlowMat.opacity=.025+Math.sin(t*2.5)*.015;jetMat.opacity=.1+Math.sin(t*3)*.08;jet1.scale.x=jet1.scale.z=1+Math.sin(t*4)*.3;jet2.scale.x=jet2.scale.z=jet1.scale.x;orbRings.forEach(r=>{r.rotation.z+=r.userData.sp;r.rotation.y+=r.userData.sp*.5;});debris.forEach(d=>{d.rotation.x+=d.userData.sp;d.rotation.y+=d.userData.sp*1.3;d.position.y+=Math.sin(t*.6+d.userData.off)*.0015;});lineTimer+=.016;webNodes.forEach((n,i)=>{n.x+=n.vx;n.y+=n.vy;n.z+=n.vz;const dist=Math.sqrt((n.x-knot.position.x)**2+n.y**2+n.z**2);if(dist>5.5||dist<1.8){n.vx*=-.7;n.vy*=-.7;n.vz*=-.7;}webPA.setXYZ(i,n.x,n.y,n.z);});webPA.needsUpdate=true;if(lineTimer>0.5){rebuildLines();lineTimer=0;}warpGrid(t);renderer.render(scene,camera);})();
+const hero=document.getElementById('hero');
+const renderer=makeRenderer('webgl-canvas');
+const scene=new THREE.Scene(),camera=makeCamera(60);
+camera.position.z=5;
+const mouse=new THREE.Vector2(),tgt=new THREE.Vector2();
+if(!IS_TOUCH)document.addEventListener('mousemove',e=>{mouse.x=(e.clientX/window.innerWidth)*2-1;mouse.y=-(e.clientY/window.innerHeight)*2+1;});
+function makeStars(n,spread,sz,op,col){const p=new Float32Array(n*3);for(let i=0;i<n;i++){p[i*3]=(Math.random()-.5)*spread;p[i*3+1]=(Math.random()-.5)*spread;p[i*3+2]=(Math.random()-.5)*spread*.3;}const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(p,3));return new THREE.Points(g,new THREE.PointsMaterial({color:col,size:sz,transparent:true,opacity:op,depthWrite:false}));}
+scene.add(makeStars(2000,80,.022,.5,0xffffff));scene.add(makeStars(300,40,.04,.3,0xe8ff47));
+scene.add(new THREE.Mesh(new THREE.SphereGeometry(12,24,24),new THREE.MeshBasicMaterial({color:0x1a004a,transparent:true,opacity:.12,side:THREE.BackSide})));
+const gridGeo=new THREE.PlaneGeometry(16,10,20,20);const gridMat=new THREE.MeshBasicMaterial({color:0xe8ff47,wireframe:true,transparent:true,opacity:.07});const grid=new THREE.Mesh(gridGeo,gridMat);grid.rotation.x=-Math.PI/2.5;grid.position.y=-2.2;grid.position.z=-1;scene.add(grid);
+const gPos=gridGeo.attributes.position;const gOrig=new Float32Array(gPos.array);
+function warpGrid(t){for(let i=0;i<gPos.count;i++){const ox=gOrig[i*3],oy=gOrig[i*3+1];const d=Math.sqrt(ox*ox+oy*oy);const warp=Math.max(0,1-d/6)*.5;gPos.setY(i,oy-warp*1.2+Math.sin(d*.8-t*.8)*warp*.3);}gPos.needsUpdate=true;}
+const knotGeo=new THREE.TorusKnotGeometry(1.5,.42,80,12,2,3);
+const knotWire=new THREE.MeshBasicMaterial({color:0xe8ff47,wireframe:true,transparent:true,opacity:.18});
+const knot=new THREE.Mesh(knotGeo,knotWire);knot.position.set(3.2,.1,0);scene.add(knot);
+const knotSolid=new THREE.Mesh(new THREE.TorusKnotGeometry(1.48,.40,60,8,2,3),new THREE.MeshBasicMaterial({color:0x04040f}));knotSolid.position.copy(knot.position);scene.add(knotSolid);
+const kGlowMat=new THREE.MeshBasicMaterial({color:0xe8ff47,transparent:true,opacity:.03,side:THREE.BackSide});const kGlow=new THREE.Mesh(new THREE.TorusKnotGeometry(1.9,.7,40,6,2,3),kGlowMat);kGlow.position.copy(knot.position);scene.add(kGlow);
+const webCount=50;const webPos=new Float32Array(webCount*3);const webNodes=[];
+for(let i=0;i<webCount;i++){const theta=Math.random()*Math.PI*2,phi=Math.acos(2*Math.random()-1),r=2.2+Math.random()*2;const x=knot.position.x+Math.sin(phi)*Math.cos(theta)*r,y=Math.sin(phi)*Math.sin(theta)*r,z=Math.cos(phi)*r*.5;webPos[i*3]=x;webPos[i*3+1]=y;webPos[i*3+2]=z;webNodes.push({x,y,z,vx:(Math.random()-.5)*.003,vy:(Math.random()-.5)*.003,vz:(Math.random()-.5)*.002});}
+const webGeo=new THREE.BufferGeometry();const webPA=new THREE.BufferAttribute(webPos,3);webGeo.setAttribute('position',webPA);
+scene.add(new THREE.Points(webGeo,new THREE.PointsMaterial({color:0xe8ff47,size:.06,transparent:true,opacity:.6,depthWrite:false})));
+const lineGroup=new THREE.Group();scene.add(lineGroup);const lineMat=new THREE.LineBasicMaterial({color:0xe8ff47,transparent:true,opacity:.08});
+function rebuildLines(){while(lineGroup.children.length)lineGroup.remove(lineGroup.children[0]);for(let a=0;a<webNodes.length;a++){for(let b=a+1;b<webNodes.length;b++){const na=webNodes[a],nb=webNodes[b],d=Math.sqrt((na.x-nb.x)**2+(na.y-nb.y)**2+(na.z-nb.z)**2);if(d<2.8){const g=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(na.x,na.y,na.z),new THREE.Vector3(nb.x,nb.y,nb.z)]);lineGroup.add(new THREE.Line(g,lineMat));}}}}
+rebuildLines();
+const jetMat=new THREE.MeshBasicMaterial({color:0xe8ff47,transparent:true,opacity:.15,side:THREE.DoubleSide});
+const jet1=new THREE.Mesh(new THREE.CylinderGeometry(.02,.4,5,6,1,true),jetMat);jet1.position.copy(knot.position);jet1.position.y+=3;scene.add(jet1);
+const jet2=new THREE.Mesh(new THREE.CylinderGeometry(.4,.02,5,6,1,true),jetMat);jet2.position.copy(knot.position);jet2.position.y-=3;scene.add(jet2);
+const orbRings=[];[{r:2.2,tilt:.5,sp:.004},{r:2.9,tilt:-.7,sp:-.003},{r:3.6,tilt:1.2,sp:.002}].forEach(d=>{const m=new THREE.Mesh(new THREE.TorusGeometry(d.r,.025,4,60),new THREE.MeshBasicMaterial({color:0xe8ff47,transparent:true,opacity:.12}));m.position.copy(knot.position);m.rotation.x=d.tilt;m.userData.sp=d.sp;scene.add(m);orbRings.push(m);});
+const debris=[];[{p:[-4,1.5,-1],s:.45,sp:.009},{p:[-2.5,-2,-1.5],s:.3,sp:.013},{p:[.5,2.5,-2],s:.25,sp:.016}].forEach(d=>{const m=new THREE.Mesh(new THREE.IcosahedronGeometry(d.s,1),new THREE.MeshBasicMaterial({color:0x8888ff,wireframe:true,transparent:true,opacity:.12}));m.position.set(...d.p);m.userData={sp:d.sp,off:Math.random()*Math.PI*2};scene.add(m);debris.push(m);});
+window.addEventListener('resize',()=>sizeRenderer(renderer,camera,hero));sizeRenderer(renderer,camera,hero);
+const clock=new THREE.Clock();let lineTimer=0,heroVis=true;
+new IntersectionObserver(([e])=>{heroVis=e.isIntersecting;},{threshold:.05}).observe(hero);
+(function loop(){requestAnimationFrame(loop);if(!heroVis)return;const t=clock.getElapsedTime();tgt.x+=(mouse.x*.5-tgt.x)*.04;tgt.y+=(mouse.y*.25-tgt.y)*.04;camera.position.x=tgt.x;camera.position.y=tgt.y;camera.lookAt(scene.position);knot.rotation.x=t*.13;knot.rotation.y=t*.19;knot.rotation.z=t*.07;knotSolid.rotation.copy(knot.rotation);kGlow.rotation.copy(knot.rotation);knotWire.opacity=.15+Math.sin(t*2.5)*.06;kGlowMat.opacity=.025+Math.sin(t*2.5)*.015;jetMat.opacity=.1+Math.sin(t*3)*.08;jet1.scale.x=jet1.scale.z=1+Math.sin(t*4)*.3;jet2.scale.x=jet2.scale.z=jet1.scale.x;orbRings.forEach(r=>{r.rotation.z+=r.userData.sp;r.rotation.y+=r.userData.sp*.5;});debris.forEach(d=>{d.rotation.x+=d.userData.sp;d.rotation.y+=d.userData.sp*1.3;d.position.y+=Math.sin(t*.6+d.userData.off)*.0015;});lineTimer+=.016;webNodes.forEach((n,i)=>{n.x+=n.vx;n.y+=n.vy;n.z+=n.vz;const dist=Math.sqrt((n.x-knot.position.x)**2+n.y**2+n.z**2);if(dist>5.5||dist<1.8){n.vx*=-.7;n.vy*=-.7;n.vz*=-.7;}webPA.setXYZ(i,n.x,n.y,n.z);});webPA.needsUpdate=true;if(lineTimer>0.5){rebuildLines();lineTimer=0;}warpGrid(t);renderer.render(scene,camera);})();
 })();
-// ══ PHILOSOPHY GALAXY ══
+
+// == PHILOSOPHY GALAXY ==
 (function(){
-  const section=document.getElementById('philosophy');
-  const renderer=makeRenderer('canvas-philosophy');
-  const scene=new THREE.Scene(),camera=makeCamera(60);
-  camera.position.z=7;
-  const isVis=watchSection(section);
-  window.addEventListener('resize',()=>sizeRenderer(renderer,camera,section));sizeRenderer(renderer,camera,section);
-  const clock=new THREE.Clock();
-  const arms=5,perArm=1200,total=arms*perArm;
-  const pos=new Float32Array(total*3),cols=new Float32Array(total*3);
-  for(let a=0;a<arms;a++){
-    const base=(a/arms)*Math.PI*2;
-    for(let i=0;i<perArm;i++){
-      const prog=i/perArm,r=prog*7,angle=base+prog*Math.PI*3.5;
-      const scatter=(.2+prog*.8)*(Math.random()-.5)*1.4;
-      const scatter2=(Math.random()-.5)*.35*prog;
-      const idx=(a*perArm+i)*3;
-      pos[idx]=Math.cos(angle)*r+scatter;pos[idx+1]=scatter2;pos[idx+2]=Math.sin(angle)*r+scatter;
-      const heat=Math.max(0,1-prog*.7);const arm_blue=prog>.3?prog*.4:0;
-      cols[idx]=heat*.9+.1;cols[idx+1]=heat*.85+arm_blue*.3+.05;cols[idx+2]=arm_blue*.5+heat*.2;
-    }
-  }
-  const gGeo=new THREE.BufferGeometry();
-  gGeo.setAttribute('position',new THREE.BufferAttribute(pos,3));
-  gGeo.setAttribute('color',new THREE.BufferAttribute(cols,3));
-  const galaxy=new THREE.Points(gGeo,new THREE.PointsMaterial({size:.055,vertexColors:true,transparent:true,opacity:.8,depthWrite:false}));
-  galaxy.position.set(2.5,-.5,-2);galaxy.rotation.x=.25;scene.add(galaxy);
-  const core=new THREE.Mesh(new THREE.SphereGeometry(.22,16,16),new THREE.MeshBasicMaterial({color:0xffeecc,transparent:true,opacity:.95}));
-  core.position.copy(galaxy.position);scene.add(core);
-  const coreGlow=new THREE.Mesh(new THREE.SphereGeometry(1.2,16,16),new THREE.MeshBasicMaterial({color:0xffcc66,transparent:true,opacity:.08,side:THREE.BackSide}));
-  coreGlow.position.copy(galaxy.position);scene.add(coreGlow);
-  const coreFog=new THREE.Mesh(new THREE.SphereGeometry(2.8,16,16),new THREE.MeshBasicMaterial({color:0x6633aa,transparent:true,opacity:.04,side:THREE.BackSide}));
-  coreFog.position.copy(galaxy.position);scene.add(coreFog);
-  for(let d=0;d<3;d++){const dGeo=new THREE.TorusGeometry(1.8+d*1.1,.12+d*.08,4,80);const dMat=new THREE.MeshBasicMaterial({color:0x0a0014,transparent:true,opacity:.35-d*.08});const dust=new THREE.Mesh(dGeo,dMat);dust.position.copy(galaxy.position);dust.rotation.x=Math.PI/2+.25+(d*.04);scene.add(dust);}
-  [{col:0x330055,op:.07},{col:0x002244,op:.06},{col:0x440022,op:.05}].forEach((n,i)=>{const nGeo=new THREE.SphereGeometry(2+i*.8,12,12);const nMat=new THREE.MeshBasicMaterial({color:n.col,transparent:true,opacity:n.op,side:THREE.BackSide});const nMesh=new THREE.Mesh(nGeo,nMat);nMesh.position.set(galaxy.position.x+(i-1)*1.5,galaxy.position.y+(i-1)*.5,galaxy.position.z-1);scene.add(nMesh);});
-  const bgP=new Float32Array(800*3);for(let i=0;i<800;i++){bgP[i*3]=(Math.random()-.5)*22;bgP[i*3+1]=(Math.random()-.5)*14;bgP[i*3+2]=(Math.random()-.5)*5;}
-  const bgG=new THREE.BufferGeometry();bgG.setAttribute('position',new THREE.BufferAttribute(bgP,3));
-  scene.add(new THREE.Points(bgG,new THREE.PointsMaterial({color:0xffffff,size:.02,transparent:true,opacity:.25})));
-  const mouse={x:0,y:0};document.addEventListener('mousemove',e=>{mouse.x=(e.clientX/window.innerWidth-.5);mouse.y=-(e.clientY/window.innerHeight-.5);});
-  let lastF=0;
-  (function loop(now){requestAnimationFrame(loop);if(!isVis()||now-lastF<16)return;lastF=now;const t=clock.getElapsedTime();
-    galaxy.rotation.y=t*.04+mouse.x*.12;galaxy.rotation.x=.25+mouse.y*.06;
-    core.position.copy(galaxy.position);coreGlow.position.copy(galaxy.position);coreFog.position.copy(galaxy.position);
-    const pulse=1+Math.sin(t*1.8)*.06;core.scale.setScalar(pulse);coreGlow.material.opacity=.07+Math.sin(t*1.8)*.02;
-    renderer.render(scene,camera);
-  })();
+const section=document.getElementById('philosophy');
+const renderer=makeRenderer('canvas-philosophy');
+const scene=new THREE.Scene(),camera=makeCamera(60);
+camera.position.z=7;
+const isVis=watchSection(section);
+window.addEventListener('resize',()=>sizeRenderer(renderer,camera,section));sizeRenderer(renderer,camera,section);
+const clock=new THREE.Clock();
+const arms=5,perArm=1200,total=arms*perArm;
+const pos=new Float32Array(total*3),cols=new Float32Array(total*3);
+for(let a=0;a<arms;a++){
+const base=(a/arms)*Math.PI*2;
+for(let i=0;i<perArm;i++){
+const prog=i/perArm,r=prog*7,angle=base+prog*Math.PI*3.5;
+const scatter=(.2+prog*.8)*(Math.random()-.5)*1.4;
+const scatter2=(Math.random()-.5)*.35*prog;
+const idx=(a*perArm+i)*3;
+pos[idx]=Math.cos(angle)*r+scatter;pos[idx+1]=scatter2;pos[idx+2]=Math.sin(angle)*r+scatter;
+const heat=Math.max(0,1-prog*.7);const arm_blue=prog>.3?prog*.4:0;
+cols[idx]=heat*.9+.1;cols[idx+1]=heat*.85+arm_blue*.3+.05;cols[idx+2]=arm_blue*.5+heat*.2;
+}
+}
+const gGeo=new THREE.BufferGeometry();
+gGeo.setAttribute('position',new THREE.BufferAttribute(pos,3));
+gGeo.setAttribute('color',new THREE.BufferAttribute(cols,3));
+const galaxy=new THREE.Points(gGeo,new THREE.PointsMaterial({size:.055,vertexColors:true,transparent:true,opacity:.8,depthWrite:false}));
+galaxy.position.set(2.5,-.5,-2);galaxy.rotation.x=.25;scene.add(galaxy);
+const core=new THREE.Mesh(new THREE.SphereGeometry(.22,16,16),new THREE.MeshBasicMaterial({color:0xffeecc,transparent:true,opacity:.95}));
+core.position.copy(galaxy.position);scene.add(core);
+const coreGlow=new THREE.Mesh(new THREE.SphereGeometry(1.2,16,16),new THREE.MeshBasicMaterial({color:0xffcc66,transparent:true,opacity:.08,side:THREE.BackSide}));
+coreGlow.position.copy(galaxy.position);scene.add(coreGlow);
+const coreFog=new THREE.Mesh(new THREE.SphereGeometry(2.8,16,16),new THREE.MeshBasicMaterial({color:0x6633aa,transparent:true,opacity:.04,side:THREE.BackSide}));
+coreFog.position.copy(galaxy.position);scene.add(coreFog);
+for(let d=0;d<3;d++){const dGeo=new THREE.TorusGeometry(1.8+d*1.1,.12+d*.08,4,80);const dMat=new THREE.MeshBasicMaterial({color:0x0a0014,transparent:true,opacity:.35-d*.08});const dust=new THREE.Mesh(dGeo,dMat);dust.position.copy(galaxy.position);dust.rotation.x=Math.PI/2+.25+(d*.04);scene.add(dust);}
+[{col:0x330055,op:.07},{col:0x002244,op:.06},{col:0x440022,op:.05}].forEach((n,i)=>{const nGeo=new THREE.SphereGeometry(2+i*.8,12,12);const nMat=new THREE.MeshBasicMaterial({color:n.col,transparent:true,opacity:n.op,side:THREE.BackSide});const nMesh=new THREE.Mesh(nGeo,nMat);nMesh.position.set(galaxy.position.x+(i-1)*1.5,galaxy.position.y+(i-1)*.5,galaxy.position.z-1);scene.add(nMesh);});
+const bgP=new Float32Array(800*3);for(let i=0;i<800;i++){bgP[i*3]=(Math.random()-.5)*22;bgP[i*3+1]=(Math.random()-.5)*14;bgP[i*3+2]=(Math.random()-.5)*5;}
+const bgG=new THREE.BufferGeometry();bgG.setAttribute('position',new THREE.BufferAttribute(bgP,3));
+scene.add(new THREE.Points(bgG,new THREE.PointsMaterial({color:0xffffff,size:.02,transparent:true,opacity:.25})));
+const mouse={x:0,y:0};if(!IS_TOUCH)document.addEventListener('mousemove',e=>{mouse.x=(e.clientX/window.innerWidth-.5);mouse.y=-(e.clientY/window.innerHeight-.5);});
+(function loop(){requestAnimationFrame(loop);if(!isVis())return;const t=clock.getElapsedTime();
+galaxy.rotation.y=t*.04+mouse.x*.12;galaxy.rotation.x=.25+mouse.y*.06;
+core.position.copy(galaxy.position);coreGlow.position.copy(galaxy.position);coreFog.position.copy(galaxy.position);
+const pulse=1+Math.sin(t*1.8)*.06;core.scale.setScalar(pulse);coreGlow.material.opacity=.07+Math.sin(t*1.8)*.02;
+renderer.render(scene,camera);
 })();
-// ══ STACK — SATURN ══
-(function(){
-  const section=document.getElementById('stack');
-  const renderer=makeRenderer('canvas-stack');
-  const scene=new THREE.Scene(),camera=makeCamera(55);
-  camera.position.set(0,1.5,9);camera.lookAt(0,0,0);
-  const isVis=watchSection(section);
-  window.addEventListener('resize',()=>sizeRenderer(renderer,camera,section));sizeRenderer(renderer,camera,section);
-  const clock=new THREE.Clock();
-  const bgP=new Float32Array(600*3);for(let i=0;i<600;i++){bgP[i*3]=(Math.random()-.5)*30;bgP[i*3+1]=(Math.random()-.5)*20;bgP[i*3+2]=(Math.random()-.5)*8;}
-  const bgG=new THREE.BufferGeometry();bgG.setAttribute('position',new THREE.BufferAttribute(bgP,3));
-  scene.add(new THREE.Points(bgG,new THREE.PointsMaterial({color:0xffffff,size:.03,transparent:true,opacity:.3})));
-  const saturnPos=new THREE.Vector3(3.5,0,0);
-  const satBody=new THREE.Mesh(new THREE.SphereGeometry(2,48,48),new THREE.MeshBasicMaterial({color:0xc8a96e}));
-  satBody.position.copy(saturnPos);scene.add(satBody);
-  const bandColors=[0xd4b07a,0xb8956a,0xdfc090,0xa88060,0xcfaa78];
-  bandColors.forEach((col,i)=>{const lat=(i/bandColors.length-.5)*Math.PI;const geo=new THREE.TorusGeometry(2.02,.06+Math.random()*.04,4,80);const mat=new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:.6});const band=new THREE.Mesh(geo,mat);band.position.copy(saturnPos);band.rotation.x=lat*.8;scene.add(band);});
-  const satWire=new THREE.Mesh(new THREE.SphereGeometry(2.02,16,16),new THREE.MeshBasicMaterial({color:0xe8d090,wireframe:true,transparent:true,opacity:.06}));satWire.position.copy(saturnPos);scene.add(satWire);
-  const satAtm=new THREE.Mesh(new THREE.SphereGeometry(2.3,24,24),new THREE.MeshBasicMaterial({color:0xd4b07a,transparent:true,opacity:.07,side:THREE.BackSide}));satAtm.position.copy(saturnPos);scene.add(satAtm);
-  const ringDefs=[{inner:2.6,outer:2.75,col:0xd4c090,op:.5},{inner:2.85,outer:3.1,col:0xc8b080,op:.65},{inner:3.2,outer:3.6,col:0xbca070,op:.55},{inner:3.7,outer:4.0,col:0xd0c090,op:.35},{inner:4.15,outer:4.5,col:0xb8a060,op:.25}];
-  ringDefs.forEach(rd=>{const width=rd.outer-rd.inner;const midR=(rd.inner+rd.outer)/2;const geo=new THREE.TorusGeometry(midR,width/2,2,120);const mat=new THREE.MeshBasicMaterial({color:rd.col,transparent:true,opacity:rd.op,side:THREE.DoubleSide});const ring=new THREE.Mesh(geo,mat);ring.position.copy(saturnPos);ring.rotation.x=Math.PI/2-.4;scene.add(ring);});
-  const rpCount=300;const rpP=new Float32Array(rpCount*3);
-  for(let i=0;i<rpCount;i++){const angle=Math.random()*Math.PI*2,r=2.6+Math.random()*1.9;rpP[i*3]=saturnPos.x+Math.cos(angle)*r;rpP[i*3+1]=saturnPos.y+(Math.random()-.5)*.05;rpP[i*3+2]=Math.sin(angle)*r*.4;}
-  const rpG=new THREE.BufferGeometry();rpG.setAttribute('position',new THREE.BufferAttribute(rpP,3));
-  scene.add(new THREE.Points(rpG,new THREE.PointsMaterial({color:0xddc070,size:.04,transparent:true,opacity:.4})));
-  const moon=new THREE.Mesh(new THREE.SphereGeometry(.2,12,12),new THREE.MeshBasicMaterial({color:0x888888}));scene.add(moon);
-  scene.add(new THREE.Mesh(new THREE.SphereGeometry(10,16,16),new THREE.MeshBasicMaterial({color:0x0a0020,transparent:true,opacity:.15,side:THREE.BackSide})));
-  let lastF=0;
-  (function loop(now){requestAnimationFrame(loop);if(!isVis()||now-lastF<16)return;lastF=now;const t=clock.getElapsedTime();
-    satBody.rotation.y=t*.06;satWire.rotation.y=t*.06;
-    moon.position.set(saturnPos.x+Math.cos(t*.5)*5.5,saturnPos.y+Math.sin(t*.2)*.4,Math.sin(t*.5)*2.2);
-    renderer.render(scene,camera);
-  })();
 })();
-// ══ PROJECTS — WORMHOLE ══
+
+// == STACK — SATURN ==
 (function(){
-  const section=document.getElementById('projects');
-  const renderer=makeRenderer('canvas-projects');
-  const scene=new THREE.Scene(),camera=makeCamera(60);
-  camera.position.z=4;
-  const isVis=watchSection(section);
-  window.addEventListener('resize',()=>sizeRenderer(renderer,camera,section));sizeRenderer(renderer,camera,section);
-  const clock=new THREE.Clock();
-  const rings=Array.from({length:28},(_,i)=>{const r=.5+i*.18,z=-i*.5;const m=new THREE.Mesh(new THREE.TorusGeometry(r,.015,4,48),new THREE.MeshBasicMaterial({color:0xe8ff47,transparent:true,opacity:Math.max(.02,.15-i*.004)}));m.position.z=z;m.userData={z,baseZ:z};scene.add(m);return m;});
-  const sPos=new Float32Array(400*3);for(let i=0;i<400;i++){sPos[i*3]=(Math.random()-.5)*6;sPos[i*3+1]=(Math.random()-.5)*6;sPos[i*3+2]=-Math.random()*15;}
-  const sGeo=new THREE.BufferGeometry();sGeo.setAttribute('position',new THREE.BufferAttribute(sPos,3));
-  scene.add(new THREE.Points(sGeo,new THREE.PointsMaterial({color:0xffffff,size:.04,transparent:true,opacity:.45})));
-  const cg=new THREE.Mesh(new THREE.SphereGeometry(.15,12,12),new THREE.MeshBasicMaterial({color:0xe8ff47,transparent:true,opacity:.8}));scene.add(cg);
-  let lastF=0;
-  (function loop(now){requestAnimationFrame(loop);if(!isVis()||now-lastF<16)return;lastF=now;const t=clock.getElapsedTime();
-    rings.forEach((r,i)=>{const spd=.3+i*.01;r.userData.z=r.userData.baseZ+((t*spd)%(rings.length*.5));if(r.userData.z>2)r.userData.z-=rings.length*.5;r.position.z=r.userData.z;r.rotation.z=t*(.01+i*.002);r.material.opacity=Math.max(0,.12-Math.abs(r.userData.z)*.015);});
-    const pa=sGeo.attributes.position;for(let i=0;i<400;i++){pa.setZ(i,pa.getZ(i)+.08);if(pa.getZ(i)>4)pa.setZ(i,-15);}pa.needsUpdate=true;
-    cg.material.opacity=.6+Math.sin(t*2)*.3;cg.scale.setScalar(1+Math.sin(t*3)*.15);
-    renderer.render(scene,camera);
-  })();
+const section=document.getElementById('stack');
+const renderer=makeRenderer('canvas-stack');
+const scene=new THREE.Scene(),camera=makeCamera(55);
+camera.position.set(0,1.5,9);camera.lookAt(0,0,0);
+const isVis=watchSection(section);
+window.addEventListener('resize',()=>sizeRenderer(renderer,camera,section));sizeRenderer(renderer,camera,section);
+const clock=new THREE.Clock();
+const bgP=new Float32Array(600*3);for(let i=0;i<600;i++){bgP[i*3]=(Math.random()-.5)*30;bgP[i*3+1]=(Math.random()-.5)*20;bgP[i*3+2]=(Math.random()-.5)*8;}
+const bgG=new THREE.BufferGeometry();bgG.setAttribute('position',new THREE.BufferAttribute(bgP,3));
+scene.add(new THREE.Points(bgG,new THREE.PointsMaterial({color:0xffffff,size:.03,transparent:true,opacity:.3})));
+const saturnPos=new THREE.Vector3(3.5,0,0);
+const satBody=new THREE.Mesh(new THREE.SphereGeometry(2,48,48),new THREE.MeshBasicMaterial({color:0xc8a96e}));
+satBody.position.copy(saturnPos);scene.add(satBody);
+const bandColors=[0xd4b07a,0xb8956a,0xdfc090,0xa88060,0xcfaa78];
+bandColors.forEach((col,i)=>{const lat=(i/bandColors.length-.5)*Math.PI;const geo=new THREE.TorusGeometry(2.02,.06+Math.random()*.04,4,80);const mat=new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:.6});const band=new THREE.Mesh(geo,mat);band.position.copy(saturnPos);band.rotation.x=lat*.8;scene.add(band);});
+const satWire=new THREE.Mesh(new THREE.SphereGeometry(2.02,16,16),new THREE.MeshBasicMaterial({color:0xe8d090,wireframe:true,transparent:true,opacity:.06}));satWire.position.copy(saturnPos);scene.add(satWire);
+const satAtm=new THREE.Mesh(new THREE.SphereGeometry(2.3,24,24),new THREE.MeshBasicMaterial({color:0xd4b07a,transparent:true,opacity:.07,side:THREE.BackSide}));satAtm.position.copy(saturnPos);scene.add(satAtm);
+const ringDefs=[{inner:2.6,outer:2.75,col:0xd4c090,op:.5},{inner:2.85,outer:3.1,col:0xc8b080,op:.65},{inner:3.2,outer:3.6,col:0xbca070,op:.55},{inner:3.7,outer:4.0,col:0xd0c090,op:.35},{inner:4.15,outer:4.5,col:0xb8a060,op:.25}];
+const ringMeshes=[];
+ringDefs.forEach(rd=>{const width=rd.outer-rd.inner;const midR=(rd.inner+rd.outer)/2;const geo=new THREE.TorusGeometry(midR,width/2,2,120);const mat=new THREE.MeshBasicMaterial({color:rd.col,transparent:true,opacity:rd.op,side:THREE.DoubleSide});const ring=new THREE.Mesh(geo,mat);ring.position.copy(saturnPos);ring.rotation.x=Math.PI/2-.4;scene.add(ring);ringMeshes.push(ring);});
+const rpCount=300;const rpP=new Float32Array(rpCount*3);
+for(let i=0;i<rpCount;i++){const angle=Math.random()*Math.PI*2,r=2.6+Math.random()*1.9;rpP[i*3]=saturnPos.x+Math.cos(angle)*r;rpP[i*3+1]=saturnPos.y+(Math.random()-.5)*.05;rpP[i*3+2]=Math.sin(angle)*r*.4;}
+const rpG=new THREE.BufferGeometry();rpG.setAttribute('position',new THREE.BufferAttribute(rpP,3));
+const ringParticles=new THREE.Points(rpG,new THREE.PointsMaterial({color:0xddc070,size:.04,transparent:true,opacity:.4}));ringParticles.position.copy(saturnPos);ringParticles.rotation.x=Math.PI/2-.4;scene.add(ringParticles);
+const moon=new THREE.Mesh(new THREE.SphereGeometry(.2,12,12),new THREE.MeshBasicMaterial({color:0x888888}));scene.add(moon);
+scene.add(new THREE.Mesh(new THREE.SphereGeometry(10,16,16),new THREE.MeshBasicMaterial({color:0x0a0020,transparent:true,opacity:.15,side:THREE.BackSide})));
+(function loop(){requestAnimationFrame(loop);if(!isVis())return;const t=clock.getElapsedTime();
+satBody.rotation.y=t*.06;satWire.rotation.y=t*.06;
+ringParticles.rotation.z=t*.03;
+moon.position.set(saturnPos.x+Math.cos(t*.5)*5.5,saturnPos.y+Math.sin(t*.2)*.4,Math.sin(t*.5)*2.2);
+renderer.render(scene,camera);
 })();
-// ══ TERMINAL — DYSON SPHERE (FIXED RESIZE) ══
-(function(){
-  const section=document.getElementById('terminal-section');
-  const canvas=document.getElementById('canvas-terminal');
-  const renderer=new THREE.WebGLRenderer({canvas,antialias:false,alpha:true,powerPreference:'low-power'});
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio,1.5));
-  renderer.setClearColor(0x000000,0);
-  const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(55,1,.1,200);
-  camera.position.set(0,0,9);
-  // Dedicated resize function
-  function resizeTerm(){
-    const w=section.offsetWidth,h=section.offsetHeight;
-    renderer.setSize(w,h,false);
-    camera.aspect=w/h;
-    camera.updateProjectionMatrix();
-  }
-  resizeTerm();
-  window.addEventListener('resize',resizeTerm);
-  const isVis=watchSection(section);
-  const clock=new THREE.Clock();
-  const bgP=new Float32Array(500*3);for(let i=0;i<500;i++){bgP[i*3]=(Math.random()-.5)*30;bgP[i*3+1]=(Math.random()-.5)*20;bgP[i*3+2]=(Math.random()-.5)*8;}
-  const bgG=new THREE.BufferGeometry();bgG.setAttribute('position',new THREE.BufferAttribute(bgP,3));
-  scene.add(new THREE.Points(bgG,new THREE.PointsMaterial({color:0xffffff,size:.04,transparent:true,opacity:.25})));
-  const star=new THREE.Mesh(new THREE.SphereGeometry(.5,24,24),new THREE.MeshBasicMaterial({color:0xffffaa}));scene.add(star);
-  [{r:.7,col:0xffee88,op:.25},{r:1.0,col:0xffcc44,op:.12},{r:1.5,col:0xff9900,op:.06}].forEach(g=>{scene.add(new THREE.Mesh(new THREE.SphereGeometry(g.r,16,16),new THREE.MeshBasicMaterial({color:g.col,transparent:true,opacity:g.op,side:THREE.BackSide})));});
-  const shellDefs=[{r:3.0,seg:18,op:.12,col:0x00ccff,tiltX:.3,tiltZ:.1},{r:3.4,seg:14,op:.08,col:0x0088cc,tiltX:-.5,tiltZ:.3},{r:3.8,seg:20,op:.06,col:0x4499dd,tiltX:.8,tiltZ:-.2},{r:2.6,seg:12,op:.14,col:0x22aaff,tiltX:.1,tiltZ:.6}];
-  const shells=shellDefs.map(d=>{const geo=new THREE.SphereGeometry(d.r,d.seg,d.seg);const mat=new THREE.MeshBasicMaterial({color:d.col,wireframe:true,transparent:true,opacity:d.op});const mesh=new THREE.Mesh(geo,mat);mesh.rotation.x=d.tiltX;mesh.rotation.z=d.tiltZ;mesh.userData={ox:d.tiltX,oz:d.tiltZ};scene.add(mesh);return mesh;});
-  [{r:2.8,op:.18},{r:3.2,op:.14},{r:3.6,op:.10}].forEach((d,i)=>{const geo=new THREE.TorusGeometry(d.r,.04,4,80);const mat=new THREE.MeshBasicMaterial({color:0x00ccff,transparent:true,opacity:d.op});const mesh=new THREE.Mesh(geo,mat);mesh.rotation.x=.5+i*.4;mesh.userData.sp=.003+i*.002;scene.add(mesh);shells.push(mesh);});
-  for(let i=0;i<8;i++){const angle=(i/8)*Math.PI*2;const pts=[new THREE.Vector3(0,0,0),new THREE.Vector3(Math.cos(angle)*3.8,Math.sin(angle)*.8,Math.sin(angle)*3.8)];const geo=new THREE.BufferGeometry().setFromPoints(pts);const mat=new THREE.LineBasicMaterial({color:0xffcc44,transparent:true,opacity:.08});scene.add(new THREE.Line(geo,mat));}
-  const panels=Array.from({length:12},(_,i)=>{const angle=(i/12)*Math.PI*2,r=3.1+Math.random()*.4;const geo=new THREE.PlaneGeometry(.2,.3);const mat=new THREE.MeshBasicMaterial({color:0x0044aa,transparent:true,opacity:.5,side:THREE.DoubleSide});const mesh=new THREE.Mesh(geo,mat);mesh.position.set(Math.cos(angle)*r,(Math.random()-.5)*2,Math.sin(angle)*r);mesh.userData={angle,r,sp:.004+Math.random()*.004};scene.add(mesh);return mesh;});
-  let lastF=0;
-  (function loop(now){requestAnimationFrame(loop);if(!isVis()||now-lastF<16)return;lastF=now;const t=clock.getElapsedTime();
-    star.rotation.y=t*.2;
-    shells.forEach((s,i)=>{if(s.userData.sp){s.rotation.z+=s.userData.sp;return;}s.rotation.y=t*(.008+i*.003);s.rotation.x=s.userData.ox+Math.sin(t*.1+i)*.02;});
-    panels.forEach(p=>{p.userData.angle+=p.userData.sp;p.position.set(Math.cos(p.userData.angle)*p.userData.r,p.position.y,Math.sin(p.userData.angle)*p.userData.r);p.rotation.y=p.userData.angle+Math.PI/2;});
-    const pulse=1+Math.sin(t*2.2)*.04;star.scale.setScalar(pulse);
-    renderer.render(scene,camera);
-  })();
 })();
-// ══ EXPERIENCE — CONSTELLATION ══
+
+// == PROJECTS — WORMHOLE ==
 (function(){
-  const section=document.getElementById('experience');
-  const renderer=makeRenderer('canvas-experience');
-  const scene=new THREE.Scene(),camera=makeCamera(60);
-  camera.position.z=6;
-  const isVis=watchSection(section);
-  window.addEventListener('resize',()=>sizeRenderer(renderer,camera,section));sizeRenderer(renderer,camera,section);
-  const clock=new THREE.Clock();
-  const sc=120,sp=new Float32Array(sc*3),stars=[];
-  for(let i=0;i<sc;i++){sp[i*3]=(Math.random()-.5)*16;sp[i*3+1]=(Math.random()-.5)*10;sp[i*3+2]=(Math.random()-.5)*4;stars.push({x:sp[i*3],y:sp[i*3+1],z:sp[i*3+2]});}
-  const sGeo=new THREE.BufferGeometry();sGeo.setAttribute('position',new THREE.BufferAttribute(sp,3));
-  const sMat=new THREE.PointsMaterial({color:0xffffff,size:.06,transparent:true,opacity:.55});
-  const sf=new THREE.Points(sGeo,sMat);scene.add(sf);
-  const lg=new THREE.Group();scene.add(lg);const lm=new THREE.LineBasicMaterial({color:0xe8ff47,transparent:true,opacity:.09});
-  for(let a=0;a<stars.length;a++)for(let b=a+1;b<stars.length;b++){const dx=stars[a].x-stars[b].x,dy=stars[a].y-stars[b].y,dz=stars[a].z-stars[b].z,d=Math.sqrt(dx*dx+dy*dy+dz*dz);if(d<3){const g=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(stars[a].x,stars[a].y,stars[a].z),new THREE.Vector3(stars[b].x,stars[b].y,stars[b].z)]);lg.add(new THREE.Line(g,lm));}}
-  const as=Array.from({length:8},()=>{const m=new THREE.Mesh(new THREE.SphereGeometry(.07,8,8),new THREE.MeshBasicMaterial({color:0xe8ff47,transparent:true,opacity:.9}));m.position.set((Math.random()-.5)*14,(Math.random()-.5)*8,(Math.random()-.5)*3);m.userData.off=Math.random()*Math.PI*2;scene.add(m);return m;});
-  const mouse={x:0,y:0};document.addEventListener('mousemove',e=>{mouse.x=e.clientX/window.innerWidth-.5;mouse.y=-(e.clientY/window.innerHeight-.5);});
-  let lastF=0;
-  (function loop(now){requestAnimationFrame(loop);if(!isVis()||now-lastF<20)return;lastF=now;const t=clock.getElapsedTime();sf.rotation.y=t*.006+mouse.x*.1;sf.rotation.x=t*.003+mouse.y*.07;lg.rotation.y=sf.rotation.y;lg.rotation.x=sf.rotation.x;sMat.opacity=.35+Math.sin(t*1.8)*.18;as.forEach(s=>{const p=.6+Math.sin(t*2+s.userData.off)*.4;s.scale.setScalar(p);s.material.opacity=.5+Math.sin(t*3+s.userData.off)*.5;});renderer.render(scene,camera);})();
+const section=document.getElementById('projects');
+const renderer=makeRenderer('canvas-projects');
+const scene=new THREE.Scene(),camera=makeCamera(60);
+camera.position.z=4;
+const isVis=watchSection(section);
+window.addEventListener('resize',()=>sizeRenderer(renderer,camera,section));sizeRenderer(renderer,camera,section);
+const clock=new THREE.Clock();
+const rings=Array.from({length:28},(_,i)=>{const r=.5+i*.18,z=-i*.5;const m=new THREE.Mesh(new THREE.TorusGeometry(r,.015,4,48),new THREE.MeshBasicMaterial({color:0xe8ff47,transparent:true,opacity:Math.max(.02,.15-i*.004)}));m.position.z=z;m.userData={z,baseZ:z};scene.add(m);return m;});
+const sPos=new Float32Array(400*3);for(let i=0;i<400;i++){sPos[i*3]=(Math.random()-.5)*6;sPos[i*3+1]=(Math.random()-.5)*6;sPos[i*3+2]=-Math.random()*15;}
+const sGeo=new THREE.BufferGeometry();sGeo.setAttribute('position',new THREE.BufferAttribute(sPos,3));
+scene.add(new THREE.Points(sGeo,new THREE.PointsMaterial({color:0xffffff,size:.04,transparent:true,opacity:.45})));
+const cg=new THREE.Mesh(new THREE.SphereGeometry(.15,12,12),new THREE.MeshBasicMaterial({color:0xe8ff47,transparent:true,opacity:.8}));scene.add(cg);
+(function loop(){requestAnimationFrame(loop);if(!isVis())return;const t=clock.getElapsedTime();
+rings.forEach((r,i)=>{const spd=.3+i*.01;r.userData.z=r.userData.baseZ+((t*spd)%(rings.length*.5));if(r.userData.z>2)r.userData.z-=rings.length*.5;r.position.z=r.userData.z;r.rotation.z=t*(.01+i*.002);r.material.opacity=Math.max(0,.12-Math.abs(r.userData.z)*.015);});
+const pa=sGeo.attributes.position;for(let i=0;i<400;i++){pa.setZ(i,pa.getZ(i)+.08);if(pa.getZ(i)>4)pa.setZ(i,-15);}pa.needsUpdate=true;
+cg.material.opacity=.6+Math.sin(t*2)*.3;cg.scale.setScalar(1+Math.sin(t*3)*.15);
+renderer.render(scene,camera);
 })();
-// ══ CONTACT — BLACK HOLE (GRAVITATIONAL LENSING REBUILD) ══
+})();
+
+// == TERMINAL — DYSON SPHERE (dedicated resize) ==
 (function(){
-  const canvas=document.getElementById('bh-canvas');
-  const ctx=canvas.getContext('2d');
-  const section=document.getElementById('contact');
-  let W,H,cx,cy,R,t=0,mx=0,my=0;
+const section=document.getElementById('terminal-section');
+const canvas=document.getElementById('canvas-terminal');
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:'high-performance'});
+renderer.setPixelRatio(DPR);
+renderer.setClearColor(0x000000,0);
+const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(55,1,.1,200);
+camera.position.set(0,0,9);
+function resizeTerm(){
+const w=section.offsetWidth,h=section.offsetHeight;
+renderer.setSize(w,h,false);
+camera.aspect=w/h;
+camera.updateProjectionMatrix();
+}
+resizeTerm();
+window.addEventListener('resize',resizeTerm);
+const isVis=watchSection(section);
+const clock=new THREE.Clock();
+const bgP=new Float32Array(500*3);for(let i=0;i<500;i++){bgP[i*3]=(Math.random()-.5)*30;bgP[i*3+1]=(Math.random()-.5)*20;bgP[i*3+2]=(Math.random()-.5)*8;}
+const bgG=new THREE.BufferGeometry();bgG.setAttribute('position',new THREE.BufferAttribute(bgP,3));
+scene.add(new THREE.Points(bgG,new THREE.PointsMaterial({color:0xffffff,size:.04,transparent:true,opacity:.25})));
+const star=new THREE.Mesh(new THREE.SphereGeometry(.5,24,24),new THREE.MeshBasicMaterial({color:0xffffaa}));scene.add(star);
+[{r:.7,col:0xffee88,op:.25},{r:1.0,col:0xffcc44,op:.12},{r:1.5,col:0xff9900,op:.06}].forEach(g=>{scene.add(new THREE.Mesh(new THREE.SphereGeometry(g.r,16,16),new THREE.MeshBasicMaterial({color:g.col,transparent:true,opacity:g.op,side:THREE.BackSide})));});
+const shellDefs=[{r:3.0,seg:18,op:.12,col:0x00ccff,tiltX:.3,tiltZ:.1},{r:3.4,seg:14,op:.08,col:0x0088cc,tiltX:-.5,tiltZ:.3},{r:3.8,seg:20,op:.06,col:0x4499dd,tiltX:.8,tiltZ:-.2},{r:2.6,seg:12,op:.14,col:0x22aaff,tiltX:.1,tiltZ:.6}];
+const shells=shellDefs.map(d=>{const geo=new THREE.SphereGeometry(d.r,d.seg,d.seg);const mat=new THREE.MeshBasicMaterial({color:d.col,wireframe:true,transparent:true,opacity:d.op});const mesh=new THREE.Mesh(geo,mat);mesh.rotation.x=d.tiltX;mesh.rotation.z=d.tiltZ;mesh.userData={ox:d.tiltX,oz:d.tiltZ};scene.add(mesh);return mesh;});
+[{r:2.8,op:.18},{r:3.2,op:.14},{r:3.6,op:.10}].forEach((d,i)=>{const geo=new THREE.TorusGeometry(d.r,.04,4,80);const mat=new THREE.MeshBasicMaterial({color:0x00ccff,transparent:true,opacity:d.op});const mesh=new THREE.Mesh(geo,mat);mesh.rotation.x=.5+i*.4;mesh.userData.sp=.003+i*.002;scene.add(mesh);shells.push(mesh);});
+for(let i=0;i<8;i++){const angle=(i/8)*Math.PI*2;const pts=[new THREE.Vector3(0,0,0),new THREE.Vector3(Math.cos(angle)*3.8,Math.sin(angle)*.8,Math.sin(angle)*3.8)];const geo=new THREE.BufferGeometry().setFromPoints(pts);const mat=new THREE.LineBasicMaterial({color:0xffcc44,transparent:true,opacity:.08});scene.add(new THREE.Line(geo,mat));}
+const panels=Array.from({length:12},(_,i)=>{const angle=(i/12)*Math.PI*2,r=3.1+Math.random()*.4;const geo=new THREE.PlaneGeometry(.2,.3);const mat=new THREE.MeshBasicMaterial({color:0x0044aa,transparent:true,opacity:.5,side:THREE.DoubleSide});const mesh=new THREE.Mesh(geo,mat);mesh.position.set(Math.cos(angle)*r,(Math.random()-.5)*2,Math.sin(angle)*r);mesh.userData={angle,r,sp:.004+Math.random()*.004};scene.add(mesh);return mesh;});
+(function loop(){requestAnimationFrame(loop);if(!isVis())return;const t=clock.getElapsedTime();
+star.rotation.y=t*.2;
+shells.forEach((s,i)=>{if(s.userData.sp){s.rotation.z+=s.userData.sp;return;}s.rotation.y=t*(.008+i*.003);s.rotation.x=s.userData.ox+Math.sin(t*.1+i)*.02;});
+panels.forEach(p=>{p.userData.angle+=p.userData.sp;p.position.set(Math.cos(p.userData.angle)*p.userData.r,p.position.y,Math.sin(p.userData.angle)*p.userData.r);p.rotation.y=p.userData.angle+Math.PI/2;});
+const pulse=1+Math.sin(t*2.2)*.04;star.scale.setScalar(pulse);
+renderer.render(scene,camera);
+})();
+})();
 
-  function resize(){
-    W=canvas.width=section.offsetWidth;
-    H=canvas.height=section.offsetHeight;
-    cx=W*.68; cy=H*.5;
-    R=Math.min(W,H)*.115;
-  }
-  resize();
-  window.addEventListener('resize',resize);
-  section.addEventListener('mousemove',e=>{const r=section.getBoundingClientRect();mx=e.clientX-r.left;my=e.clientY-r.top;});
+// == EXPERIENCE — CONSTELLATION ==
+(function(){
+const section=document.getElementById('experience');
+const renderer=makeRenderer('canvas-experience');
+const scene=new THREE.Scene(),camera=makeCamera(60);
+camera.position.z=6;
+const isVis=watchSection(section);
+window.addEventListener('resize',()=>sizeRenderer(renderer,camera,section));sizeRenderer(renderer,camera,section);
+const clock=new THREE.Clock();
+const sc=120,sp=new Float32Array(sc*3),stars=[];
+for(let i=0;i<sc;i++){sp[i*3]=(Math.random()-.5)*16;sp[i*3+1]=(Math.random()-.5)*10;sp[i*3+2]=(Math.random()-.5)*4;stars.push({x:sp[i*3],y:sp[i*3+1],z:sp[i*3+2]});}
+const sGeo=new THREE.BufferGeometry();sGeo.setAttribute('position',new THREE.BufferAttribute(sp,3));
+const sMat=new THREE.PointsMaterial({color:0xffffff,size:.06,transparent:true,opacity:.55});
+const sf=new THREE.Points(sGeo,sMat);scene.add(sf);
+const lg=new THREE.Group();scene.add(lg);const lm=new THREE.LineBasicMaterial({color:0xe8ff47,transparent:true,opacity:.09});
+for(let a=0;a<stars.length;a++)for(let b=a+1;b<stars.length;b++){const dx=stars[a].x-stars[b].x,dy=stars[a].y-stars[b].y,dz=stars[a].z-stars[b].z,d=Math.sqrt(dx*dx+dy*dy+dz*dz);if(d<3){const g=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(stars[a].x,stars[a].y,stars[a].z),new THREE.Vector3(stars[b].x,stars[b].y,stars[b].z)]);lg.add(new THREE.Line(g,lm));}}
+const as=Array.from({length:8},()=>{const m=new THREE.Mesh(new THREE.SphereGeometry(.07,8,8),new THREE.MeshBasicMaterial({color:0xe8ff47,transparent:true,opacity:.9}));m.position.set((Math.random()-.5)*14,(Math.random()-.5)*8,(Math.random()-.5)*3);m.userData.off=Math.random()*Math.PI*2;scene.add(m);return m;});
+const mouse={x:0,y:0};if(!IS_TOUCH)document.addEventListener('mousemove',e=>{mouse.x=e.clientX/window.innerWidth-.5;mouse.y=-(e.clientY/window.innerHeight-.5);});
+(function loop(){requestAnimationFrame(loop);if(!isVis())return;const t=clock.getElapsedTime();sf.rotation.y=t*.006+mouse.x*.1;sf.rotation.x=t*.003+mouse.y*.07;lg.rotation.y=sf.rotation.y;lg.rotation.x=sf.rotation.x;sMat.opacity=.35+Math.sin(t*1.8)*.18;as.forEach(s=>{const p=.6+Math.sin(t*2+s.userData.off)*.4;s.scale.setScalar(p);s.material.opacity=.5+Math.sin(t*3+s.userData.off)*.5;});renderer.render(scene,camera);})();
+})();
 
-  // Accretion disk particles — swept into orbit
-  const DISK=Array.from({length:220},(_,i)=>{
-    const side=i%2===0?1:-1;
-    const prog=Math.random();
-    const r=R*(1.35+prog*2.8);
-    const angle=Math.random()*Math.PI*2;
-    const speed=(0.0014+Math.random()*0.0018)*side*(1.4-prog*.6);
-    return {r,angle,speed,prog,side,
-      thickness:0.5+Math.random()*2.5,
-      alpha:0.12+Math.random()*0.55*(1-prog*.6),
-    };
-  });
-
-  // Gravitational lensing arcs — close-in photon-sphere echoes
-  const ARCS=Array.from({length:60},(_,i)=>{
-    const t0=Math.random()*Math.PI*2;
-    const layer=Math.floor(i/20); // 3 layers
-    const rMult=[1.02,1.06,1.11][layer];
-    return {
-      t0, rMult,
-      span:0.06+Math.random()*0.18,
-      alpha:(0.5-layer*0.12)*(0.5+Math.random()*.5),
-      speed:(Math.random()>.5?1:-1)*(0.0003+Math.random()*0.0006),
-      width:2.5-layer*.6+Math.random()*1.2,
-    };
-  });
-
-  // Stars with lensing distortion
-  const STARS=Array.from({length:200},()=>({
-    x:Math.random(),y:Math.random(),
-    r:Math.random()*1.2+.3,
-    base:.2+Math.random()*.6,
-    phase:Math.random()*Math.PI*2,
-    speed:.2+Math.random()*.5,
-  }));
-
-  // Accretion jet particles
-  const JETS=Array.from({length:60},(_,i)=>{
-    const side=i<30?1:-1;
-    return {
-      prog:Math.random(),
-      offset:(Math.random()-.5)*.015,
-      speed:.004+Math.random()*.006,
-      alpha:.08+Math.random()*.22,
-      side,
-    };
-  });
-
-  function drawFrame(){
-    ctx.clearRect(0,0,W,H);
-
-    // Deep space — layered radial gradient background
-    const bg=ctx.createRadialGradient(cx,cy,0,cx,cy,W*.65);
-    bg.addColorStop(0,'rgba(8,4,0,1)');
-    bg.addColorStop(.12,'rgba(5,2,0,1)');
-    bg.addColorStop(.5,'rgba(2,1,6,1)');
-    bg.addColorStop(1,'rgba(0,0,2,1)');
-    ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
-
-    // Ambient nebula glow around BH
-    const neb=ctx.createRadialGradient(cx,cy,R*1.2,cx,cy,R*5.5);
-    neb.addColorStop(0,'rgba(40,12,0,0.0)');
-    neb.addColorStop(.25,'rgba(60,14,2,0.22)');
-    neb.addColorStop(.55,'rgba(30,6,8,0.10)');
-    neb.addColorStop(.8,'rgba(8,2,12,0.06)');
-    neb.addColorStop(1,'rgba(0,0,0,0)');
-    ctx.fillStyle=neb;ctx.fillRect(0,0,W,H);
-
-    // Stars (skip if inside disk zone)
-    const diskW=R*3.8;
-    for(const s of STARS){
-      const sx=s.x*W,sy=s.y*H;
-      const dx=sx-cx,dy=sy-cy;
-      const dist=Math.sqrt(dx*dx+dy*dy);
-      if(dist<R*1.15)continue;
-      // gravitational lensing distortion near BH
-      const lensStrength=Math.max(0,1-dist/(R*4.5));
-      const lensX=sx+dx/(dist+.1)*(-lensStrength*R*.35);
-      const lensY=sy+dy/(dist+.1)*(-lensStrength*R*.35);
-      const alpha=s.base*.55+Math.sin(t*s.speed+s.phase)*.2;
-      const brightness=1+lensStrength*2.5;
-      ctx.beginPath();ctx.arc(lensX,lensY,s.r*brightness,0,Math.PI*2);
-      ctx.fillStyle=`rgba(${Math.floor(210+40*lensStrength)},${Math.floor(220+20*lensStrength)},255,${Math.max(0,alpha)})`;
-      ctx.fill();
-    }
-
-    // ── ACCRETION DISK (bottom half rendered first)
-    ctx.save();
-    ctx.translate(cx,cy);
-    ctx.scale(1,.28); // flatten to disk plane
-
-    // Bottom (behind BH) — darker, redder, thinner
-    for(const p of DISK){
-      p.angle+=p.speed;
-      const x=Math.cos(p.angle)*p.r;
-      const y=Math.sin(p.angle)*p.r;
-      if(y<0) continue; // only bottom half (which becomes "behind")
-      const heat=1-p.prog;
-      const r2=Math.floor(255);
-      const g2=Math.floor((80+heat*140)*0.6);
-      const b2=Math.floor(heat*40*0.4);
-      ctx.beginPath();
-      ctx.arc(x,y,p.thickness*.7,0,Math.PI*2);
-      ctx.fillStyle=`rgba(${r2},${g2},${b2},${p.alpha*.45})`;
-      ctx.fill();
-    }
-    ctx.restore();
-
-    // ── EVENT HORIZON (hard black circle)
-    ctx.save();
-    ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);
-    ctx.fillStyle='#000000';ctx.fill();
-    ctx.restore();
-
-    // ── PHOTON SPHERE — bright hard ring with glow
-    // Outer glow
-    for(let g=3;g>=0;g--){
-      const gR=R*(1.0+g*.04);
-      const gAlpha=[.55,.30,.15,.06][g];
-      const gWidth=R*[.055,.10,.18,.28][g];
-      const photonGrad=ctx.createRadialGradient(cx,cy,gR-gWidth,cx,cy,gR+gWidth);
-      photonGrad.addColorStop(0,'rgba(255,255,255,0)');
-      photonGrad.addColorStop(.45,`rgba(255,240,180,${gAlpha})`);
-      photonGrad.addColorStop(.5,`rgba(255,255,230,${gAlpha*1.4})`);
-      photonGrad.addColorStop(.55,`rgba(255,200,80,${gAlpha})`);
-      photonGrad.addColorStop(1,'rgba(255,100,20,0)');
-      ctx.beginPath();ctx.arc(cx,cy,gR,0,Math.PI*2);
-      ctx.strokeStyle=photonGrad;
-      ctx.lineWidth=gWidth*2;ctx.stroke();
-    }
-    // Hard bright inner ring
-    const pulse=.85+Math.sin(t*5.1)*.08+Math.sin(t*8.3)*.04;
-    ctx.beginPath();ctx.arc(cx,cy,R*1.015,0,Math.PI*2);
-    ctx.strokeStyle=`rgba(255,255,240,${pulse})`;
-    ctx.lineWidth=R*.018;ctx.stroke();
-
-    // ── GRAVITATIONAL LENSING ARCS
-    for(const a of ARCS){
-      a.t0+=a.speed;
-      const lr=R*a.rMult;
-      const flutter=Math.sin(a.t0*3.1+lr)*.02;
-      ctx.beginPath();
-      ctx.arc(cx,cy,lr,a.t0,a.t0+a.span+flutter);
-      const brightness=0.6+Math.sin(t*2.2+a.t0)*0.2;
-      ctx.strokeStyle=`rgba(255,248,210,${a.alpha*brightness})`;
-      ctx.lineWidth=a.width;ctx.stroke();
-    }
-
-    // ── ACCRETION DISK (top half — in front of BH)
-    ctx.save();
-    ctx.translate(cx,cy);
-    ctx.scale(1,.28);
-
-    for(const p of DISK){
-      const x=Math.cos(p.angle)*p.r;
-      const y=Math.sin(p.angle)*p.r;
-      if(y>0) continue; // only top half (in front)
-      const heat=1-p.prog;
-      const innerBoost=heat*heat;
-      const r2=255;
-      const g2=Math.floor(60+heat*195);
-      const b2=Math.floor(innerBoost*80);
-      ctx.beginPath();
-      ctx.arc(x,y,p.thickness,0,Math.PI*2);
-      ctx.fillStyle=`rgba(${r2},${g2},${b2},${p.alpha})`;
-      ctx.fill();
-    }
-
-    // Hot inner disk band
-    const innerDisk=ctx.createLinearGradient(-R*1.3,0,R*1.3,0);
-    innerDisk.addColorStop(0,'rgba(255,80,20,0)');
-    innerDisk.addColorStop(.2,'rgba(255,200,80,0.18)');
-    innerDisk.addColorStop(.35,'rgba(255,255,220,0.45)');
-    innerDisk.addColorStop(.5,'rgba(255,255,255,0.55)');
-    innerDisk.addColorStop(.65,'rgba(255,255,220,0.45)');
-    innerDisk.addColorStop(.8,'rgba(255,200,80,0.18)');
-    innerDisk.addColorStop(1,'rgba(255,80,20,0)');
-    ctx.fillStyle=innerDisk;
-    const iH=R*.42;
-    ctx.beginPath();
-    ctx.ellipse(0,-iH*.1,R*1.32,iH,0,0,Math.PI*2);
-    ctx.fill();
-    ctx.restore();
-
-    // Redraw event horizon clean on top of disk
-    ctx.save();
-    ctx.beginPath();ctx.arc(cx,cy,R*.998,0,Math.PI*2);
-    ctx.fillStyle='#000000';ctx.fill();
-    ctx.restore();
-
-    // ── RELATIVISTIC JETS (vertical)
-    for(const j of JETS){
-      j.prog=(j.prog+j.speed)%1;
-      const side=j.side;
-      const dist=j.prog*R*5.8;
-      const w=R*(.06-j.prog*.055);
-      if(w<=0)continue;
-      const jx=cx+j.offset*W;
-      const jy=cy+side*(-R-dist);
-      const heat=1-j.prog*.7;
-      ctx.beginPath();ctx.arc(jx,jy,w,0,Math.PI*2);
-      ctx.fillStyle=`rgba(180,255,130,${j.alpha*(1-j.prog*.8)})`;
-      ctx.fill();
-    }
-
-    // Jet glow beam
-    const jH=R*6;
-    for(const side of [1,-1]){
-      const jg=ctx.createLinearGradient(cx,cy+side*R,cx,cy+side*(R+jH));
-      jg.addColorStop(0,`rgba(180,255,100,${.18+Math.sin(t*4)*.06})`);
-      jg.addColorStop(.5,'rgba(140,220,60,0.04)');
-      jg.addColorStop(1,'rgba(100,180,40,0)');
-      ctx.save();
-      ctx.beginPath();
-      ctx.moveTo(cx-R*.12,cy+side*R);
-      ctx.lineTo(cx+R*.12,cy+side*R);
-      ctx.lineTo(cx+R*.02,cy+side*(R+jH));
-      ctx.lineTo(cx-R*.02,cy+side*(R+jH));
-      ctx.closePath();
-      ctx.fillStyle=jg;ctx.fill();
-      ctx.restore();
-    }
-
-    // Photon ring redraw on absolute top
-    ctx.beginPath();ctx.arc(cx,cy,R*1.016,0,Math.PI*2);
-    ctx.strokeStyle=`rgba(255,252,220,${.25+Math.sin(t*4.8)*.06})`;
-    ctx.lineWidth=R*.012;ctx.stroke();
-
-    // Mouse interaction — gravitational lensing ripple
-    if(mx>0){
-      const mdx=mx-cx,mdy=my-cy,md=Math.sqrt(mdx*mdx+mdy*mdy);
-      if(md<W*.45&&md>R*1.5){
-        const flareA=.06*(1-md/(W*.45));
-        const flare=ctx.createRadialGradient(mx,my,0,mx,my,R*.9);
-        flare.addColorStop(0,`rgba(232,255,71,${flareA})`);
-        flare.addColorStop(.6,`rgba(232,255,71,${flareA*.2})`);
-        flare.addColorStop(1,'rgba(232,255,71,0)');
-        ctx.fillStyle=flare;ctx.fillRect(0,0,W,H);
-      }
-    }
-
-    t+=.010;
-    requestAnimationFrame(drawFrame);
-  }
-
-  let running=false;
-  new IntersectionObserver(([e])=>{
-    if(e.isIntersecting&&!running){running=true;drawFrame();}
-  },{threshold:.05}).observe(section);
+// == CONTACT — NEBULA (cosmic clouds + shooting stars) ==
+(function(){
+const canvas=document.getElementById('bh-canvas');
+const ctx=canvas.getContext('2d');
+const section=document.getElementById('contact');
+let W,H,t=0,mx=0.5,my=0.5,px=0.5,py=0.5,nebCanvas=null;
+const DPR2=Math.min(window.devicePixelRatio||1,2);
+function resize(){const w=section.offsetWidth,h=section.offsetHeight;canvas.width=Math.floor(w*DPR2);canvas.height=Math.floor(h*DPR2);canvas.style.width=w+'px';canvas.style.height=h+'px';ctx.setTransform(DPR2,0,0,DPR2,0,0);W=w;H=h;buildNebula();}
+resize();window.addEventListener('resize',resize);
+if(!IS_TOUCH)section.addEventListener('mousemove',e=>{const r=section.getBoundingClientRect();mx=(e.clientX-r.left)/W;my=(e.clientY-r.top)/H;});
+const NCOLS=[[88,42,150],[150,46,120],[34,74,150],[40,120,140],[120,60,160],[150,90,60]];
+function buildNebula(){
+const scale=REDUCED?5:3;const NW=Math.max(1,Math.ceil(W/scale)),NH=Math.max(1,Math.ceil(H/scale));
+nebCanvas=document.createElement('canvas');nebCanvas.width=NW;nebCanvas.height=NH;
+const nctx=nebCanvas.getContext('2d');const img=nctx.createImageData(NW,NH);const dat=img.data;
+const perm=new Uint8Array(512);for(let i=0;i<256;i++)perm[i]=i;for(let i=255;i>0;i--){const j=Math.floor(Math.random()*(i+1));const tmp=perm[i];perm[i]=perm[j];perm[j]=tmp;}for(let i=0;i<256;i++)perm[i+256]=perm[i];
+function fade(u){return u*u*u*(u*(u*6-15)+10);}
+function vnoise(x,y){const xi=Math.floor(x)&255,yi=Math.floor(y)&255;const xf=x-Math.floor(x),yf=y-Math.floor(y);const aa=perm[perm[xi]+yi],ab=perm[perm[xi]+yi+1],ba=perm[perm[xi+1]+yi],bb=perm[perm[xi+1]+yi+1];const u=fade(xf),v=fade(yf);const top=aa+u*(ba-aa),bot=ab+u*(bb-ab);return(top+v*(bot-top))/255;}
+function fbm(x,y){let s=0,a=0.5,f=1;for(let o=0;o<5;o++){s+=a*vnoise(x*f,y*f);f*=2;a*=0.5;}return s;}
+const off=Math.random()*100;
+for(let yy=0;yy<NH;yy++){for(let xx=0;xx<NW;xx++){
+const nx=xx/NW,ny=yy/NH;
+let d=fbm(nx*6+off,ny*6+off);
+const lane=fbm(nx*10+30,ny*10+30);
+d=d*1.2-0.45;d-=lane*lane*0.38;
+if(d<0)d=0;d=Math.pow(d,1.5);
+const hsel=fbm(nx*1.6+70,ny*1.6+70);
+let col;if(hsel<0.42)col=[64,40,120];else if(hsel<0.62)col=[150,52,108];else if(hsel<0.8)col=[40,92,150];else col=[150,104,60];
+const ic=Math.min(1,d*2.0),hot=Math.max(0,d-0.55)*1.7;
+const idx=(yy*NW+xx)*4;
+dat[idx]=Math.min(255,col[0]*ic+hot*170);
+dat[idx+1]=Math.min(255,col[1]*ic+hot*175);
+dat[idx+2]=Math.min(255,col[2]*ic+hot*195);
+dat[idx+3]=Math.min(255,d*255*1.5);
+}}
+nctx.putImageData(img,0,0);
+}
+const DUST=Array.from({length:REDUCED?60:120},()=>{const c=NCOLS[Math.floor(Math.random()*NCOLS.length)];return{x:Math.random(),y:Math.random(),r:Math.random()*1.0+0.2,op:0.05+Math.random()*0.12,col:c,depth:0.2+Math.random()*0.7};});
+const SCOLS=[[200,214,255],[224,234,255],[255,255,248],[255,242,216],[255,212,170],[255,184,146]];
+const STARS=Array.from({length:REDUCED?150:320},()=>({x:Math.random(),y:Math.random(),r:Math.pow(Math.random(),2.4)*2.0+0.18,b:0.22+Math.random()*0.62,ph:Math.random()*6.283,sp:0.2+Math.random()*0.6,depth:0.15+Math.random()*0.85,glow:Math.random()<0.1,col:SCOLS[Math.floor(Math.pow(Math.random(),1.6)*SCOLS.length)]}));
+let shoot=null,nextShoot=80+Math.random()*200;
+function spawnShoot(){const sx=Math.random()*W*0.85,sy=Math.random()*H*0.35,ang=Math.PI*(0.13+Math.random()*0.22),speed=7+Math.random()*6;shoot={x:sx,y:sy,vx:Math.cos(ang)*speed,vy:Math.sin(ang)*speed,life:0,max:42+Math.random()*34,len:110+Math.random()*150};}
+function draw(){
+ctx.clearRect(0,0,W,H);
+px+=(mx-px)*0.035;py+=(my-py)*0.035;
+const shiftX=(px-0.5)*40,shiftY=(py-0.5)*26;
+const bg=ctx.createLinearGradient(0,0,W*0.6,H);
+bg.addColorStop(0,'rgba(7,6,16,1)');bg.addColorStop(0.55,'rgba(4,4,12,1)');bg.addColorStop(1,'rgba(1,1,6,1)');
+ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+const minD=Math.min(W,H);
+if(nebCanvas){ctx.save();ctx.globalCompositeOperation='lighter';ctx.globalAlpha=0.9*(0.82+Math.sin(t*0.005)*0.14);ctx.imageSmoothingEnabled=true;const ox=-shiftX*0.5,oy=-shiftY*0.5;ctx.drawImage(nebCanvas,-30+ox,-30+oy,W+60,H+60);ctx.restore();}
+ctx.save();ctx.globalCompositeOperation='lighter';
+for(const d of DUST){const x=d.x*W-shiftX*d.depth,y=d.y*H-shiftY*d.depth;ctx.beginPath();ctx.arc(x,y,d.r,0,6.283);ctx.fillStyle='rgba('+d.col[0]+','+d.col[1]+','+d.col[2]+','+d.op+')';ctx.fill();}
+ctx.restore();
+for(const s of STARS){
+const a=Math.max(0,s.b*0.72+Math.sin(t*0.03*s.sp+s.ph)*0.28);
+const x=s.x*W-shiftX*s.depth,y=s.y*H-shiftY*s.depth;
+const cr=s.col[0],cg=s.col[1],cb=s.col[2];
+if(s.glow){ctx.save();ctx.globalCompositeOperation='lighter';const gg=ctx.createRadialGradient(x,y,0,x,y,s.r*6);gg.addColorStop(0,'rgba('+cr+','+cg+','+cb+','+(a*0.5)+')');gg.addColorStop(1,'rgba('+cr+','+cg+','+cb+',0)');ctx.fillStyle=gg;ctx.beginPath();ctx.arc(x,y,s.r*6,0,6.283);ctx.fill();const sk=s.r*9;ctx.strokeStyle='rgba('+cr+','+cg+','+cb+','+(a*0.22)+')';ctx.lineWidth=0.8;ctx.beginPath();ctx.moveTo(x-sk,y);ctx.lineTo(x+sk,y);ctx.moveTo(x,y-sk);ctx.lineTo(x,y+sk);ctx.stroke();ctx.restore();}
+ctx.beginPath();ctx.arc(x,y,s.r,0,6.283);ctx.fillStyle='rgba('+cr+','+cg+','+cb+','+a+')';ctx.fill();
+}
+(function(){
+const minD=Math.min(W,H);
+const pr=0.27*minD;
+const pxp=0.86*W-shiftX*0.15,pyp=0.88*H-shiftY*0.15;
+ctx.save();ctx.globalCompositeOperation='lighter';
+const halo=ctx.createRadialGradient(pxp,pyp,pr*0.92,pxp,pyp,pr*1.4);
+halo.addColorStop(0,'rgba(120,150,220,0.14)');halo.addColorStop(1,'rgba(120,150,220,0)');
+ctx.fillStyle=halo;ctx.beginPath();ctx.arc(pxp,pyp,pr*1.4,0,6.283);ctx.fill();
+ctx.restore();
+ctx.beginPath();ctx.arc(pxp,pyp,pr,0,6.283);ctx.fillStyle='#05060d';ctx.fill();
+ctx.save();
+ctx.beginPath();ctx.arc(pxp,pyp,pr,0,6.283);ctx.clip();
+const lx=pxp-pr*0.45,ly=pyp-pr*0.5;
+const lit=ctx.createRadialGradient(lx,ly,pr*0.15,lx,ly,pr*1.75);
+lit.addColorStop(0,'rgba(155,175,215,0.55)');
+lit.addColorStop(0.4,'rgba(85,105,160,0.18)');
+lit.addColorStop(1,'rgba(0,0,0,0)');
+ctx.globalCompositeOperation='lighter';
+ctx.fillStyle=lit;ctx.fillRect(pxp-pr,pyp-pr,pr*2,pr*2);
+ctx.restore();
+ctx.save();
+ctx.beginPath();ctx.arc(pxp,pyp,pr*0.995,Math.PI*0.92,Math.PI*1.58);
+ctx.strokeStyle='rgba(205,218,248,0.6)';ctx.lineWidth=1.6;ctx.lineCap='round';ctx.stroke();
+ctx.restore();
+})();
+if(!REDUCED){
+if(!shoot){nextShoot--;if(nextShoot<=0){spawnShoot();}}
+else{
+shoot.x+=shoot.vx;shoot.y+=shoot.vy;shoot.life++;
+const k=Math.sin((shoot.life/shoot.max)*Math.PI);
+const sp=Math.sqrt(shoot.vx*shoot.vx+shoot.vy*shoot.vy);
+const ux=shoot.vx/sp,uy=shoot.vy/sp;
+const tx=shoot.x-ux*shoot.len,ty=shoot.y-uy*shoot.len;
+ctx.save();ctx.globalCompositeOperation='lighter';
+const tg=ctx.createLinearGradient(shoot.x,shoot.y,tx,ty);
+tg.addColorStop(0,'rgba(255,255,250,'+(0.9*k)+')');
+tg.addColorStop(0.3,'rgba(232,255,180,'+(0.5*k)+')');
+tg.addColorStop(1,'rgba(232,255,71,0)');
+ctx.strokeStyle=tg;ctx.lineWidth=2;ctx.lineCap='round';
+ctx.beginPath();ctx.moveTo(shoot.x,shoot.y);ctx.lineTo(tx,ty);ctx.stroke();
+const hg=ctx.createRadialGradient(shoot.x,shoot.y,0,shoot.x,shoot.y,4);
+hg.addColorStop(0,'rgba(255,255,250,'+k+')');hg.addColorStop(1,'rgba(255,255,250,0)');
+ctx.fillStyle=hg;ctx.beginPath();ctx.arc(shoot.x,shoot.y,4,0,6.283);ctx.fill();
+ctx.restore();
+if(shoot.life>shoot.max||shoot.x>W+50||shoot.y>H+50){shoot=null;nextShoot=120+Math.random()*260;}
+}
+}
+t+=1;
+requestAnimationFrame(draw);
+}
+let running=false;
+new IntersectionObserver(([e])=>{if(e.isIntersecting&&!running){running=true;draw();}},{threshold:0.05}).observe(section);
 })();
 </script>
 </body>
