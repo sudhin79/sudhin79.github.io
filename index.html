@@ -720,6 +720,63 @@ transform:translateX(-50%) translateY(0);opacity:1;pointer-events:auto;
 .mission-summary b{font-family:var(--font-display);font-weight:400;font-size:22px;letter-spacing:1px;color:var(--accent);margin-right:6px;vertical-align:-2px}
 .mission-summary em{font-family:var(--font-serif);font-style:italic;text-transform:none;letter-spacing:0;font-size:16px;color:var(--white)}
 @media (max-width:900px){.cine-caption{bottom:18px;font-size:10px;letter-spacing:1px;white-space:normal;width:max-content;max-width:calc(100vw - 32px);text-align:center}}
+
+/* ===== LESS, BUT BETTER ===== */
+/* one quiet chapter marker per screen: the section label. Everything else that repeated it goes. */
+.chapter-hud,.section-number,.marquee-section,.hero-telemetry,.contact-bottom,.bh-label,.projects-scroll-hint>span:first-child{display:none!important}
+.section-label{font-size:10.5px;letter-spacing:4px;color:rgba(232,230,240,.42)}
+/* narration lives where the HUD was: bottom-left, no chrome */
+.cine-caption{left:48px;bottom:36px;transform:none;background:none;border:0;box-shadow:none;padding:0;font-size:11px;letter-spacing:2.5px;color:rgba(232,230,240,.72);text-shadow:0 0 18px rgba(4,4,15,.95),0 0 4px rgba(4,4,15,.9)}
+/* accent discipline: yellow-green only for emphasis, live states and the light-paths */
+.proj-tag,.traj-tags span{color:rgba(232,230,240,.62);border-color:rgba(255,255,255,.1)}
+.proj-card-badge{color:rgba(232,230,240,.7);border-color:rgba(255,255,255,.1);background:rgba(255,255,255,.03)}
+.cat-label{color:rgba(232,230,240,.45)}
+.term-chip{color:rgba(232,230,240,.65)!important;border-color:rgba(255,255,255,.1)!important}
+.term-chip:hover{color:var(--accent)!important;border-color:rgba(232,255,71,.4)!important}
+.log-state{color:rgba(232,230,240,.5)}
+.traj-item:not(.current) .exp-period{color:rgba(232,230,240,.5)}
+.proj-card-status{color:rgba(232,230,240,.45)}.ms-code{color:rgba(232,230,240,.3)}
+.ms-dot:not(.live){background:rgba(232,230,240,.45);box-shadow:none}
+/* softer panels: less border, more depth */
+.proj-card,.traj-card,.terminal-window,.pipeline-section,.philosophy-right{border-color:rgba(255,255,255,.07)!important}
+
+/* ---- ORBIT: Saturn gets the stage, tools read like an index beside it ---- */
+@media (min-width:1001px){
+#stack{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:flex-start}
+#stack .stack-header{flex-direction:column;align-items:flex-start;gap:22px;margin-bottom:44px;max-width:520px}
+#stack .stack-categories{grid-template-columns:1fr 1fr;gap:34px 48px;max-width:560px}
+}
+.stack-cat{background:none!important;border:0!important;border-top:1px solid rgba(255,255,255,.09)!important;padding:20px 0 0!important;box-shadow:none!important}
+.stack-cat::before,.stack-cat::after,.cat-icon{display:none}
+.stack-cat:hover{transform:none}
+.cat-label{margin-bottom:8px}
+.cat-title{font-size:24px;margin-bottom:12px;transition:color .3s}
+.stack-cat:hover .cat-title{color:var(--accent)}
+.cat-items{flex-direction:row;flex-wrap:wrap;gap:4px 0}
+.cat-items li{font-family:var(--font-body);font-size:13.5px;color:rgba(232,230,240,.6)}
+.cat-items li::before{display:none}
+.cat-items li:not(:last-child)::after{content:'·';margin:0 9px;color:rgba(232,230,240,.25)}
+
+/* ---- WARP: bigger cards, less text, a live architecture diagram ---- */
+.warp-slot{width:min(470px,88vw);margin-left:calc(min(470px,88vw) / -2)}
+.proj-card-title{font-size:36px}
+.proj-card-desc{font-size:14px;color:rgba(232,230,240,.6);margin-bottom:26px}
+.proj-card-num{margin-bottom:22px}
+.proj-flow{position:relative;display:grid;grid-auto-flow:column;grid-auto-columns:1fr;align-items:center;gap:16px;margin:0 0 26px;padding:18px 0 4px;border-top:1px solid rgba(255,255,255,.06)}
+.proj-flow::before{content:'Architecture';position:absolute;top:-7px;left:0;padding-right:10px;background:rgba(6,6,22,1);font-family:var(--font-mono);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(232,230,240,.35)}
+.pf-track{position:absolute;left:0;right:0;top:calc(50% + 7px);height:1px;background:rgba(255,255,255,.08);overflow:hidden}
+.pf-track i{position:absolute;inset:0;background:linear-gradient(90deg,transparent 0,transparent 72%,rgba(232,255,71,.9) 100%);transform:translateX(-100%)}
+.proj-card.on .pf-track i{animation:pfFlow 2.8s cubic-bezier(.45,0,.55,1) .9s infinite}
+@keyframes pfFlow{to{transform:translateX(100%)}}
+.pf-n{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;min-height:42px;text-align:center;line-height:1.35;font-family:var(--font-mono);font-size:9.5px;letter-spacing:.5px;color:rgba(232,230,240,.4);padding:6px 4px;background:rgba(8,8,26,1);border:1px solid rgba(255,255,255,.08);transition:color .5s,border-color .5s,box-shadow .5s;transition-delay:calc(var(--i) * .16s + .3s)}
+.proj-card.on .pf-n{color:rgba(240,240,250,.92);border-color:rgba(232,255,71,.3);box-shadow:0 0 14px rgba(232,255,71,.08)}
+.pf-n:not(:last-child)::after{content:'';position:absolute;right:-12px;top:50%;width:6px;height:6px;margin-top:-3px;border-top:1px solid rgba(232,230,240,.35);border-right:1px solid rgba(232,230,240,.35);transform:rotate(45deg)}
+@media (max-width:1000px){
+#canvas-stack{opacity:.55}
+.stack-cat{background:rgba(4,4,15,.72)!important;padding:18px 16px 16px!important}
+.cine-caption{left:16px;right:16px;bottom:16px;width:auto;max-width:none;text-align:left;padding:9px 14px;background:rgba(6,6,20,.94);border:1px solid rgba(232,255,71,.16);font-size:10px;letter-spacing:1px}
+.proj-card-title{font-size:28px}.pf-n{font-size:8.5px;padding:5px 2px;min-height:38px}.proj-flow{gap:12px}.pf-n:not(:last-child)::after{right:-10px;width:5px;height:5px}
+}
 /* PERFORMANCE: backdrop blur re-renders every frame when live 3D sits behind it, so panels over canvases get a deeper solid tint instead */
 .stack-cat,.proj-card,.terminal-window,.exp-card,.hero-telemetry,.stat-box,.pipeline-section{backdrop-filter:none;-webkit-backdrop-filter:none}
 .stack-cat{background:rgba(6,6,24,.84)}
@@ -984,7 +1041,7 @@ That Scales
 <div class="section-number">03</div>
 <div class="projects-header" id="warpHeader">
 <div class="projects-title">What<br/>I've Built</div>
-<div class="projects-sub">✦ Six missions · Production deployments · Client infrastructure</div>
+<div class="projects-sub">Six missions · Production deployments · Client infrastructure</div>
 <div class="warp-cue">Scroll to enter the wormhole</div>
 </div>
 <div class="warp-stage" id="warpStage">
@@ -995,11 +1052,7 @@ That Scales
 <div class="proj-card-num">01 / 06</div>
 <div class="proj-card-title">Client Interview Portal</div>
 <div class="proj-card-desc">Full CI/CD — Jenkins Master local, Agent on GCP VM. OAuth, DB seeding, Dockerised React/Node/PostgreSQL stack. Zero-downtime blue-green deploys.</div>
-<div class="proj-card-metrics">
-<span>Strategy: <strong>Blue-Green Zero-Downtime</strong></span>
-<span>Infra: <strong>GCP Compute Engine + Jenkins Agent</strong></span>
-</div>
-<div class="proj-card-tags"><span class="proj-tag">Jenkins</span><span class="proj-tag">Docker</span><span class="proj-tag">GCP</span><span class="proj-tag">PostgreSQL</span></div>
+<div class="proj-flow" aria-label="Architecture: Git push to Jenkins to GCP VM agent to Docker to Blue / Green"><div class="pf-track"><i></i></div><span class="pf-n" style="--i:0">Git push</span><span class="pf-n" style="--i:1">Jenkins</span><span class="pf-n" style="--i:2">GCP VM agent</span><span class="pf-n" style="--i:3">Docker</span><span class="pf-n" style="--i:4">Blue / Green</span></div>
 <div class="proj-card-status"><span class="ms-dot"></span>Mission complete<span class="ms-code">M-01</span></div>
 </div>
 <div class="proj-card" data-tilt>
@@ -1008,11 +1061,7 @@ That Scales
 <div class="proj-card-num">02 / 06</div>
 <div class="proj-card-title">Azure DevOps Platform</div>
 <div class="proj-card-desc">Built an Azure DevOps UI project using Azure Entra ID, service principal, and Azure DevOps APIs. Managed identity, access control, and pipeline integration end-to-end.</div>
-<div class="proj-card-metrics">
-<span>Identity: <strong>Azure Entra ID &amp; Service Principal</strong></span>
-<span>Security: <strong>RBAC Policy Governance &amp; REST APIs</strong></span>
-</div>
-<div class="proj-card-tags"><span class="proj-tag">Azure</span><span class="proj-tag">Entra ID</span><span class="proj-tag">DevOps API</span><span class="proj-tag">RBAC</span></div>
+<div class="proj-flow" aria-label="Architecture: Entra ID to Service principal to DevOps API to RBAC"><div class="pf-track"><i></i></div><span class="pf-n" style="--i:0">Entra ID</span><span class="pf-n" style="--i:1">Service principal</span><span class="pf-n" style="--i:2">DevOps API</span><span class="pf-n" style="--i:3">RBAC</span></div>
 <div class="proj-card-status"><span class="ms-dot"></span>Mission complete<span class="ms-code">M-02</span></div>
 </div>
 <div class="proj-card" data-tilt>
@@ -1021,11 +1070,7 @@ That Scales
 <div class="proj-card-num">03 / 06</div>
 <div class="proj-card-title">Finance Vaastu</div>
 <div class="proj-card-desc">Production PHP app deployed to Contabo VPS. Docker, Nginx reverse proxy, SSL/TLS, DNS. End-to-end resolution of networking and container issues.</div>
-<div class="proj-card-metrics">
-<span>Hosting: <strong>Contabo VPS Production Instance</strong></span>
-<span>Proxy: <strong>NGINX SSL/TLS Automated Termination</strong></span>
-</div>
-<div class="proj-card-tags"><span class="proj-tag">PHP</span><span class="proj-tag">Docker</span><span class="proj-tag">Nginx</span><span class="proj-tag">SSL</span></div>
+<div class="proj-flow" aria-label="Architecture: DNS to Nginx + TLS to Docker to PHP app · VPS"><div class="pf-track"><i></i></div><span class="pf-n" style="--i:0">DNS</span><span class="pf-n" style="--i:1">Nginx + TLS</span><span class="pf-n" style="--i:2">Docker</span><span class="pf-n" style="--i:3">PHP app · VPS</span></div>
 <div class="proj-card-status"><span class="ms-dot"></span>Mission complete<span class="ms-code">M-03</span></div>
 </div>
 <div class="proj-card" data-tilt>
@@ -1034,11 +1079,7 @@ That Scales
 <div class="proj-card-num">04 / 06</div>
 <div class="proj-card-title">B2W Green</div>
 <div class="proj-card-desc">WordPress platform on Docker Compose. Multi-service orchestration, Nginx reverse proxy, SSL certificates, production DNS setup and container networking.</div>
-<div class="proj-card-metrics">
-<span>Stack: <strong>Docker Compose Orchestration</strong></span>
-<span>Network: <strong>Custom Bridge Network &amp; DNS Failover</strong></span>
-</div>
-<div class="proj-card-tags"><span class="proj-tag">WordPress</span><span class="proj-tag">Docker Compose</span><span class="proj-tag">Nginx</span></div>
+<div class="proj-flow" aria-label="Architecture: DNS to Nginx + SSL to Compose network to WordPress"><div class="pf-track"><i></i></div><span class="pf-n" style="--i:0">DNS</span><span class="pf-n" style="--i:1">Nginx + SSL</span><span class="pf-n" style="--i:2">Compose network</span><span class="pf-n" style="--i:3">WordPress</span></div>
 <div class="proj-card-status"><span class="ms-dot"></span>Mission complete<span class="ms-code">M-04</span></div>
 </div>
 <div class="proj-card" data-tilt>
@@ -1047,11 +1088,7 @@ That Scales
 <div class="proj-card-num">05 / 06</div>
 <div class="proj-card-title">Monitoring Stack (EC2)</div>
 <div class="proj-card-desc">Full observability stack alongside MERN app on EC2. Prometheus, Grafana dashboards, Alertmanager, Node Exporter, cAdvisor. Cloudflare tunnel for Jenkins scraping.</div>
-<div class="proj-card-metrics">
-<span>Telemetry: <strong>Node Exporter + cAdvisor Metrics</strong></span>
-<span>Tunneling: <strong>Cloudflare Zero Trust Tunnel Proxy</strong></span>
-</div>
-<div class="proj-card-tags"><span class="proj-tag">Prometheus</span><span class="proj-tag">Grafana</span><span class="proj-tag">EC2</span><span class="proj-tag">MERN</span></div>
+<div class="proj-flow" aria-label="Architecture: Exporters to Prometheus to Alertmanager to Grafana"><div class="pf-track"><i></i></div><span class="pf-n" style="--i:0">Exporters</span><span class="pf-n" style="--i:1">Prometheus</span><span class="pf-n" style="--i:2">Alertmanager</span><span class="pf-n" style="--i:3">Grafana</span></div>
 <div class="proj-card-status"><span class="ms-dot"></span>Mission complete<span class="ms-code">M-05</span></div>
 </div>
 <div class="proj-card" data-tilt>
@@ -1060,11 +1097,7 @@ That Scales
 <div class="proj-card-num">06 / 06</div>
 <div class="proj-card-title">Portfolio K8s Cluster</div>
 <div class="proj-card-desc">This portfolio, containerised and deployed to a local Kind cluster (namespace portfolio-dev) with Helm and NGINX Ingress. The public copy you are flying through is served from GitHub Pages.</div>
-<div class="proj-card-metrics">
-<span>Cluster: <strong>Kind / Kubernetes namespace portfolio-dev</strong></span>
-<span>Routing: <strong>Helm Charts + NGINX Ingress Controller</strong></span>
-</div>
-<div class="proj-card-tags"><span class="proj-tag">Kind</span><span class="proj-tag">Kubernetes</span><span class="proj-tag">Helm</span><span class="proj-tag">Three.js</span></div>
+<div class="proj-flow" aria-label="Architecture: Docker image to Helm to Kind cluster to Ingress"><div class="pf-track"><i></i></div><span class="pf-n" style="--i:0">Docker image</span><span class="pf-n" style="--i:1">Helm</span><span class="pf-n" style="--i:2">Kind cluster</span><span class="pf-n" style="--i:3">Ingress</span></div>
 <div class="proj-card-status"><span class="ms-dot live"></span>In orbit · you're flying through it<span class="ms-code">M-06</span></div>
 </div>
 </div>
@@ -1638,13 +1671,13 @@ const slots=cards.map((c,i)=>{const s=document.createElement('div');s.className=
 const ghost=document.createElement('div');ghost.className='warp-ghost';ghost.textContent=String(i+1).padStart(2,'0');s.appendChild(ghost);s.appendChild(c);return s;});
 const thumb=document.getElementById('scrollThumb'),countEl=document.getElementById('scrollCount');
 const N=slots.length,pad=n=>String(n).padStart(2,'0');
-if(REDUCED){section.classList.add('warp-static');return;}
+if(REDUCED){section.classList.add('warp-static');cards.forEach(c=>c.classList.add('on'));return;}
 const mission=document.createElement('div');mission.className='warp-mission';stage.appendChild(mission);
 const flash=document.createElement('div');flash.className='warp-flash';section.appendChild(flash);
 const parts=cards.map(c=>[...c.children].filter(el=>!el.classList.contains('proj-card-accent')));
 parts.forEach(p=>gsap.set(p,{opacity:0,y:14}));
 const assembled=new Set();
-function assemble(i){if(assembled.has(i))return;assembled.add(i);gsap.to(parts[i],{opacity:1,y:0,filter:BLUR(0),duration:.75,stagger:.06,ease:'expo.out',startAt:{filter:BLUR(6)}});}
+function assemble(i){if(assembled.has(i))return;assembled.add(i);cards[i].classList.add('on');gsap.to(parts[i],{opacity:1,y:0,filter:BLUR(0),duration:.75,stagger:.06,ease:'expo.out',startAt:{filter:BLUR(6)}});}
 const wide=()=>innerWidth>900;
 gsap.set(slots,{yPercent:-50,opacity:0,z:-2600});
 const LEAD=.5,STEP=1;
@@ -2169,7 +2202,7 @@ moons.forEach(m=>{m.spin.rotation.y=m.spin.userData.a+t*m.spin.userData.sp;m.s.g
 moon.position.set(saturnPos.x+Math.cos(t*.5)*6.2,saturnPos.y+Math.sin(t*.2)*.4,Math.sin(t*.5)*2.4);
 // scroll carries the camera around the planet: entering orbit
 const p=SCENE.stack,a=(p-.5)*.7;
-camera.position.set(Math.sin(a)*9.2,1.9-p*1.6,Math.cos(a)*9.2);camera.lookAt(saturnPos.x*.55,0,0);
+const CR=innerWidth>1000?11.2:9.2;camera.position.set(Math.sin(a)*CR,1.9-p*1.6,Math.cos(a)*CR);camera.lookAt(innerWidth>1000?saturnPos.x*.28:saturnPos.x*.55,innerWidth>1000?.1:0,0);
 renderer.render(scene,camera);
 })();
 })();
