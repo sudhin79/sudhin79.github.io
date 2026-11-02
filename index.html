@@ -31,15 +31,22 @@
 --font-body:'Manrope',sans-serif;
 }
 html{scroll-behavior:auto}
-body{background:var(--black);color:var(--white);font-family:var(--font-body);overflow-x:hidden;cursor:none}
-.cursor{position:fixed;left:0;top:0;width:10px;height:10px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .45s cubic-bezier(.23,1,.32,1),height .45s cubic-bezier(.23,1,.32,1);mix-blend-mode:difference;will-change:transform}
-.cursor-follower{position:fixed;left:0;top:0;width:36px;height:36px;border:1px solid rgba(232,255,71,.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .55s cubic-bezier(.23,1,.32,1),height .55s cubic-bezier(.23,1,.32,1),background .4s,border-color .4s;will-change:transform;display:flex;align-items:center;justify-content:center}
-.cursor-label{font-family:var(--font-mono);font-size:10px;letter-spacing:2px;color:var(--black);opacity:0;transform:scale(.6);transition:opacity .3s,transform .4s cubic-bezier(.23,1,.32,1)}
-body[data-cursor="hover"] .cursor{width:20px;height:20px}
-body[data-cursor="hover"] .cursor-follower{width:60px;height:60px;border-color:rgba(232,255,71,.75)}
-body[data-cursor="drag"] .cursor{width:0;height:0}
-body[data-cursor="drag"] .cursor-follower{width:86px;height:86px;background:rgba(232,255,71,.92);border-color:transparent}
-body[data-cursor="drag"] .cursor-label{opacity:1;transform:scale(1)}
+body{background:var(--black);color:var(--white);font-family:var(--font-body);overflow-x:hidden}
+.ship-on,.ship-on *{cursor:none!important}
+.ship-cursor,.ship-reticle,.ship-trail{position:fixed;left:0;top:0;pointer-events:none;opacity:0}
+.ship-trail{z-index:99997;width:100vw;height:100vh}
+.ship-reticle{z-index:99998;transition:opacity .25s;will-change:transform}
+.ship-reticle i{position:absolute;width:9px;height:9px;border:0 solid var(--accent)}
+.ship-reticle i:nth-child(1){left:0;top:0;border-width:1px 0 0 1px}
+.ship-reticle i:nth-child(2){right:0;top:0;border-width:1px 1px 0 0}
+.ship-reticle i:nth-child(3){left:0;bottom:0;border-width:0 0 1px 1px}
+.ship-reticle i:nth-child(4){right:0;bottom:0;border-width:0 1px 1px 0}
+.ship-reticle.locked{opacity:1}
+.ship-cursor{z-index:99999;margin-left:-12px;width:24px;height:30px;transform-origin:12px 0;will-change:transform;transition:opacity .2s}
+.ship-cursor svg{display:block;overflow:visible}
+.ship-flame{transform-box:fill-box;transform-origin:50% 0}
+.ship-on .ship-trail{opacity:1}
+.ship-on .ship-cursor.flying{opacity:1}
 /* CINEMATIC LETTERBOX (anchor flights) */
 .cine-bar{position:fixed;left:0;right:0;height:0;background:#000;z-index:7500;pointer-events:none}
 .cine-bar.top{top:0}.cine-bar.bottom{bottom:0}
@@ -178,7 +185,6 @@ border:1px solid rgba(232,255,71,.1);
 padding:36px 28px 32px;
 position:relative;overflow:hidden;
 transition:border-color .4s,background .4s,transform .3s;
-cursor:none;
 }
 .stack-cat::before{
 content:'';position:absolute;inset:0;
@@ -823,9 +829,9 @@ html.perf-lite .cine-grain{display:none}
 .exp-card.lit::before{transform:scaleY(1)}
 @media (max-width:900px){.pipeline-beam{display:none}}
 /* ===== REFINEMENTS (additive only — design unchanged) ===== */
-@media (hover:none){body{cursor:auto}.cursor,.cursor-follower{display:none!important}}
 @media (prefers-reduced-motion:reduce){
 *,*::before,*::after{animation-duration:.001s!important;animation-iteration-count:1!important}
+.ship-reticle{transition:none}
 .marquee-track{animation:none}
 .hero-scroll-hint::before{animation:none}
 }
@@ -862,8 +868,9 @@ section{padding:80px 24px}
 <span class="ch-rule"></span>
 <span class="ch-text"><span class="ch-name" id="chName">Launch</span><span class="ch-desc" id="chDesc">Every deploy is a launch</span></span>
 </div>
-<div class="cursor" id="cursor"></div>
-<div class="cursor-follower" id="follower"></div>
+<canvas class="ship-trail" id="shipTrail" aria-hidden="true"></canvas>
+<div class="ship-reticle" id="shipReticle" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<div class="ship-cursor" id="shipCursor" aria-hidden="true"><svg width="24" height="30" viewBox="0 0 24 30"><path class="ship-flame" d="M9.2 20.6h5.6L12 30z" fill="#e8ff47"/><path d="M12 1 3 24l9-5z" fill="#f4f2fb"/><path d="m12 1 9 23-9-5z" fill="#9d9cc0"/><path d="M12 1 3 24l9-5 9 5z" fill="none" stroke="#04040f" stroke-width=".9" stroke-linejoin="round"/></svg></div>
 <!-- PRELOADER -->
 <div id="preloader">
 <canvas id="preStars"></canvas>
@@ -1269,23 +1276,78 @@ const BLUR=px=>`blur(${LOW_END?0:px}px)`;
 if(LOW_END)document.documentElement.classList.add('perf-lite');
 
 // == CURSOR ==
-const cursor=document.getElementById('cursor'),follower=document.getElementById('follower');
-let mx=0,my=0,fx=0,fy=0;
-if(!IS_TOUCH){
-gsap.set([cursor,follower],{xPercent:-50,yPercent:-50});
-const cX=gsap.quickTo(cursor,'x',{duration:.12,ease:'power3'}),cY=gsap.quickTo(cursor,'y',{duration:.12,ease:'power3'});
-const fX=gsap.quickTo(follower,'x',{duration:.6,ease:'power3'}),fY=gsap.quickTo(follower,'y',{duration:.6,ease:'power3'});
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cX(mx);cY(my);fX(mx);fY(my);});
-const cursorLabel=document.createElement('span');cursorLabel.className='cursor-label';follower.appendChild(cursorLabel);
-document.addEventListener('mouseover',e=>{
-const t=e.target;let state='';
-if(t.closest('a,button,input,.term-chip'))state='hover';
-else if(t.closest('.stack-cat,.stat-box,.pipeline-node'))state='hover';
-document.body.dataset.cursor=state;cursorLabel.textContent=state==='drag'?'DRAG':'';
-});
-document.addEventListener('mouseleave',()=>gsap.to([cursor,follower],{opacity:0,duration:.3}));
-document.addEventListener('mouseenter',()=>gsap.to([cursor,follower],{opacity:1,duration:.3}));
+// A small spacecraft. Its nose is the hotspot, so aim stays exact while the hull swings behind it.
+if(!IS_TOUCH)(function(){
+const ship=document.getElementById('shipCursor'),flame=ship.querySelector('.ship-flame');
+const reticle=document.getElementById('shipReticle'),trailEl=document.getElementById('shipTrail');
+const LOCKABLE='a,button,input,.term-chip,.stack-cat,.stat-box,.pipeline-node';
+const HULL=21,PAD=7,MAX_TRAIL=36,RAD=Math.PI/180;
+const ctx=!REDUCED&&!LOW_END?trailEl.getContext('2d'):null;
+const trail=[];
+let x=0,y=0,hx=0,hy=0,moved=0,fresh=true,ang=-45,goal=-45,thrust=0,press=0,pressGoal=0;
+let target=null,rx=0,ry=0,rw=0,rh=0,raf=0,last=0;
+const wrap=d=>((d+540)%360)-180;
+const ease=(r,k)=>1-Math.pow(r,k);
+function fit(){if(!ctx)return;trailEl.width=innerWidth*DPR;trailEl.height=innerHeight*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);ctx.lineCap='round';}
+function drawTrail(k,didMove){
+if(!ctx)return;
+if(didMove){const a=ang*RAD;trail.push({x:x-Math.sin(a)*HULL,y:y+Math.cos(a)*HULL,life:1});if(trail.length>MAX_TRAIL)trail.shift();}
+for(const p of trail)p.life-=.04*k;
+while(trail.length&&trail[0].life<=0)trail.shift();
+ctx.clearRect(0,0,innerWidth,innerHeight);
+for(let i=1;i<trail.length;i++){
+const p=trail[i-1],q=trail[i],l=q.life;
+ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);
+ctx.strokeStyle=`rgba(232,255,71,${l*.12})`;ctx.lineWidth=l*7;ctx.stroke();
+ctx.strokeStyle=`rgba(244,242,251,${l*.6})`;ctx.lineWidth=Math.max(l*1.8,.4);ctx.stroke();
 }
+}
+function drawReticle(k){
+if(!target)return;
+const r=target.isConnected?target.getBoundingClientRect():null;
+if(!r||!r.width||!r.height){setTarget(null);return;}
+const l=Math.max(r.left-PAD,2),t=Math.max(r.top-PAD,2),w=Math.min(r.right+PAD,innerWidth-2)-l,h=Math.min(r.bottom+PAD,innerHeight-2)-t;
+const f=REDUCED?1:ease(.72,k);
+rx+=(l-rx)*f;ry+=(t-ry)*f;rw+=(w-rw)*f;rh+=(h-rh)*f;
+reticle.style.transform=`translate3d(${rx}px,${ry}px,0)`;reticle.style.width=rw+'px';reticle.style.height=rh+'px';
+}
+function setTarget(el){
+if(el===target)return;
+if(el&&!target){rx=x;ry=y;rw=0;rh=0;}
+target=el;reticle.classList.toggle('locked',!!el);wake();
+}
+function frame(now){
+raf=0;
+const k=Math.min((now-last)/16.67,3);last=now;
+const didMove=moved>0;
+if(!REDUCED){
+const dx=x-hx,dy=y-hy;
+if(dx*dx+dy*dy>36){goal=Math.atan2(dy,dx)/RAD+90;hx=x;hy=y;}
+ang+=wrap(goal-ang)*ease(.8,k);
+thrust+=(Math.min(moved/34,1)-thrust)*ease(.84,k);
+flame.style.transform=`scaleY(${.28+thrust*1.3})`;
+}else flame.style.transform='scaleY(.28)';
+moved=0;
+press+=(pressGoal-press)*ease(.6,k);
+ship.style.transform=`translate3d(${x}px,${y}px,0) rotate(${ang}deg) scale(${1-press*.16})`;
+drawTrail(k,didMove);
+drawReticle(k);
+if(target||trail.length||thrust>.01||Math.abs(wrap(goal-ang))>.2||Math.abs(pressGoal-press)>.01)wake();
+}
+function wake(){if(!raf){last=performance.now();raf=requestAnimationFrame(frame);}}
+fit();addEventListener('resize',fit);
+document.addEventListener('mousemove',e=>{
+moved+=Math.hypot(e.clientX-x,e.clientY-y);
+x=e.clientX;y=e.clientY;
+if(fresh){fresh=false;moved=0;hx=x;hy=y;trail.length=0;document.documentElement.classList.add('ship-on');ship.classList.add('flying');}
+wake();
+},{passive:true});
+document.addEventListener('mouseover',e=>setTarget(e.target.closest(LOCKABLE)));
+document.addEventListener('mousedown',()=>{pressGoal=1;wake();});
+document.addEventListener('mouseup',()=>{pressGoal=0;wake();});
+const root=document.documentElement;
+root.addEventListener('mouseleave',()=>{fresh=true;ship.classList.remove('flying');setTarget(null);});
+})();
 
 // == CINEMATIC LETTERBOX ==
 const cineBars=document.querySelectorAll('.cine-bar');
